@@ -16,7 +16,7 @@ email: ""
 description: >-
   个人主页 of Fragmented_Chaos，欢迎交流。
 baseurl: "" # the subpath of your site, e.g. /blog
-url: "https://fragmentedchaos.github.io" # the base hostname & protocol for your site
+url: "https://fragmented-chaos.github.io" # the base hostname & protocol for your site
 github_username: Fragmented-Chaos
 
 # Build settings
