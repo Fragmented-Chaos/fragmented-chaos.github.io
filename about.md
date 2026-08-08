@@ -1,24 +1,18 @@
 ---
-layout: page
+layout: about
 title: 关于我
 permalink: /about/
 ---
 
-# 我是谁
+<p class="about-intro">
+  你好，我是 <strong>Fragmented_Chaos</strong>。这里是记录我 Minecraft 相关内容与日常的个人博客。
+</p>
 
-你好，我是 **Fragmented_Chaos**。
+<p>
+  除了主要身份之外，我在不同平台上也使用过以下名字：
+</p>
 
-除了主要身份之外，我在不同平台上也使用过以下名字：
-
-- **StewedTuba73416**
-- **Rending_Void**
-
-## 关注我
-
-想了解我的最新动态或与我交流，可以通过下面的入口找到我：
-
-- [mc百科](https://center.mcmod.cn/626584/)
-- [GitHub](https://github.com/Fragmented-Chaos)
-- [CurseForge](https://www.curseforge.com/members/fragmented_chaos/projects)
-- [Modrinth](https://modrinth.com/user/Fragmented_Chaos)
-- [B站](https://space.bilibili.com/3546896511536057)
+<ul>
+  <li><strong>StewedTuba73416</strong></li>
+  <li><strong>Rending_Void</strong></li>
+</ul>

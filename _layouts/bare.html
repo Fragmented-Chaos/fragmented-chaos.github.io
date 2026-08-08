@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="{{ page.lang | default: site.lang | default: "zh-CN" }}">
+
+  {%- include head.html -%}
+
+  <body class="bare-body">
+
+    <main class="page-content" aria-label="Content">
+      {{ content }}
+    </main>
+
+    <script>
+    (function () {
+      var btn = document.getElementById('theme-toggle');
+      var moon = document.getElementById('icon-moon');
+      var sun = document.getElementById('icon-sun');
+      var KEY = 'fragmentedchaos-theme';
+      function apply(theme) {
+        document.documentElement.setAttribute('data-theme', theme);
+        var dark = theme === 'dark';
+        if (moon) moon.style.display = dark ? 'inline-block' : 'none';
+        if (sun) sun.style.display = dark ? 'none' : 'inline-block';
+      }
+      var saved = null;
+      try { saved = localStorage.getItem(KEY); } catch (e) {}
+      apply(saved || 'dark');
+      if (btn) {
+        btn.addEventListener('click', function () {
+          var next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+          apply(next);
+          try { localStorage.setItem(KEY, next); } catch (e) {}
+        });
+      }
+    })();
+    </script>
+
+  </body>
+
+</html>
