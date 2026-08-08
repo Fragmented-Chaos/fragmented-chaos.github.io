@@ -28,7 +28,7 @@ plugins:
 
 # Minima customization
 minima:
-  skin: dark
+  skin: auto
 
 # Exclude from processing.
 # The following items will not be processed, by default.
