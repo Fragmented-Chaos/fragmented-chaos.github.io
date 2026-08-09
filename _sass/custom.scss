@@ -74,6 +74,10 @@ body {
   font-weight: 500;
 }
 
+.site-nav .page-link:visited {
+  color: var(--muted);
+}
+
 .site-nav .page-link:hover {
   color: var(--brand-color);
   text-decoration: none;
@@ -275,6 +279,10 @@ blockquote {
     box-shadow 0.2s ease;
 }
 
+.social-btn:visited {
+  color: var(--text-color);
+}
+
 .social-btn svg {
   width: 1.4rem;
   height: 1.4rem;
@@ -358,6 +366,10 @@ blockquote {
   transition: transform 0.15s ease, box-shadow 0.2s ease;
 }
 
+.landing-btn:visited {
+  color: var(--on-brand);
+}
+
 .landing-btn:hover {
   color: var(--on-brand);
   text-decoration: none;
@@ -403,6 +415,10 @@ blockquote {
   transition: transform 0.15s ease, box-shadow 0.2s ease;
 }
 
+.error-link:visited {
+  color: var(--on-brand);
+}
+
 .error-link:hover {
   color: var(--on-brand);
   text-decoration: none;
@@ -444,10 +460,6 @@ blockquote {
   line-height: 1.8;
 }
 
-.about-body .about-intro {
-  font-size: 1.05rem;
-}
-
 .about-social {
   margin-top: 2.5rem;
   padding-top: 1.5rem;
@@ -474,6 +486,10 @@ blockquote {
 
 .about-links a {
   font-weight: 500;
+}
+
+.about-links a:visited {
+  color: var(--brand-color);
 }
 
 .timeline {
