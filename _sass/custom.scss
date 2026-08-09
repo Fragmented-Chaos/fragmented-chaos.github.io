@@ -1,5 +1,7 @@
 :root {
   --brand-color: #2563eb;
+  --brand-2: #0ea5e9;
+  --accent-color: #8b5cf6;
   --text-color: #1f2328;
   --bg-color: #ffffff;
   --content-bg: #ffffff;
@@ -16,6 +18,8 @@
 
 [data-theme="dark"] {
   --brand-color: #60a5fa;
+  --brand-2: #22d3ee;
+  --accent-color: #a78bfa;
   --text-color: #e5e7eb;
   --bg-color: #0d1117;
   --content-bg: #161b22;
@@ -39,6 +43,22 @@ body {
   color: var(--text-color);
   font-family: var(--font);
   -webkit-font-smoothing: antialiased;
+  background-image: radial-gradient(
+      ellipse 70% 50% at 10% -5%,
+      color-mix(in srgb, var(--brand-color) 18%, transparent),
+      transparent
+    ),
+    radial-gradient(
+      ellipse 60% 45% at 90% 105%,
+      color-mix(in srgb, var(--accent-color) 16%, transparent),
+      transparent
+    ),
+    radial-gradient(
+      ellipse 40% 30% at 50% 50%,
+      color-mix(in srgb, var(--brand-2) 6%, transparent),
+      transparent
+    );
+  background-attachment: fixed;
 }
 
 .site-header {
@@ -61,6 +81,10 @@ body {
   font-size: 1.25rem;
   float: none;
   line-height: 54px;
+  background: linear-gradient(135deg, var(--brand-color), var(--brand-2));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 .site-nav {
@@ -94,6 +118,26 @@ body {
   }
   .site-nav .menu-icon > svg {
     fill: var(--text-color);
+  }
+
+  .site-header .wrapper {
+    display: block;
+  }
+
+  .site-title {
+    line-height: 54px;
+  }
+
+  .site-nav {
+    position: absolute;
+    top: 9px;
+    right: 15px;
+    line-height: 1.5;
+    margin-left: 0;
+  }
+
+  .site-nav .trigger {
+    background-color: var(--bg-color);
   }
 }
 
@@ -255,6 +299,18 @@ blockquote {
   padding-bottom: 0.6rem;
   border-bottom: 1px solid var(--border-color);
   letter-spacing: 0.01em;
+  position: relative;
+}
+
+.section-title::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -1px;
+  width: 2.5rem;
+  height: 2px;
+  background: linear-gradient(90deg, var(--brand-color), var(--brand-2));
+  border-radius: 2px;
 }
 
 .social-buttons {
@@ -289,7 +345,7 @@ blockquote {
 }
 
 .social-btn:hover {
-  background-color: var(--brand-color);
+  background: linear-gradient(135deg, var(--brand-color), var(--brand-2));
   color: var(--on-brand);
   text-decoration: none;
   transform: translateY(-3px);
@@ -516,7 +572,7 @@ blockquote {
   width: 0.9rem;
   height: 0.9rem;
   border-radius: 50%;
-  background-color: var(--brand-color);
+  background: linear-gradient(135deg, var(--brand-color), var(--accent-color));
   border: 2px solid var(--content-bg);
   box-shadow: var(--shadow-sm);
 }
@@ -535,4 +591,86 @@ blockquote {
 
 .timeline-content p:last-child {
   margin-bottom: 0;
+}
+
+@media screen and (max-width: 600px) {
+  body {
+    background-attachment: scroll;
+  }
+
+  .profile,
+  .about,
+  .timeline,
+  .error-page {
+    padding: 2rem 1rem;
+  }
+
+  .profile-header {
+    gap: 1.25rem;
+  }
+
+  .avatar,
+  .avatar-wrap .avatar {
+    width: 6rem;
+    height: 6rem;
+  }
+
+  .profile-name {
+    font-size: 1.7rem;
+  }
+
+  .landing {
+    padding: 1.5rem 1rem;
+  }
+
+  .landing-title {
+    font-size: 2rem;
+  }
+
+  .landing-theme-toggle {
+    top: 0.75rem;
+    right: 0.75rem;
+    width: 2.2rem;
+    height: 2.2rem;
+  }
+
+  .about-avatar {
+    width: 5rem;
+    height: 5rem;
+  }
+
+  .about-name {
+    font-size: 1.6rem;
+  }
+
+  .social-buttons {
+    gap: 0.7rem;
+  }
+
+  .social-btn {
+    width: 2.7rem;
+    height: 2.7rem;
+  }
+
+  .social-btn svg {
+    width: 1.25rem;
+    height: 1.25rem;
+  }
+
+  .error-code {
+    font-size: 3.2rem;
+  }
+
+  .timeline {
+    margin-left: 0.5rem;
+    padding-left: 0.75rem;
+  }
+
+  .timeline-item {
+    padding-left: 1.25rem;
+  }
+
+  .timeline-dot {
+    left: -1.1rem;
+  }
 }
