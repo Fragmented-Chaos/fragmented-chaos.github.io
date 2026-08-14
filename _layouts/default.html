@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% if page.title %}{{ page.title }} · {% endif %}{{ site.title }}</title>
+    <meta name="description" content="{{ page.excerpt | default: site.description | strip_html | strip_newlines | truncate: 160 }}">
+    {%- if page.title -%}
+    <meta property="og:title" content="{{ page.title }} · {{ site.title }}">
+    {%- else -%}
+    <meta property="og:title" content="{{ site.title }}">
+    {%- endif -%}
+    <meta property="og:type" content="website">
+    <link rel="stylesheet" href="{{ '/assets/main.css' | relative_url }}">
+    <link rel="icon" href="{{ '/assets/images/logo.png' | relative_url }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container header-inner">
+        <a class="site-title" href="{{ '/' | relative_url }}">{{ site.title }}</a>
+        <nav class="site-nav" aria-label="主导航">
+          <a class="nav-link" href="{{ '/home/' | relative_url }}">主页</a>
+          <a class="nav-link" href="{{ '/about/' | relative_url }}">关于我</a>
+          <a class="nav-link" href="{{ '/experience/' | relative_url }}">经历</a>
+          <a class="nav-link" href="#" onclick="window.open('https://www.bilibili.com/video/BV1GJ411x7h7/','_blank','noopener');return false;">点这里有惊喜</a>
+          <button type="button" class="theme-toggle" id="theme-toggle" aria-label="切换主题">
+            <svg class="icon-moon" id="icon-moon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+            <svg class="icon-sun" id="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+          </button>
+        </nav>
+      </div>
+    </header>
+
+    <main class="page-content">
+      {{ content }}
+    </main>
+
+    <footer class="site-footer">
+      <div class="container">
+        <p class="footer-text">{{ site.description }}</p>
+      </div>
+    </footer>
+
+    <script>
+    (function () {
+      var btn = document.getElementById('theme-toggle');
+      var moon = document.getElementById('icon-moon');
+      var sun = document.getElementById('icon-sun');
+      var KEY = 'fragmentedchaos-theme';
+      function apply(theme) {
+        document.documentElement.setAttribute('data-theme', theme);
+        var dark = theme === 'dark';
+        if (moon) moon.style.display = dark ? 'inline-block' : 'none';
+        if (sun) sun.style.display = dark ? 'none' : 'inline-block';
+      }
+      var saved = null;
+      try { saved = localStorage.getItem(KEY); } catch (e) {}
+      var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+      apply(saved || (prefersDark ? 'dark' : 'light'));
+      if (btn) {
+        btn.addEventListener('click', function () {
+          var next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+          apply(next);
+          try { localStorage.setItem(KEY, next); } catch (e) {}
+        });
+      }
+    })();
+    </script>
+  </body>
+</html>
