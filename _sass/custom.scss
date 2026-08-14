@@ -261,47 +261,44 @@ a:hover {
 }
 
 /* ---------- 介绍页 ---------- */
-.profile {
+.hero {
   max-width: 44rem;
   margin: 0 auto;
-  padding: 1rem 1.25rem;
-}
-
-.profile-header {
-  display: flex;
+  padding: 2rem 1.25rem;
+  display: grid;
+  grid-template-columns: 0.9fr 1.1fr;
   align-items: center;
-  gap: 1.5rem;
-  flex-wrap: wrap;
-  margin-bottom: 2rem;
+  gap: 3rem;
+  min-height: calc(100vh - 8rem);
 }
 
-.avatar {
-  width: 7rem;
-  height: 7rem;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 2px solid var(--border);
-  box-shadow: var(--shadow-md);
+.hero-visual {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  grid-column: 1;
+  grid-row: 1;
 }
 
-.profile-info {
-  flex: 1;
-  min-width: 14rem;
+.hero-text {
+  grid-column: 2;
+  grid-row: 1;
 }
 
-.profile-name {
-  margin: 0 0 0.4rem;
+.hero-title {
+  margin: 0 0 0.6rem;
   font-family: var(--font-hand);
-  font-size: 2.2rem;
+  font-size: 3.2rem;
   font-weight: 700;
   color: var(--foreground);
   letter-spacing: 0.5px;
+  line-height: 1.1;
 }
 
-.profile-aliases {
-  margin: 0;
+.hero-aliases {
+  margin: 0 0 1rem;
   color: var(--muted-foreground);
-  font-size: 0.9rem;
+  font-size: 0.95rem;
 }
 
 .alias {
@@ -309,26 +306,39 @@ a:hover {
   color: var(--foreground);
 }
 
-.profile-body {
-  line-height: 1.75;
+.hero-intro {
+  margin: 0 0 1.75rem;
+  font-size: 1.1rem;
+  line-height: 1.7;
+  max-width: 26rem;
 }
 
-.profile-intro {
-  margin: 0 0 1.5rem;
-  font-size: 1.05rem;
+.hero-intro strong {
+  color: var(--accent);
 }
 
-.section-title {
-  font-size: 1.05rem;
-  font-weight: 700;
-  margin: 0 0 1rem;
-  color: var(--foreground);
-}
-
-.social-buttons {
+.hero-social {
   display: flex;
   flex-wrap: wrap;
   gap: 0.85rem;
+}
+
+.hero-visual {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.hero-avatar-frame {
+  width: 16rem;
+  height: 16rem;
+}
+
+.hero-avatar {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
 }
 
 .social-btn {
@@ -339,9 +349,10 @@ a:hover {
   width: 3rem;
   height: 3rem;
   border: 1px solid var(--border);
-  border-radius: 10px;
+  border-radius: 12px;
   color: var(--muted-foreground);
   background-color: var(--card);
+  box-shadow: var(--shadow-sm);
   transition: color 0.15s ease, border-color 0.15s ease,
     transform 0.15s ease, box-shadow 0.2s ease;
 }
@@ -378,7 +389,6 @@ a:hover {
   white-space: nowrap;
   z-index: 10;
 }
-
 /* ---------- 关于页 ---------- */
 .about {
   max-width: 44rem;
@@ -590,13 +600,30 @@ a:hover {
     padding: 2.5rem 1.25rem;
   }
 
-  .avatar {
-    width: 5.5rem;
-    height: 5.5rem;
+  .hero {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    text-align: center;
+    padding: 1.5rem 1.25rem;
+    min-height: auto;
   }
 
-  .profile-name {
-    font-size: 1.8rem;
+  .hero-intro {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .hero-social {
+    justify-content: center;
+  }
+
+  .hero-title {
+    font-size: 2.5rem;
+  }
+
+  .hero-avatar-frame {
+    width: 12rem;
+    height: 12rem;
   }
 
   .error-code {
