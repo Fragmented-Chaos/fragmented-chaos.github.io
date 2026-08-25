@@ -357,13 +357,28 @@ a:hover {
 
 .hero-visual {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
 }
 
 .hero-avatar-frame {
+  display: block;
   width: 16rem;
   height: 16rem;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.hero-avatar-frame:hover {
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent) 40%, transparent),
+    var(--shadow-md);
+}
+
+.hero-avatar-frame:visited {
+  color: inherit;
 }
 
 .hero-avatar {
@@ -599,6 +614,121 @@ a:hover {
   text-decoration: none;
 }
 
+/* ---------- 俄罗斯方块 ---------- */
+.tetris-page {
+  max-width: 44rem;
+  margin: 0 auto;
+  padding: 1rem 1.25rem;
+}
+
+.tetris-game {
+  display: flex;
+  gap: 1.5rem;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.tetris-board-wrap {
+  position: relative;
+  flex-shrink: 0;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+  background-color: var(--card);
+}
+
+.tetris-board-wrap canvas {
+  display: block;
+}
+
+.tetris-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  text-align: center;
+  background-color: color-mix(in srgb, var(--card) 86%, transparent);
+  backdrop-filter: blur(4px);
+  z-index: 5;
+  cursor: pointer;
+}
+
+.tetris-overlay-title {
+  margin: 0;
+  font-family: var(--font-hand);
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--foreground);
+}
+
+.tetris-overlay-title:empty {
+  display: none;
+}
+
+.tetris-overlay-start {
+  margin: 0;
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--foreground);
+  cursor: pointer;
+}
+
+.tetris-overlay-msg {
+  margin: 0;
+  color: var(--muted-foreground);
+  font-size: 0.9rem;
+}
+
+.tetris-side {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  min-width: 9rem;
+}
+
+.tetris-panel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.15rem;
+  padding: 0.6rem 0.75rem;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background-color: var(--card);
+  box-shadow: var(--shadow-sm);
+}
+
+.tetris-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--muted-foreground);
+}
+
+.tetris-value {
+  font-size: 1.25rem;
+  color: var(--foreground);
+}
+
+.tetris-next canvas {
+  display: block;
+}
+
+.tetris-keys {
+  margin: 0.25rem 0 0;
+  font-size: 0.75rem;
+  color: var(--muted-foreground);
+  line-height: 1.6;
+  text-align: center;
+}
+
+.tetris-touch {
+  display: none;
+}
+
 /* ---------- 移动端 ---------- */
 @media screen and (max-width: 640px) {
   .page-content {
@@ -695,6 +825,57 @@ a:hover {
   .timeline {
     margin-left: 1rem;
     padding-left: 0.75rem;
+  }
+
+  .tetris-game {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .tetris-side {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    min-width: 0;
+  }
+
+  .tetris-panel {
+    min-width: 5.5rem;
+  }
+
+  .tetris-next {
+    flex-basis: 100%;
+  }
+
+  .tetris-keys {
+    display: none;
+  }
+
+  .tetris-touch {
+    display: grid;
+    grid-template-columns: repeat(3, 3.5rem);
+    gap: 0.5rem;
+  }
+
+  .tetris-touch-btn {
+    height: 3.5rem;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    background-color: var(--card);
+    color: var(--foreground);
+    font-size: 1.1rem;
+    cursor: pointer;
+    touch-action: manipulation;
+    user-select: none;
+    -webkit-user-select: none;
+  }
+
+  .tetris-touch-btn:active {
+    background-color: var(--muted);
+  }
+
+  .tetris-touch-drop {
+    grid-column: span 2;
   }
 }
 

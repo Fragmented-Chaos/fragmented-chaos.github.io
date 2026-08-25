@@ -1,0 +1,471 @@
+---
+layout: default
+---
+
+<div class="tetris-page">
+  <h1 class="page-title">俄罗斯方块</h1>
+
+  <div class="tetris-game">
+    <div class="tetris-board-wrap">
+      <canvas id="tetris-board" width="240" height="480" aria-label="俄罗斯方块游戏盘"></canvas>
+      <div class="tetris-overlay" id="tetris-overlay" role="button" tabindex="0">
+        <p class="tetris-overlay-title" id="tetris-overlay-title"></p>
+        <p class="tetris-overlay-start" id="tetris-overlay-start">&gt;点击开始游戏&lt;</p>
+        <p class="tetris-overlay-msg" id="tetris-overlay-msg"></p>
+      </div>
+    </div>
+
+    <aside class="tetris-side">
+      <div class="tetris-panel">
+        <span class="tetris-label">分数</span>
+        <strong class="tetris-value" id="tetris-score">0</strong>
+      </div>
+      <div class="tetris-panel">
+        <span class="tetris-label">等级</span>
+        <strong class="tetris-value" id="tetris-level">1</strong>
+      </div>
+      <div class="tetris-panel">
+        <span class="tetris-label">消行</span>
+        <strong class="tetris-value" id="tetris-lines">0</strong>
+      </div>
+      <div class="tetris-panel">
+        <span class="tetris-label">下一个</span>
+        <canvas id="tetris-next" width="120" height="80"></canvas>
+      </div>
+      <p class="tetris-keys">
+        操作：← → 移动 · ↑ / X 旋转 · ↓ 软降 · 空格 硬降 · P 暂停
+      </p>
+      <div class="tetris-touch" id="tetris-touch">
+        <button type="button" class="tetris-touch-btn" data-action="left" aria-label="左移">◀</button>
+        <button type="button" class="tetris-touch-btn" data-action="rotate" aria-label="旋转">↻</button>
+        <button type="button" class="tetris-touch-btn" data-action="right" aria-label="右移">▶</button>
+        <button type="button" class="tetris-touch-btn" data-action="down" aria-label="软降">▼</button>
+        <button type="button" class="tetris-touch-btn tetris-touch-drop" data-action="drop" aria-label="硬降">⤓</button>
+      </div>
+    </aside>
+  </div>
+</div>
+
+<script>
+(function () {
+  var COLS = 10;
+  var ROWS = 20;
+  var CELL = 24;
+
+  var COLORS = {
+    I: "#06b6d4",
+    J: "#3b82f6",
+    L: "#f97316",
+    O: "#eab308",
+    S: "#22c55e",
+    T: "#a855f7",
+    Z: "#ef4444"
+  };
+
+  var SHAPES = {
+    I: [[0, 0, 0, 0], [1, 1, 1, 1], [0, 0, 0, 0], [0, 0, 0, 0]],
+    J: [[1, 0, 0], [1, 1, 1], [0, 0, 0]],
+    L: [[0, 0, 1], [1, 1, 1], [0, 0, 0]],
+    O: [[1, 1], [1, 1]],
+    S: [[0, 1, 1], [1, 1, 0], [0, 0, 0]],
+    T: [[0, 1, 0], [1, 1, 1], [0, 0, 0]],
+    Z: [[1, 1, 0], [0, 1, 1], [0, 0, 0]]
+  };
+  var KEYS = Object.keys(SHAPES);
+
+  var boardCanvas = document.getElementById("tetris-board");
+  var nextCanvas = document.getElementById("tetris-next");
+  var boardCtx = boardCanvas.getContext("2d");
+  var nextCtx = nextCanvas.getContext("2d");
+  var scoreEl = document.getElementById("tetris-score");
+  var levelEl = document.getElementById("tetris-level");
+  var linesEl = document.getElementById("tetris-lines");
+  var overlay = document.getElementById("tetris-overlay");
+  var overlayTitle = document.getElementById("tetris-overlay-title");
+  var overlayStart = document.getElementById("tetris-overlay-start");
+  var overlayMsg = document.getElementById("tetris-overlay-msg");
+
+  var board = [];
+  var score = 0;
+  var lines = 0;
+  var level = 1;
+  var bag = [];
+  var current = null;
+  var next = null;
+  var running = false;
+  var paused = false;
+  var gameOver = false;
+  var dropTimer = 0;
+  var dropInterval = 800;
+  var rafId = null;
+  var lastTime = 0;
+
+  function makeBoard() {
+    board = [];
+    for (var r = 0; r < ROWS; r++) {
+      board.push(new Array(COLS).fill(0));
+    }
+  }
+
+  function bagPiece() {
+    if (bag.length === 0) {
+      bag = KEYS.slice();
+      for (var i = bag.length - 1; i > 0; i--) {
+        var j = Math.floor(Math.random() * (i + 1));
+        var t = bag[i]; bag[i] = bag[j]; bag[j] = t;
+      }
+    }
+    return bag.pop();
+  }
+
+  function spawnPiece(type) {
+    var matrix = SHAPES[type].map(function (row) { return row.slice(); });
+    var w = matrix[0].length;
+    return {
+      type: type,
+      matrix: matrix,
+      x: Math.floor((COLS - w) / 2),
+      y: 0
+    };
+  }
+
+  function collides(piece, dx, dy, matrix) {
+    matrix = matrix || piece.matrix;
+    for (var r = 0; r < matrix.length; r++) {
+      for (var c = 0; c < matrix[0].length; c++) {
+        if (!matrix[r][c]) continue;
+        var nx = piece.x + c + dx;
+        var ny = piece.y + r + dy;
+        if (nx < 0 || nx >= COLS || ny >= ROWS) return true;
+        if (ny >= 0 && board[ny][nx]) return true;
+      }
+    }
+    return false;
+  }
+
+  function rotateMatrix(matrix, dir) {
+    var n = matrix.length;
+    var m = matrix[0].length;
+    var out = [];
+    for (var r = 0; r < m; r++) {
+      out.push(new Array(n).fill(0));
+    }
+    for (var r = 0; r < n; r++) {
+      for (var c = 0; c < m; c++) {
+        if (dir === 1) out[c][n - 1 - r] = matrix[r][c];
+        else out[m - 1 - c][r] = matrix[r][c];
+      }
+    }
+    return out;
+  }
+
+  function rotate(dir) {
+    if (!current) return;
+    var m = rotateMatrix(current.matrix, dir);
+    var kicks = [0, -1, 1, -2, 2];
+    for (var i = 0; i < kicks.length; i++) {
+      if (!collides(current, kicks[i], 0, m)) {
+        current.matrix = m;
+        current.x += kicks[i];
+        return;
+      }
+    }
+  }
+
+  function dropDistance(piece) {
+    var dy = 0;
+    while (!collides(piece, 0, dy + 1)) dy++;
+    return dy;
+  }
+
+  function lockPiece() {
+    for (var r = 0; r < current.matrix.length; r++) {
+      for (var c = 0; c < current.matrix[0].length; c++) {
+        if (current.matrix[r][c]) {
+          var ny = current.y + r;
+          if (ny < 0) { endGame(); return; }
+          board[ny][current.x + c] = COLORS[current.type];
+        }
+      }
+    }
+    clearLines();
+    spawnNext();
+  }
+
+  function clearLines() {
+    var cleared = 0;
+    for (var r = ROWS - 1; r >= 0; r--) {
+      var full = true;
+      for (var c = 0; c < COLS; c++) {
+        if (!board[r][c]) { full = false; break; }
+      }
+      if (full) {
+        board.splice(r, 1);
+        board.unshift(new Array(COLS).fill(0));
+        r++;
+        cleared++;
+      }
+    }
+    if (cleared > 0) {
+      lines += cleared;
+      score += cleared;
+      level = Math.floor(lines / 10) + 1;
+      dropInterval = Math.max(100, 800 - (level - 1) * 70);
+      updateHud();
+    }
+  }
+
+  function spawnNext() {
+    current = next || spawnPiece(bagPiece());
+    next = spawnPiece(bagPiece());
+    if (collides(current, 0, 0)) { endGame(); return; }
+  }
+
+  function hardDrop() {
+    if (!running || paused || gameOver) return;
+    var dy = dropDistance(current);
+    current.y += dy;
+    lockPiece();
+    drawAll();
+  }
+
+  function softDrop() {
+    if (!running || paused || gameOver) return;
+    if (!collides(current, 0, 1)) {
+      current.y++;
+    } else {
+      lockPiece();
+    }
+    dropTimer = 0;
+    drawAll();
+  }
+
+  function move(dx) {
+    if (!running || paused || gameOver) return;
+    if (!collides(current, dx, 0)) {
+      current.x += dx;
+      drawAll();
+    }
+  }
+
+  function startGame() {
+    makeBoard();
+    score = 0;
+    lines = 0;
+    level = 1;
+    dropInterval = 800;
+    bag = [];
+    gameOver = false;
+    paused = false;
+    running = true;
+    dropTimer = 0;
+    overlay.style.display = "none";
+    updateHud();
+    spawnNext();
+    drawAll();
+    startLoop();
+  }
+
+  function endGame() {
+    running = false;
+    gameOver = true;
+    cancelLoop();
+    overlayTitle.textContent = "游戏结束";
+    overlayStart.style.display = "block";
+    overlayMsg.textContent = "得分 " + score + " · 消行 " + lines;
+    overlay.style.display = "flex";
+  }
+
+  function togglePause() {
+    if (!running || gameOver) return;
+    paused = !paused;
+    if (paused) {
+      cancelLoop();
+      overlayTitle.textContent = "已暂停";
+      overlayStart.style.display = "none";
+      overlayMsg.textContent = "按 P 或点击继续";
+      overlay.style.display = "flex";
+    } else {
+      overlay.style.display = "none";
+      lastTime = 0;
+      startLoop();
+    }
+  }
+
+  function updateHud() {
+    scoreEl.textContent = score;
+    levelEl.textContent = level;
+    linesEl.textContent = lines;
+  }
+
+  /* ---------- 绘制 ---------- */
+  function drawCell(ctx, x, y, color) {
+    var pad = 1;
+    ctx.fillStyle = color;
+    ctx.fillRect(x * CELL + pad, y * CELL + pad, CELL - pad * 2, CELL - pad * 2);
+    ctx.fillStyle = "rgba(255,255,255,0.18)";
+    ctx.fillRect(x * CELL + pad, y * CELL + pad, CELL - pad * 2, CELL * 0.3);
+  }
+
+  function drawGhost() {
+    if (!current) return;
+    var dy = dropDistance(current);
+    if (dy === 0) return;
+    var ctx = boardCtx;
+    for (var r = 0; r < current.matrix.length; r++) {
+      for (var c = 0; c < current.matrix[0].length; c++) {
+        if (!current.matrix[r][c]) continue;
+        var x = current.x + c;
+        var y = current.y + r + dy;
+        ctx.fillStyle = "rgba(128,128,128,0.18)";
+        ctx.fillRect(x * CELL + 1, y * CELL + 1, CELL - 2, CELL - 2);
+      }
+    }
+  }
+
+  function drawBoard() {
+    var c = boardCtx;
+    c.clearRect(0, 0, boardCanvas.width, boardCanvas.height);
+    for (var r = 0; r < ROWS; r++) {
+      for (var col = 0; col < COLS; col++) {
+        if (board[r][col]) drawCell(c, col, r, board[r][col]);
+      }
+    }
+    drawGhost();
+    if (current) {
+      for (var r2 = 0; r2 < current.matrix.length; r2++) {
+        for (var c2 = 0; c2 < current.matrix[0].length; c2++) {
+          if (!current.matrix[r2][c2]) continue;
+          var px = current.x + c2;
+          var py = current.y + r2;
+          if (py >= 0) drawCell(c, px, py, COLORS[current.type]);
+        }
+      }
+    }
+  }
+
+  function drawNext() {
+    var c = nextCtx;
+    c.clearRect(0, 0, nextCanvas.width, nextCanvas.height);
+    if (!next) return;
+    var m = next.matrix;
+    var rows = m.length;
+    var cols = m[0].length;
+    var scale = Math.min(120 / (cols * 6), 80 / (rows * 6), 6);
+    var ox = (120 - cols * scale * 6) / 2;
+    var oy = (80 - rows * scale * 6) / 2;
+    for (var r = 0; r < rows; r++) {
+      for (var c2 = 0; c2 < cols; c2++) {
+        if (!m[r][c2]) continue;
+        c.fillStyle = COLORS[next.type];
+        c.fillRect(ox + c2 * scale * 6 + 1, oy + r * scale * 6 + 1, scale * 6 - 2, scale * 6 - 2);
+      }
+    }
+  }
+
+  function drawAll() {
+    drawBoard();
+    drawNext();
+  }
+
+  /* ---------- 主循环 ---------- */
+  function tick(ts) {
+    if (!running || paused || gameOver) return;
+    if (!lastTime) lastTime = ts;
+    var dt = ts - lastTime;
+    lastTime = ts;
+    dropTimer += dt;
+    while (dropTimer >= dropInterval) {
+      dropTimer -= dropInterval;
+      if (!collides(current, 0, 1)) {
+        current.y++;
+      } else {
+        lockPiece();
+      }
+      drawBoard();
+      if (gameOver) return;
+    }
+    drawGhost();
+    rafId = requestAnimationFrame(tick);
+  }
+
+  function startLoop() {
+    lastTime = 0;
+    if (rafId) cancelAnimationFrame(rafId);
+    rafId = requestAnimationFrame(tick);
+  }
+
+  function cancelLoop() {
+    if (rafId) { cancelAnimationFrame(rafId); rafId = null; }
+  }
+
+  /* ---------- 输入 ---------- */
+  document.addEventListener("keydown", function (e) {
+    var handled = true;
+    switch (e.key) {
+      case "ArrowLeft": case "a": case "A": move(-1); break;
+      case "ArrowRight": case "d": case "D": move(1); break;
+      case "ArrowDown": case "s": case "S": softDrop(); break;
+      case "ArrowUp": case "x": case "X": rotate(1); drawAll(); break;
+      case "z": case "Z": rotate(-1); drawAll(); break;
+      case " ":
+        if (paused) togglePause();
+        else if (running && !gameOver) hardDrop();
+        else startGame();
+        e.preventDefault(); break;
+      case "Enter":
+        if (paused) togglePause();
+        else startGame();
+        break;
+      case "p": case "P": togglePause(); break;
+      default: handled = false;
+    }
+    if (handled) e.preventDefault();
+  });
+
+  overlay.addEventListener("click", function () {
+    if (paused) togglePause();
+    else if (!running || gameOver) startGame();
+  });
+
+  document.getElementById("tetris-touch").addEventListener("click", function (e) {
+    var btn = e.target.closest("[data-action]");
+    if (!btn) return;
+    switch (btn.getAttribute("data-action")) {
+      case "left": move(-1); break;
+      case "right": move(1); break;
+      case "rotate": rotate(1); drawAll(); break;
+      case "down": softDrop(); break;
+      case "drop": hardDrop(); break;
+    }
+  });
+
+  /* 移动端按住长按连续移动 */
+  var holdTimers = {};
+  document.getElementById("tetris-touch").addEventListener("touchstart", function (e) {
+    var btn = e.target.closest("[data-action]");
+    if (!btn) return;
+    var action = btn.getAttribute("data-action");
+    if (action === "left" || action === "right" || action === "down") {
+      e.preventDefault();
+      holdTimers[action] = setInterval(function () {
+        if (action === "left") move(-1);
+        else if (action === "right") move(1);
+        else softDrop();
+      }, 120);
+    }
+  });
+  document.getElementById("tetris-touch").addEventListener("touchend", function (e) {
+    var action = e.target.closest("[data-action]");
+    if (action) action = action.getAttribute("data-action");
+    if (action && holdTimers[action]) {
+      clearInterval(holdTimers[action]);
+      delete holdTimers[action];
+    }
+  });
+
+  overlayMsg.textContent = "";
+  makeBoard();
+  drawAll();
+})();
+</script>
