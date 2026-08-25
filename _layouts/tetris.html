@@ -1,46 +1,48 @@
 ---
 layout: default
 ---
+{%- assign lang = page.lang | default: site.lang -%}
+{%- assign t = site.data.i18n[lang] -%}
 
 <div class="tetris-page">
-  <h1 class="page-title">俄罗斯方块</h1>
+  <h1 class="page-title">{{ t.tetris_title }}</h1>
 
   <div class="tetris-game">
     <div class="tetris-board-wrap">
-      <canvas id="tetris-board" width="240" height="480" aria-label="俄罗斯方块游戏盘"></canvas>
+      <canvas id="tetris-board" width="240" height="480" aria-label="{{ t.tetris_title }}"></canvas>
       <div class="tetris-overlay" id="tetris-overlay" role="button" tabindex="0">
         <p class="tetris-overlay-title" id="tetris-overlay-title"></p>
-        <p class="tetris-overlay-start" id="tetris-overlay-start">&gt;点击开始游戏&lt;</p>
+        <p class="tetris-overlay-start" id="tetris-overlay-start">{{ t.tetris_start }}</p>
         <p class="tetris-overlay-msg" id="tetris-overlay-msg"></p>
       </div>
     </div>
 
     <aside class="tetris-side">
       <div class="tetris-panel">
-        <span class="tetris-label">分数</span>
+        <span class="tetris-label">{{ t.tetris_score }}</span>
         <strong class="tetris-value" id="tetris-score">0</strong>
       </div>
       <div class="tetris-panel">
-        <span class="tetris-label">等级</span>
+        <span class="tetris-label">{{ t.tetris_level }}</span>
         <strong class="tetris-value" id="tetris-level">1</strong>
       </div>
       <div class="tetris-panel">
-        <span class="tetris-label">消行</span>
+        <span class="tetris-label">{{ t.tetris_lines }}</span>
         <strong class="tetris-value" id="tetris-lines">0</strong>
       </div>
       <div class="tetris-panel">
-        <span class="tetris-label">下一个</span>
+        <span class="tetris-label">{{ t.tetris_next }}</span>
         <canvas id="tetris-next" width="120" height="80"></canvas>
       </div>
       <p class="tetris-keys">
-        操作：← → 移动 · ↑ / X 旋转 · ↓ 软降 · 空格 硬降 · P 暂停
+        {{ t.tetris_keys }}
       </p>
       <div class="tetris-touch" id="tetris-touch">
-        <button type="button" class="tetris-touch-btn" data-action="left" aria-label="左移">◀</button>
-        <button type="button" class="tetris-touch-btn" data-action="rotate" aria-label="旋转">↻</button>
-        <button type="button" class="tetris-touch-btn" data-action="right" aria-label="右移">▶</button>
-        <button type="button" class="tetris-touch-btn" data-action="down" aria-label="软降">▼</button>
-        <button type="button" class="tetris-touch-btn tetris-touch-drop" data-action="drop" aria-label="硬降">⤓</button>
+        <button type="button" class="tetris-touch-btn" data-action="left" aria-label="{{ t.tetris_aria_left }}">◀</button>
+        <button type="button" class="tetris-touch-btn" data-action="rotate" aria-label="{{ t.tetris_aria_rotate }}">↻</button>
+        <button type="button" class="tetris-touch-btn" data-action="right" aria-label="{{ t.tetris_aria_right }}">▶</button>
+        <button type="button" class="tetris-touch-btn" data-action="down" aria-label="{{ t.tetris_aria_down }}">▼</button>
+        <button type="button" class="tetris-touch-btn tetris-touch-drop" data-action="drop" aria-label="{{ t.tetris_aria_drop }}">⤓</button>
       </div>
     </aside>
   </div>
@@ -48,6 +50,14 @@ layout: default
 
 <script>
 (function () {
+  var I18N = {
+    start: "{{ t.tetris_start }}",
+    paused: "{{ t.tetris_paused }}",
+    resume: "{{ t.tetris_resume }}",
+    over: "{{ t.tetris_over }}",
+    resultScore: "{{ t.tetris_result_score }}",
+    resultLines: "{{ t.tetris_result_lines }}"
+  };
   var COLS = 10;
   var ROWS = 20;
   var CELL = 24;
@@ -270,9 +280,9 @@ layout: default
     running = false;
     gameOver = true;
     cancelLoop();
-    overlayTitle.textContent = "游戏结束";
+    overlayTitle.textContent = I18N.over;
     overlayStart.style.display = "block";
-    overlayMsg.textContent = "得分 " + score + " · 消行 " + lines;
+    overlayMsg.textContent = I18N.resultScore + " " + score + " · " + I18N.resultLines + " " + lines;
     overlay.style.display = "flex";
   }
 
@@ -281,9 +291,9 @@ layout: default
     paused = !paused;
     if (paused) {
       cancelLoop();
-      overlayTitle.textContent = "已暂停";
+      overlayTitle.textContent = I18N.paused;
       overlayStart.style.display = "none";
-      overlayMsg.textContent = "按 P 或点击继续";
+      overlayMsg.textContent = I18N.resume;
       overlay.style.display = "flex";
     } else {
       overlay.style.display = "none";

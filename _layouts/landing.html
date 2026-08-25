@@ -1,16 +1,24 @@
 ---
 layout: bare
 ---
+{%- assign lang = page.lang | default: site.lang -%}
+{%- assign t = site.data.i18n[lang] -%}
+{%- assign other = "en" -%}
+{%- if lang == "en" -%}{%- assign other = "zh" -%}{%- endif -%}
 
 <div class="landing">
-  <button type="button" class="theme-toggle landing-theme-toggle" id="theme-toggle" aria-label="切换主题">
+  <button type="button" class="theme-toggle landing-theme-toggle" id="theme-toggle" aria-label="{{ t.aria_theme }}">
     <svg class="icon-moon" id="icon-moon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
     <svg class="icon-sun" id="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
   </button>
 
+  {%- if page.key -%}
+  <a class="theme-toggle landing-theme-toggle landing-lang-toggle" href="{{ site.data.pages[page.key][other] | relative_url }}">{{ t.lang_switch }}</a>
+  {%- endif -%}
+
   <div class="landing-inner">
     <h1 class="landing-title">{{ site.title }}</h1>
-    <p class="landing-sub">我的个人主页 · 博客</p>
-    <a class="landing-btn" href="{{ '/home/' | relative_url }}">进入</a>
+    <p class="landing-sub">{{ t.landing_sub }}</p>
+    <a class="landing-btn" href="{{ site.data.pages.home[lang] | relative_url }}">{{ t.landing_enter }}</a>
   </div>
 </div>

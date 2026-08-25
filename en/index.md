@@ -1,5 +1,6 @@
 ---
 layout: landing
-lang: zh
+lang: en
 key: landing
+permalink: /en/
 ---

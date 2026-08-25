@@ -1,13 +1,13 @@
 ---
 layout: about
-lang: zh
+lang: en
 key: about
-title: 关于我
-permalink: /about/
+title: About
+permalink: /en/about/
 ---
 
 <p>
-  除了主要身份之外，我在不同平台上也使用过以下名字：
+  Besides my main identity, I have also used the following names on different platforms:
 </p>
 
 <ul>

@@ -1,5 +1,7 @@
 ---
 layout: page
+lang: zh
+key: experience
 title: 经历
 permalink: /experience/
 ---

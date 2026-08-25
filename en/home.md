@@ -1,6 +1,6 @@
 ---
 layout: home
-lang: zh
+lang: en
 key: home
-permalink: /home/
+permalink: /en/home/
 ---

@@ -1,6 +1,8 @@
 ---
 layout: default
 ---
+{%- assign lang = page.lang | default: site.lang -%}
+{%- assign t = site.data.i18n[lang] -%}
 
 <div class="about">
   <header class="about-header">
@@ -13,7 +15,7 @@ layout: default
   </div>
 
   <section class="about-social">
-    <h2>关注我</h2>
+    <h2>{{ t.about_follow }}</h2>
     <ul class="about-links">
       <li><a href="https://center.mcmod.cn/626584/" target="_blank" rel="noopener">mc百科</a></li>
       <li><a href="https://github.com/Fragmented-Chaos" target="_blank" rel="noopener">GitHub</a></li>

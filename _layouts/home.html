@@ -1,15 +1,17 @@
 ---
 layout: default
 ---
+{%- assign lang = page.lang | default: site.lang -%}
+{%- assign t = site.data.i18n[lang] -%}
 
 <div class="hero">
   <div class="hero-text">
     <h1 class="hero-title">Fragmented_Chaos</h1>
     <p class="hero-aliases">
-      亦用名：<span class="alias">StewedTuba73416</span> · <span class="alias">Rending_Void</span>
+      {{ t.hero_aliases }}<span class="alias">StewedTuba73416</span> · <span class="alias">Rending_Void</span>
     </p>
     <p class="hero-intro">
-      你好，我是 <strong>Fragmented_Chaos</strong>，欢迎来到我的个人主页。
+      {{ t.hero_intro }}
     </p>
     <div class="hero-social">
       <a class="social-btn" href="https://center.mcmod.cn/626584/" target="_blank" rel="noopener" aria-label="mc百科">
@@ -31,7 +33,7 @@ layout: default
   </div>
 
   <div class="hero-visual">
-    <a class="hero-avatar-frame" href="{{ '/tetris/' | relative_url }}" aria-label="玩俄罗斯方块">
+    <a class="hero-avatar-frame" href="{{ site.data.pages.tetris[lang] | relative_url }}" aria-label="{{ t.tetris_aria }}">
       <img class="hero-avatar" src="{{ '/assets/images/logo.png' | relative_url }}" alt="Fragmented_Chaos 头像" />
     </a>
   </div>

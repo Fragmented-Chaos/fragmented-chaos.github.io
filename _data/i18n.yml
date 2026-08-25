@@ -1,0 +1,67 @@
+zh:
+  lang_switch: EN
+  nav_home: 主页
+  nav_about: 关于我
+  nav_experience: 经历
+  nav_surprise: 点这里有惊喜
+  nav_surprise_url: https://www.bilibili.com/video/BV1GJ411x7h7/
+  aria_theme: 切换主题
+  aria_menu: 菜单
+  footer: 个人主页 of Fragmented_Chaos，欢迎交流。
+  landing_sub: 我的个人主页 · 博客
+  landing_enter: 进入
+  hero_aliases: 亦用名：
+  hero_intro: 你好，我是 <strong>Fragmented_Chaos</strong>，欢迎来到我的个人主页。
+  about_follow: 关注我
+  tetris_title: 俄罗斯方块
+  tetris_aria: 玩俄罗斯方块
+  tetris_score: 分数
+  tetris_level: 等级
+  tetris_lines: 消行
+  tetris_next: 下一个
+  tetris_start: "&gt;点击开始游戏&lt;"
+  tetris_paused: 已暂停
+  tetris_resume: 按 P 或点击继续
+  tetris_over: 游戏结束
+  tetris_result_score: 得分
+  tetris_result_lines: 消行
+  tetris_keys: 操作：← → 移动 · ↑ / X 旋转 · ↓ 软降 · 空格 硬降 · P 暂停
+  tetris_aria_left: 左移
+  tetris_aria_rotate: 旋转
+  tetris_aria_right: 右移
+  tetris_aria_down: 软降
+  tetris_aria_drop: 硬降
+
+en:
+  lang_switch: 中文
+  nav_home: Home
+  nav_about: About
+  nav_experience: Experience
+  nav_surprise: Click for a surprise
+  nav_surprise_url: https://www.bilibili.com/video/BV1GJ411x7h7/
+  aria_theme: Toggle theme
+  aria_menu: Menu
+  footer: Personal homepage of Fragmented_Chaos. Welcome!
+  landing_sub: My personal homepage · Blog
+  landing_enter: Enter
+  hero_aliases: "Also known as:"
+  hero_intro: Hi, I'm <strong>Fragmented_Chaos</strong>, welcome to my personal homepage.
+  about_follow: Follow me
+  tetris_title: Tetris
+  tetris_aria: Play Tetris
+  tetris_score: Score
+  tetris_level: Level
+  tetris_lines: Lines
+  tetris_next: Next
+  tetris_start: "&gt;Click to Start&lt;"
+  tetris_paused: Paused
+  tetris_resume: Press P or click to continue
+  tetris_over: Game Over
+  tetris_result_score: Score
+  tetris_result_lines: Lines
+  tetris_keys: "Controls: ← → move · ↑ / X rotate · ↓ soft drop · Space hard drop · P pause"
+  tetris_aria_left: Move left
+  tetris_aria_rotate: Rotate
+  tetris_aria_right: Move right
+  tetris_aria_down: Soft drop
+  tetris_aria_drop: Hard drop
