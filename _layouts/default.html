@@ -40,7 +40,7 @@
             <svg class="icon-sun" id="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
           </button>
           {%- if page.key -%}
-          <a class="nav-link lang-switch" href="{{ site.data.pages[page.key][other] | relative_url }}">{{ t.lang_switch }}</a>
+          <a class="nav-link lang-switch" href="{{ site.data.pages[page.key][other] | relative_url }}" onclick="try{localStorage.setItem('fragmentedchaos-lang','{{ other }}');}catch(e){}">{{ t.lang_switch }}</a>
           {%- endif -%}
         </nav>
       </div>
@@ -57,6 +57,22 @@
     </footer>
 
     <script>
+    (function () {
+      var KEY = 'fragmentedchaos-lang';
+      var current = '{{ lang }}';
+      var otherHref = '{% if page.key %}{{ site.data.pages[page.key][other] | relative_url }}{% endif %}';
+      var saved = null;
+      try { saved = localStorage.getItem(KEY); } catch (e) {}
+      var pref = saved;
+      if (!pref) {
+        var nav = ((navigator.language || (navigator.languages && navigator.languages[0]) || '') + '').toLowerCase();
+        pref = nav.indexOf('zh') === 0 ? 'zh' : 'en';
+      }
+      if (pref !== current && otherHref) {
+        try { localStorage.setItem(KEY, pref); } catch (e) {}
+        window.location.replace(otherHref);
+      }
+    })();
     (function () {
       var btn = document.getElementById('theme-toggle');
       var moon = document.getElementById('icon-moon');

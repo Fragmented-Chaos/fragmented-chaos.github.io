@@ -31,9 +31,11 @@ zh:
   tetris_aria_right: 右移
   tetris_aria_down: 软降
   tetris_aria_drop: 硬降
+  error_msg: 页面不存在
+  error_link: 返回起始页
 
 en:
-  lang_switch: 中文
+  lang_switch: CN
   nav_home: Home
   nav_about: About
   nav_experience: Experience
@@ -65,3 +67,5 @@ en:
   tetris_aria_right: Move right
   tetris_aria_down: Soft drop
   tetris_aria_drop: Hard drop
+  error_msg: Page not found
+  error_link: Back to home

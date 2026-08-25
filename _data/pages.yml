@@ -13,3 +13,6 @@ experience:
 tetris:
   zh: /tetris/
   en: /en/tetris/
+error:
+  zh: /404.html
+  en: /en/404.html

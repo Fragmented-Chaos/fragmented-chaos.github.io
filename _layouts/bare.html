@@ -1,5 +1,8 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+{%- assign lang = page.lang | default: site.lang -%}
+{%- assign other = "en" -%}
+{%- if lang == "en" -%}{%- assign other = "zh" -%}{%- endif -%}
+<html lang="{{ lang }}">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -17,6 +20,22 @@
     </main>
 
     <script>
+    (function () {
+      var KEY = 'fragmentedchaos-lang';
+      var current = '{{ lang }}';
+      var otherHref = '{% if page.key %}{{ site.data.pages[page.key][other] | relative_url }}{% endif %}';
+      var saved = null;
+      try { saved = localStorage.getItem(KEY); } catch (e) {}
+      var pref = saved;
+      if (!pref) {
+        var nav = ((navigator.language || (navigator.languages && navigator.languages[0]) || '') + '').toLowerCase();
+        pref = nav.indexOf('zh') === 0 ? 'zh' : 'en';
+      }
+      if (pref !== current && otherHref) {
+        try { localStorage.setItem(KEY, pref); } catch (e) {}
+        window.location.replace(otherHref);
+      }
+    })();
     (function () {
       var btn = document.getElementById('theme-toggle');
       var moon = document.getElementById('icon-moon');
