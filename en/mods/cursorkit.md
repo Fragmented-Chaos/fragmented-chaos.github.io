@@ -152,7 +152,7 @@ Loose set:      config/cursorkit/<set>.json
 
 Resource packs and cursor packs share the same internal layout (`assets/<namespace>/cursor/<set>.json` + `textures/cursor/<texture>`), so one pack works as both; only the resource pack route needs `pack.mcmeta`. The file name (minus the extension) is the set's **id** and decides overriding.
 
-**The full field table, image rules, hotspots, animation, effect parameters, packaging steps and a pre-release checklist live in [Authoring cursor packs]({{ '/en/mods/cursorkit/packs/' | relative_url }})**; the repository's `examples/` folder has packs to copy from.
+**The full field table, image rules, hotspots, animation and effect parameters live in [Authoring cursor packs]({{ '/en/mods/cursorkit/packs/' | relative_url }})**; the repository's `examples/` folder has packs to copy from.
 
 ## Click effects {: #effects}
 

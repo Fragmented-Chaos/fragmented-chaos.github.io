@@ -152,7 +152,7 @@ Cursor Kit 接管光标的绘制并隐藏系统光标，按当前界面状态画
 
 资源包与光标包内部结构相同（`assets/<命名空间>/cursor/<集合>.json` + `textures/cursor/<贴图>`），所以同一个包两种身份都能用，只有资源包路线需要 `pack.mcmeta`。文件名（去掉扩展名）就是集合 **id**，决定覆盖关系。
 
-**完整的字段表、图片规格、热区、动画、特效参数、打包与发布前检查清单见[《制作光标包》]({{ '/mods/cursorkit/packs/' | relative_url }})**；仓库 `examples/` 里也有现成包可以直接改。
+**完整的字段表、图片规格、热区、动画与特效参数见[《制作光标包》]({{ '/mods/cursorkit/packs/' | relative_url }})**；仓库 `examples/` 里也有现成包可以直接改。
 
 ## 点击特效 {: #effects}
 
