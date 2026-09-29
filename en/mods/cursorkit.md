@@ -42,33 +42,27 @@ Every state's image comes from an external pack — resource packs, cursor packs
 
 ## Install {: #install}
 
-1. Make sure the game is **Minecraft 26.3** on **Fabric**, **NeoForge** or **Quilt** (Quilt runs through its Fabric compatibility layer).
-2. Download `cursorkit-<version>-universal.jar` (one jar for all three loaders).
-3. Drop it into `.minecraft/mods/`.
-4. Launch the game and open **Options → Video Settings → `Cursor`**.
+1. Download `cursorkit-<version>-universal.jar` (one jar for all three loaders) and drop it into `.minecraft/mods/`
+2. In game: **Options → Video Settings → `Cursor`**
 
-No Fabric API or dependencies. **Nothing to install on the server**: it is client-side, and joining a server without it never errors.
-
-With [Sodium](https://modrinth.com/mod/sodium) installed, Sodium owns the video settings screen — the mod then registers `Cursor` into Sodium's own page list at runtime through its config API, adding a **Cursor Kit** section on the left (with a hand-drawn arrow icon and the mod's gold colour theme) that opens the picker in one click. Mods that replace the video settings screen in other ways (Embeddium, OptiFine, …) fall back to a floating button in the bottom-left corner of the screen, with the same effect.
+With [Sodium](https://modrinth.com/mod/sodium) installed, `Cursor` appears in Sodium's own page list; mods that replace the video settings screen in other ways get a floating button in the bottom-left corner instead. No dependencies, and nothing to install on the server.
 
 ## Getting started {: #start}
 
-**A fresh install only lists `Default (system cursor)`** (the mod ships no cursor sets). Two ways to add one:
+**A fresh install only lists `Default (system cursor)`.** Add a cursor and it shows up:
 
-- **Drag it in**: drop a `.zip`, a folder containing `assets/`, or loose PNG/JSON files **straight onto the screen**. Archives and complete folders are installed into `config/cursorkit/packs/`, loose files into `config/cursorkit/`; name collisions never overwrite, they get `-2`, `-3`. The list refreshes immediately and the bottom of the screen reports what was installed.
-- **Place it yourself**: put the pack into `config/cursorkit/packs/` (a folder or a `.zip`), or drop the cursor JSON and its PNGs directly into `config/cursorkit/`. The **`Folder`** button in the top-right corner opens that directory for you.
+- **Drag it in**: drop a `.zip`, a folder containing `assets/`, or loose PNG/JSON files onto the screen (name collisions get `-2`)
+- **Place it yourself**: cursor packs go into `config/cursorkit/packs/` (folder or `.zip`), loose JSON + PNGs into `config/cursorkit/`
 
-While the screen is open, `config/cursorkit/` (including `packs/`) is watched continuously: any change re-reads and refreshes the list, keeping your search text and selection.
+`config/cursorkit/` (including `packs/`) is watched continuously: any change re-reads and refreshes the list, keeping your search text and selection.
 
-**Controls (same idea as the shader pack selector):**
+Controls:
 
-- **Clicking a list entry selects it and applies it immediately** — no confirm button needed.
-- The right side shows the selected set: its origin, **live previews of all six states** (animations play, the red dot marks the hotspot, missing states are tagged `(default)`), and a **looping click-effect preview in the top-right corner**.
-- Each list row shows `name`, `origin · state count · effect: …`, with a search box above. The first row is always **`Default (system cursor)`** — selecting it means the mod does not touch the cursor at all.
-- The second row is **`Custom (per-state paths)`**, where you can point each state at any local PNG / `.cur` file (see <a href="#custom">Custom cursors</a>).
-- Four switches along the bottom: `Animation`, `Click effect`, `Scale`, `Edge margin`.
-- Top-right: `Folder` (opens the config directory) and `Hotspots…` (opens the hotspot editor).
-- `Done` writes the config, `Cancel` restores the state from when the screen was opened.
+- **Clicking a list entry selects and applies it immediately**
+- Each row shows `name · origin · states · effect`, with a search box above; the first row is `Default (system cursor)`, the second is [`Custom (per-state paths)`](#custom)
+- The right side previews all six states live (red dot = hotspot, missing states tagged `(default)`) plus a looping click-effect preview
+- Bottom switches: `Animation`, `Click effect`, `Scale`, `Edge margin`; top-right: `Folder` and `Hotspots…`
+- `Done` saves, `Cancel` restores the state from when the screen was opened
 
 <figure class="shot">
   <img src="{{ '/assets/images/cursorkit/picker.png' | relative_url }}" alt="The cursor picker: pack list on the left, six state previews on the right">
