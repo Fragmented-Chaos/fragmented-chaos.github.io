@@ -66,7 +66,7 @@ permalink: /mods/cursorkit/
 
 <figure class="shot">
   <img src="{{ '/assets/images/cursorkit/picker.png' | relative_url }}" alt="光标选择界面：左侧列表、右侧六个状态预览">
-  <figcaption>选择界面：左边是可搜索的包列表（每行标出来源与特效），右边是六个状态的预览和逐状态点击点。</figcaption>
+  <figcaption>选择界面：左边是包列表（每行标出来源与特效），右边是六个状态的预览和逐状态点击点。</figcaption>
 </figure>
 
 ### 自定义光标 {: #custom}

@@ -66,7 +66,7 @@ Controls:
 
 <figure class="shot">
   <img src="{{ '/assets/images/cursorkit/picker.png' | relative_url }}" alt="The cursor picker: pack list on the left, six state previews on the right">
-  <figcaption>The picker: a searchable pack list on the left (each row shows its origin and effect), the six state previews and per-state hotspots on the right.</figcaption>
+  <figcaption>The picker: the pack list on the left (each row shows its origin and effect), the six state previews and per-state hotspots on the right.</figcaption>
 </figure>
 
 ### Custom cursors {: #custom}
