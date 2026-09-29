@@ -23,7 +23,7 @@ permalink: /en/mods/cursorkit/
   </p>
 </div>
 
-Cursor Kit takes over cursor drawing and hides the system cursor, painting the image that matches the current UI state. Which image belongs to which state is decided **entirely by external packs** — resource packs, cursor packs or loose files in the `config` folder — so swapping cursors never means swapping mods or restarting the game.
+Every state's image comes from an external pack — resource packs, cursor packs or loose files in the `config` folder — so swapping cursors never means swapping mods or restarting the game.
 
 <div class="mod-toc">
   <p>Contents</p>
