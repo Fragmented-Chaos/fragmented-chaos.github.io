@@ -1,6 +1,7 @@
 zh:
   lang_switch: EN
   nav_home: 主页
+  nav_mods: 模组
   nav_about: 关于我
   nav_experience: 经历
   nav_surprise: 点这里有惊喜
@@ -37,6 +38,7 @@ zh:
 en:
   lang_switch: CN
   nav_home: Home
+  nav_mods: Mods
   nav_about: About
   nav_experience: Experience
   nav_surprise: Click for a surprise

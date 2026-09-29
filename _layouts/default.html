@@ -32,6 +32,7 @@
         </button>
         <nav class="site-nav" id="site-nav" aria-label="{{ t.aria_menu }}">
           <a class="nav-link" href="{{ site.data.pages.home[lang] | relative_url }}">{{ t.nav_home }}</a>
+          <a class="nav-link" href="{{ site.data.pages.mods[lang] | relative_url }}">{{ t.nav_mods }}</a>
           <a class="nav-link" href="{{ site.data.pages.about[lang] | relative_url }}">{{ t.nav_about }}</a>
           <a class="nav-link" href="{{ site.data.pages.experience[lang] | relative_url }}">{{ t.nav_experience }}</a>
           <a class="nav-link" href="#" onclick="window.open('{{ t.nav_surprise_url }}','_blank','noopener');return false;">{{ t.nav_surprise }}</a>

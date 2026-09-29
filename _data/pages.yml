@@ -4,6 +4,12 @@ landing:
 home:
   zh: /home/
   en: /en/home/
+mods:
+  zh: /mods/
+  en: /en/mods/
+cursorkit:
+  zh: /mods/cursorkit/
+  en: /en/mods/cursorkit/
 about:
   zh: /about/
   en: /en/about/
