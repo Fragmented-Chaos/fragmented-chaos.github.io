@@ -45,7 +45,7 @@ Every state's image comes from an external pack — resource packs, cursor packs
 1. Download `cursorkit-<version>-universal.jar` (one jar for all three loaders) and drop it into `.minecraft/mods/`
 2. In game: **Options → Video Settings → `Cursor`**
 
-With [Sodium](https://modrinth.com/mod/sodium) installed, `Cursor` appears in Sodium's own page list; mods that replace the video settings screen in other ways get a floating button in the bottom-left corner instead. No dependencies, and nothing to install on the server.
+No dependencies, and nothing to install on the server.
 
 ## Getting started {: #start}
 

@@ -45,7 +45,7 @@ permalink: /mods/cursorkit/
 1. 下载 `cursorkit-<版本>-universal.jar`（三端通用），丢进 `.minecraft/mods/`
 2. 进游戏：**选项 → 视频设置 → `光标`**
 
-装了 [Sodium](https://modrinth.com/mod/sodium) 时视频设置由它接管，`光标` 会出现在 Sodium 的页面列表里；其它替换视频设置界面的模组则用界面左下角的浮动按钮。没有前置依赖，服务器也不用装。
+没有前置依赖，服务器也不用装。
 
 ## 快速上手 {: #start}
 
