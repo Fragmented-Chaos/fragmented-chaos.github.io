@@ -6,18 +6,17 @@ title: 模组
 permalink: /mods/
 ---
 
-这是我为 Minecraft 写的模组。点开卡片可以看到安装步骤、界面说明和光标包/配置文件格式。
+这是我为 Minecraft 写的模组。
 
 <ul class="mods-grid">
   <li>
     <a class="mod-card" href="{{ '/mods/cursorkit/' | relative_url }}">
       <img class="mod-card-icon" src="{{ '/assets/images/cursorkit/icon.png' | relative_url }}" alt="Cursor Kit 图标">
       <span class="mod-card-title">Cursor Kit</span>
-      <span class="mod-card-desc">把鼠标指针换成完全自定义的高清光标：六个状态、帧动画、逐状态热区，以及随光标包切换的点击特效。光标集完全由外部包提供。</span>
+      <span class="mod-card-desc">六个状态、帧动画、逐状态热区的自定义高清光标，点击特效跟随光标包。</span>
       <span class="mod-card-meta">
         <span class="badge">Minecraft 26.3</span>
         <span class="badge">Fabric · NeoForge · Quilt</span>
-        <span class="badge">纯客户端</span>
         <span class="badge">使用说明 →</span>
       </span>
     </a>

@@ -9,14 +9,11 @@ permalink: /en/mods/cursorkit/
 <div class="mod-hero">
   <img class="mod-icon" src="{{ '/assets/images/cursorkit/icon.png' | relative_url }}" alt="Cursor Kit icon" width="96" height="96">
   <div>
-    <p class="mod-tagline">Replaces Minecraft's mouse pointer with fully custom HD cursors: six states, frame animation, per-state hotspots, and per-pack click effects. Every cursor set comes from an external pack — the mod ships none of its own.</p>
+    <p class="mod-tagline">Replaces Minecraft's mouse pointer with custom HD cursors: six states, frame animation, per-state hotspots, and click effects that follow the pack.</p>
     <p class="mod-badges">
       <span class="badge">Minecraft 26.3</span>
       <span class="badge">Fabric · NeoForge · Quilt</span>
-      <span class="badge">One universal jar</span>
       <span class="badge">Client-side only</span>
-      <span class="badge">No dependencies</span>
-      <span class="badge">LGPL-3.0</span>
     </p>
   </div>
   <p class="mod-actions">
@@ -26,7 +23,7 @@ permalink: /en/mods/cursorkit/
   </p>
 </div>
 
-Cursor Kit replaces the pointer inside the Minecraft window with images you draw yourself. The mod hides the system cursor, takes over drawing, and paints the image that matches the current UI state. Which image belongs to which state is decided **entirely by external packs** — resource packs, cursor packs, or loose files in the `config` folder — so swapping cursors never means swapping mods or restarting the game.
+Cursor Kit takes over cursor drawing and hides the system cursor, painting the image that matches the current UI state. Which image belongs to which state is decided **entirely by external packs** — resource packs, cursor packs or loose files in the `config` folder — so swapping cursors never means swapping mods or restarting the game.
 
 <div class="mod-toc">
   <p>Contents</p>
@@ -46,22 +43,22 @@ Cursor Kit replaces the pointer inside the Minecraft window with images you draw
 ## Install {: #install}
 
 1. Make sure the game is **Minecraft 26.3** on **Fabric**, **NeoForge** or **Quilt** (Quilt runs through its Fabric compatibility layer).
-2. Download `cursorkit-<version>-universal.jar` — **the same jar works on all three loaders**, so there is nothing to pick.
+2. Download `cursorkit-<version>-universal.jar` (one jar for all three loaders).
 3. Drop it into `.minecraft/mods/`.
 4. Launch the game and open **Options → Video Settings → `Cursor`**.
 
-No Fabric API, no dependencies of any kind. **The server side needs nothing**: this is a client-side mod, it does nothing when installed on a server, and it declares itself version-agnostic so joining a server without it never errors.
+No Fabric API or dependencies. **Nothing to install on the server**: it is client-side, and joining a server without it never errors.
 
 With [Sodium](https://modrinth.com/mod/sodium) installed, Sodium owns the video settings screen — the mod then registers `Cursor` into Sodium's own page list at runtime through its config API, adding a **Cursor Kit** section on the left (with a hand-drawn arrow icon and the mod's gold colour theme) that opens the picker in one click. Mods that replace the video settings screen in other ways (Embeddium, OptiFine, …) fall back to a floating button in the bottom-left corner of the screen, with the same effect.
 
 ## Getting started {: #start}
 
-**On a fresh install the list only contains `Default (system cursor)`**, because the mod ships no cursor sets. Put one in and it appears. Two ways:
+**A fresh install only lists `Default (system cursor)`** (the mod ships no cursor sets). Two ways to add one:
 
 - **Drag it in**: drop a `.zip`, a folder containing `assets/`, or loose PNG/JSON files **straight onto the screen**. Archives and complete folders are installed into `config/cursorkit/packs/`, loose files into `config/cursorkit/`; name collisions never overwrite, they get `-2`, `-3`. The list refreshes immediately and the bottom of the screen reports what was installed.
 - **Place it yourself**: put the pack into `config/cursorkit/packs/` (a folder or a `.zip`), or drop the cursor JSON and its PNGs directly into `config/cursorkit/`. The **`Folder`** button in the top-right corner opens that directory for you.
 
-While the screen is open, `config/cursorkit/` is watched continuously (file name + size + modification time, including the `packs/` subfolder). Any change and the list is re-read and refreshed, keeping your search text and current selection.
+While the screen is open, `config/cursorkit/` (including `packs/`) is watched continuously: any change re-reads and refreshes the list, keeping your search text and selection.
 
 **Controls (same idea as the shader pack selector):**
 
@@ -138,8 +135,8 @@ Because this edits your config rather than the pack itself, **sets that live ins
     <p>Archives, folders and loose images can be dropped straight onto the screen: filed automatically, never overwriting, list refreshed at once.</p>
   </li>
   <li class="feature">
-    <h3>Client-side, no dependencies</h3>
-    <p>No Fabric API or any other mod required, nothing to install on servers, and Windows <code>.cur</code> files work as-is.</p>
+    <h3><code>.cur</code> support</h3>
+    <p>Drop a Windows cursor file into <code>config/cursorkit/</code> or a cursor pack and its image and built-in hotspot are read automatically (resource packs must ship PNG).</p>
   </li>
 </ul>
 
@@ -158,7 +155,7 @@ Loose set:      config/cursorkit/<set>.json
                 config/cursorkit/<texture>.png   (texture paths are relative to this folder)
 ```
 
-**One pack, two identities**: since the layout is identical to a resource pack, the same pack can be dropped into `resourcepacks/` and enabled there, or into `config/cursorkit/packs/` where the mod reads it directly and it is always on. `pack.mcmeta` is only needed for the resource pack route.
+**One pack, two identities**: the layout matches a resource pack, so the same pack can go into `resourcepacks/` (enable it there) or into `config/cursorkit/packs/` (read directly by the mod, always on). `pack.mcmeta` is only needed for the resource pack route.
 
 The file name (minus `.json`) is the set's **id** and decides overriding; the `name` inside the JSON is only a display name.
 
@@ -313,8 +310,4 @@ Yes. The `universal.jar` covers all three loaders — Fabric and Quilt share one
 **How do I keep the custom cursor from turning back into the system cursor?**
 Near the window edge the mod deliberately hands the cursor back (`edge_margin`, 2 pixels by default) so the mouse never gets stuck at the border. Set `edge margin` to `0` to keep the custom cursor everywhere.
 
----
-
-**Links**: [source and issue tracker](https://github.com/Fragmented-Chaos/Cursor-Kit) · [Modrinth](https://modrinth.com/user/Fragmented_Chaos) · [CurseForge](https://www.curseforge.com/members/fragmented_chaos/projects)
-
-Licensed under **LGPL-3.0**. Current version **0.1.0+26.3**.
+Licensed under **LGPL-3.0** · current version **0.1.0+26.3**.

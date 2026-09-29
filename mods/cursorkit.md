@@ -9,14 +9,11 @@ permalink: /mods/cursorkit/
 <div class="mod-hero">
   <img class="mod-icon" src="{{ '/assets/images/cursorkit/icon.png' | relative_url }}" alt="Cursor Kit 图标" width="96" height="96">
   <div>
-    <p class="mod-tagline">把 Minecraft 的鼠标指针换成完全自定义的高清光标：六个状态、帧动画、逐状态热区，以及随光标包切换的点击特效。光标集全部由外部包提供，模组本身不内置任何光标。</p>
+    <p class="mod-tagline">把 Minecraft 的鼠标指针换成自定义高清光标：六个状态、帧动画、逐状态热区，点击特效跟随光标包。</p>
     <p class="mod-badges">
       <span class="badge">Minecraft 26.3</span>
       <span class="badge">Fabric · NeoForge · Quilt</span>
-      <span class="badge">单 jar 通用</span>
       <span class="badge">纯客户端</span>
-      <span class="badge">无前置依赖</span>
-      <span class="badge">LGPL-3.0</span>
     </p>
   </div>
   <p class="mod-actions">
@@ -26,7 +23,7 @@ permalink: /mods/cursorkit/
   </p>
 </div>
 
-Cursor Kit 把 Minecraft 窗口里的鼠标指针换成自己画的图片：模组接管光标的绘制，隐藏系统光标，然后按当前界面的状态画对应的图。光标集（哪张图对应哪个状态）**完全由外部包决定** —— 资源包、光标包、或者 `config` 目录里的散装图片都行，所以换一套光标不需要换模组，也不需要重启游戏。
+Cursor Kit 接管光标的绘制并隐藏系统光标，按当前界面状态画对应的图。哪个状态用哪张图**完全由外部包决定** —— 资源包、光标包、或 `config` 里的散装图片都行，换一套光标不用换模组，也不用重启游戏。
 
 <div class="mod-toc">
   <p>目录</p>
@@ -46,22 +43,22 @@ Cursor Kit 把 Minecraft 窗口里的鼠标指针换成自己画的图片：模�
 ## 安装 {: #install}
 
 1. 确认游戏是 **Minecraft 26.3**，加载器是 **Fabric / NeoForge / Quilt** 之一（Quilt 走 Fabric 兼容层）。
-2. 下载 `cursorkit-<版本>-universal.jar` —— **同一个 jar 三端通用**，不用挑加载器。
+2. 下载 `cursorkit-<版本>-universal.jar`（三端通用）。
 3. 丢进 `.minecraft/mods/`。
 4. 启动游戏，进 **选项 → 视频设置 → `光标`**。
 
-不需要 Fabric API，也不需要任何前置模组。**服务器端不需要安装**：这是纯客户端模组，装在服务器上也不会做任何事（元数据里声明了忽略版本检查，联机时不会因为服务端没装而报错）。
+不需要 Fabric API 或任何前置。**服务器不用装**：纯客户端模组，服务端没装也不会报错。
 
 装了 [Sodium](https://modrinth.com/mod/sodium) 的话，视频设置界面由它接管，模组会在运行期通过 Sodium 的配置 API 把 `光标` 加进它的页面列表 —— 左侧多一段 **Cursor Kit**（带一个自绘的箭头图标，配色用模组自己的金色），点一下直接打开。其它替换视频设置界面的模组（Embeddium、OptiFine 等）则退回到界面左下角的浮动按钮，作用一样。
 
 ## 快速上手 {: #start}
 
-**第一次进游戏时列表里只有「默认（系统光标）」**，因为模组不内置任何光标集。放一个进去就会长出来，两种办法：
+**首次进游戏时列表里只有「默认（系统光标）」**（模组不内置光标集）。两种放法：
 
 - **拖进去**：把 `.zip`、或一个带 `assets/` 的文件夹、或散装 PNG/JSON，**直接拖到界面上**。压缩包和完整文件夹会装到 `config/cursorkit/packs/`，散装文件装到 `config/cursorkit/`；重名不覆盖，自动加 `-2`、`-3`；装完列表立刻刷新，底部会提示装了什么。
 - **自己放**：把包放到 `config/cursorkit/packs/`（文件夹或 `.zip` 都行），或者把光标的 JSON + PNG 直接丢进 `config/cursorkit/`。界面上点右上角的 **`文件夹`** 按钮可以直接打开这个目录。
 
-界面开着的时候 `config/cursorkit/` 会被持续监听（文件名 + 大小 + 修改时间，含 `packs/` 子目录），一旦发现变化就自动重读并刷新列表，搜索词和当前选中项都保留。
+界面开着时 `config/cursorkit/` 会被持续监听（含 `packs/`），一有变化就重读刷新，搜索词与选中项保留。
 
 **操作方式（和光影包选择器一样）**：
 
@@ -138,8 +135,8 @@ Cursor Kit 把 Minecraft 窗口里的鼠标指针换成自己画的图片：模�
     <p>压缩包、文件夹、散装图片直接拖进界面，自动归类、自动避让重名、列表立刻刷新。</p>
   </li>
   <li class="feature">
-    <h3>纯客户端、无前置</h3>
-    <p>不需要 Fabric API 或任何前置模组，服务器也不用装；<code>.cur</code>（Windows 光标文件）可以直接丢进来用。</p>
+    <h3>支持 <code>.cur</code></h3>
+    <p>Windows 光标文件直接丢进 <code>config/cursorkit/</code> 或光标包即可，图片与自带热点自动读取（资源包里只能放 PNG）。</p>
   </li>
 </ul>
 
@@ -158,7 +155,7 @@ Cursor Kit 把 Minecraft 窗口里的鼠标指针换成自己画的图片：模�
               config/cursorkit/<贴图路径>.png     （贴图路径相对该目录）
 ```
 
-**同一个包两种身份**：因为目录结构和资源包完全一致，一个光标包既能丢进 `resourcepacks/` 走资源包系统（要在资源包界面启用），也能丢进 `config/cursorkit/packs/` 由模组直接读取（永远是开启的，不用手动启用）。只有走资源包路线时才需要 `pack.mcmeta`。
+**同一个包两种身份**：目录结构和资源包一致，所以既能丢进 `resourcepacks/`（需在资源包界面启用），也能丢进 `config/cursorkit/packs/`（模组直接读，永远开启）。只有走资源包路线才需要 `pack.mcmeta`。
 
 文件名（去掉 `.json`）就是集合的 **id**，它决定覆盖关系；JSON 里的 `name` 只是界面显示名。
 
@@ -313,8 +310,4 @@ CursorStateProviders.register((screen, mouseX, mouseY, context) -> {
 **怎么让自定义光标一直显示，不要突然变回系统光标？**
 指针靠近窗口边缘时模组会主动交还系统光标（`edge_margin`，默认 2 像素），这是为了避免鼠标贴边时点不到东西。把 `边界` 调到 `0` 就会一直用自定义光标。
 
----
-
-**链接**：[源码与问题反馈](https://github.com/Fragmented-Chaos/Cursor-Kit) · [Modrinth](https://modrinth.com/user/Fragmented_Chaos) · [CurseForge](https://www.curseforge.com/members/fragmented_chaos/projects)
-
-许可证 **LGPL-3.0**。当前版本 **0.1.0+26.3**。
+许可证 **LGPL-3.0** · 当前版本 **0.1.0+26.3**。
