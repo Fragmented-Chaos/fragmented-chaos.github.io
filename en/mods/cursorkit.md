@@ -142,90 +142,31 @@ Because this edits your config rather than the pack itself, **sets that live ins
 
 ## Authoring cursor packs {: #packs}
 
-A cursor set is **one JSON file plus its textures**. Three places to put it:
+A cursor set is one JSON file plus its textures. For a quick look: drop a 32×32 PNG into `config/cursorkit/` and it works, then add a JSON file with the same name for the other states.
 
 ```
 Resource pack:  resourcepacks/<pack>/            or <pack>.zip
 Cursor pack:    config/cursorkit/packs/<pack>/   or <pack>.zip
-                └─ both use exactly the same layout:
-                   assets/<namespace>/cursor/<set>.json
-                   assets/<namespace>/textures/cursor/<texture>.png
-
 Loose set:      config/cursorkit/<set>.json
-                config/cursorkit/<texture>.png   (texture paths are relative to this folder)
 ```
 
-**One pack, two identities**: the layout matches a resource pack, so the same pack can go into `resourcepacks/` (enable it there) or into `config/cursorkit/packs/` (read directly by the mod, always on). `pack.mcmeta` is only needed for the resource pack route.
+Resource packs and cursor packs share the same internal layout (`assets/<namespace>/cursor/<set>.json` + `textures/cursor/<texture>`), so one pack works as both; only the resource pack route needs `pack.mcmeta`. The file name (minus the extension) is the set's **id** and decides overriding.
 
-The file name (minus `.json`) is the set's **id** and decides overriding; the `name` inside the JSON is only a display name.
-
-```json
-{
-    "name": "Demo Set",
-    "scale": 1,
-    "states": {
-        "default":   { "texture": "demo/arrow.png", "hotspot": [0, 0] },
-        "clickable": { "texture": "demo/hand.png",  "hotspot": [7, 1] },
-        "text":      { "texture": "demo/ibeam.png", "hotspot": [7, 7] },
-        "drag":      { "texture": "demo/fist.png",  "hotspot": [7, 5] },
-        "disabled":  { "texture": "demo/disabled.png" },
-        "busy":      { "texture": "demo/spinner.png", "frames": 8, "frame_ms": 80 }
-    }
-}
-```
-
-| Field | Required | Default | Meaning |
-|-------|----------|---------|---------|
-| `states.<state>.texture` | ✅ | — | Texture path, relative to `textures/cursor/` (resource / cursor packs) or to `config/cursorkit/` (loose set). **PNG** and **`.cur`** are supported (Windows cursor files: image and built-in hotspot are read automatically) |
-| `states.<state>.hotspot` | | `[0, 0]` | Click point in **image pixels**, can differ per state. When omitted, `.cur` uses the hotspot stored in the file and other formats use the top-left corner |
-| `states.<state>.frames` | | `1` | Number of frames in a horizontal strip; more than 1 makes it animated |
-| `states.<state>.frame_ms` | | `100` | Milliseconds per frame, minimum 1 |
-| `name` | | same as id | Display name only, never used for overriding |
-| `scale` | | `1` | Extra integer scale for this set |
-
-**Rules and requirements**
-
-- Every frame must be **square**; resolution decides both sharpness and size. Hotspots are given in image pixels.
-- Animation frames must sit on **one row**, image width = `frames × frame height`. If `frames` disagrees with the image, the image wins and a note is written to the log.
-- A missing state **falls back to `default`**, which is therefore the only required state.
-- Unknown state names, wrong types and a missing `default` are **skipped one by one with a log entry** — they never break the whole mod.
-- `.cur` works **only in `config/cursorkit/` and cursor packs**: Minecraft's own resource pack loader understands PNG only, so ship PNG inside resource packs.
-
-**Working examples**: the repository's `examples/` folder has the same assets in four shapes you can copy from — the same resource pack as a folder and as a zip, the `config/` layout (including a folder pack and a zip pack), a complete six-state set, a two-state animated set, 32×32 and 64×64 HD sets, and the ClickFX pack with click effects.
+**The full field table, image rules, hotspots, animation, effect parameters, packaging steps and a pre-release checklist live in [Authoring cursor packs]({{ '/en/mods/cursorkit/packs/' | relative_url }})**; the repository's `examples/` folder has packs to copy from.
 
 ## Click effects {: #effects}
 
-`click_effect` is an optional block in the cursor set JSON and **travels with the pack**: a different pack gives you different click feedback. Each mouse press spawns the effect **at the click position** (the cursor itself never moves, so aiming is unaffected).
-
-```json
-"click_effect": {
-    "type": "ripple",
-    "color": "#FFD479",
-    "radius": 15,
-    "duration_ms": 450,
-    "particles": 6
-}
-```
+`click_effect` is an optional block in the cursor set JSON and **travels with the pack**: a different pack gives different click feedback. Each press spawns the effect **at the click position**; the cursor itself never moves, so aiming is unaffected.
 
 | `type` | Effect |
 |--------|--------|
 | `ripple` | Expanding ring plus a few particles (default) |
 | `burst` | Particles only, bursting outwards |
 | `pulse` | A solid dot that flashes in place |
-| `image` | **Custom animation from the pack**: a horizontal frame strip played at the click position |
+| `image` | **Custom animation from the pack**: a horizontal strip played at the click position |
 | `none` | No effect for this pack |
 
-| Field | Default | Meaning |
-|-------|---------|---------|
-| `color` | gold | Any RGB: `#RRGGBB`, `RRGGBB` or a decimal number |
-| `radius` | `15` | How far it spreads (GUI units) |
-| `duration_ms` | `450` | Lifetime; for `image` the animation's own length is used when omitted |
-| `particles` | `6` | Particle count (used by `ripple` / `burst`) |
-| `texture` / `frames` / `frame_ms` / `size` | — | `image` only: strip path (relative to `textures/cursor/`), frame count, frame duration, drawn edge length |
-
-- Every field is optional; leave the whole `click_effect` block out and the mod's own ripple is used.
-- For `image`, the fade-out must be **drawn into the artwork** — texture drawing cannot fade the whole thing.
-- The `Click effect` switch at the bottom of the screen is the master switch; with it off no pack plays anything. It also plays for `Default (system cursor)`, so even the vanilla cursor gets click feedback.
+Colour, radius, duration, particle count and the `image` strip parameters are in [Authoring cursor packs]({{ '/en/mods/cursorkit/packs/' | relative_url }}). The `Click effect` switch at the bottom of the screen is the master switch, and it also plays for `Default (system cursor)`.
 
 ## Configuration {: #config}
 

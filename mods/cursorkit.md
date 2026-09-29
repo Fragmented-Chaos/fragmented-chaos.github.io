@@ -142,70 +142,21 @@ Cursor Kit 接管光标的绘制并隐藏系统光标，按当前界面状态画
 
 ## 做自己的光标包 {: #packs}
 
-一个光标集 = **一份 JSON + 若干贴图**。三种放法：
+一个光标集 = 一份 JSON + 若干贴图。想先试效果：把一张 32×32 的 PNG 丢进 `config/cursorkit/` 就能用，再加一份同名 JSON 补其它状态。
 
 ```
 资源包：      resourcepacks/<包名>/            或 <包名>.zip
 光标包：      config/cursorkit/packs/<包名>/   或 <包名>.zip
-              └─ 两者内部结构完全一样：
-                 assets/<命名空间>/cursor/<集合>.json
-                 assets/<命名空间>/textures/cursor/<贴图路径>.png
-
 本地单集合：  config/cursorkit/<集合>.json
-              config/cursorkit/<贴图路径>.png     （贴图路径相对该目录）
 ```
 
-**同一个包两种身份**：目录结构和资源包一致，所以既能丢进 `resourcepacks/`（需在资源包界面启用），也能丢进 `config/cursorkit/packs/`（模组直接读，永远开启）。只有走资源包路线才需要 `pack.mcmeta`。
+资源包与光标包内部结构相同（`assets/<命名空间>/cursor/<集合>.json` + `textures/cursor/<贴图>`），所以同一个包两种身份都能用，只有资源包路线需要 `pack.mcmeta`。文件名（去掉扩展名）就是集合 **id**，决定覆盖关系。
 
-文件名（去掉 `.json`）就是集合的 **id**，它决定覆盖关系；JSON 里的 `name` 只是界面显示名。
-
-```json
-{
-    "name": "Demo Set",
-    "scale": 1,
-    "states": {
-        "default":   { "texture": "demo/arrow.png", "hotspot": [0, 0] },
-        "clickable": { "texture": "demo/hand.png",  "hotspot": [7, 1] },
-        "text":      { "texture": "demo/ibeam.png", "hotspot": [7, 7] },
-        "drag":      { "texture": "demo/fist.png",  "hotspot": [7, 5] },
-        "disabled":  { "texture": "demo/disabled.png" },
-        "busy":      { "texture": "demo/spinner.png", "frames": 8, "frame_ms": 80 }
-    }
-}
-```
-
-| 字段 | 必填 | 默认 | 说明 |
-|------|------|------|------|
-| `states.<状态>.texture` | ✅ | — | 贴图路径，相对 `textures/cursor/`（资源包 / 光标包）或相对 `config/cursorkit/`（本地单集合）；支持 **PNG** 与 **`.cur`**（Windows 光标文件，自动读取其中的图片与自带热点） |
-| `states.<状态>.hotspot` | | `[0, 0]` | 点击点在**图片像素**里的坐标，可逐状态不同。不写时：`.cur` 用文件自带的热点，其它格式用左上角 |
-| `states.<状态>.frames` | | `1` | 横向帧图集的帧数；大于 1 即为动画 |
-| `states.<状态>.frame_ms` | | `100` | 每帧显示时长（毫秒），最小 1 |
-| `name` | | 同 id | 只在界面显示，不参与覆盖判定 |
-| `scale` | | `1` | 该集合的额外整数倍缩放 |
-
-**约定与要求**
-
-- 每帧是**正方形**，分辨率决定清晰度与大小；热区按图片像素填写即可。
-- 动画帧必须排在**同一行**，图片宽度 = `帧数 × 帧高`；`frames` 和图片实际不一致时以图片为准并写日志。
-- 缺省状态**回退到 `default`**，所以 `default` 是唯一必填项。
-- 未知状态名、类型错误、缺少 `default` 都会被**逐个跳过并写日志**，不会让整个模组失效。
-- `.cur` **只适用于 `config/cursorkit/` 与光标包**：Minecraft 自己的资源包加载器只认 PNG，资源包里请放 PNG。
-
-**现成样例**：仓库的 `examples/` 下有四种形式的同一套素材可以直接照着改 —— 同一个资源包的文件夹与 zip 两种形式、`config/` 目录结构（含文件夹包与 zip 包）、六状态齐全的集合、两状态 + 动画的集合、32×32 与 64×64 的高清集合，以及带点击特效的 ClickFX 包。
+**完整的字段表、图片规格、热区、动画、特效参数、打包与发布前检查清单见[《制作光标包》]({{ '/mods/cursorkit/packs/' | relative_url }})**；仓库 `examples/` 里也有现成包可以直接改。
 
 ## 点击特效 {: #effects}
 
-`click_effect` 是光标集 JSON 里的可选段，**跟着光标包走**：换一个包就换一套点击反馈。每次按下鼠标时，在**点击位置**生成特效（光标本身不动，所以不影响瞄准）。
-
-```json
-"click_effect": {
-    "type": "ripple",
-    "color": "#FFD479",
-    "radius": 15,
-    "duration_ms": 450,
-    "particles": 6
-}
-```
+`click_effect` 是光标集 JSON 里的可选段，**跟着光标包走**：换一个包就换一套点击反馈。每次按下鼠标时在**点击位置**生成特效，光标本身不动，不影响瞄准。
 
 | `type` | 效果 |
 |--------|------|
@@ -215,17 +166,7 @@ Cursor Kit 接管光标的绘制并隐藏系统光标，按当前界面状态画
 | `image` | **包自带的自定义动画**：一条横向帧带，点击时在点击位置播放 |
 | `none` | 这个包不要特效 |
 
-| 字段 | 默认 | 说明 |
-|------|------|------|
-| `color` | 金色 | 任意 RGB：`#RRGGBB`、`RRGGBB` 或十进制数字 |
-| `radius` | `15` | 扩散距离（GUI 单位） |
-| `duration_ms` | `450` | 存活时间；`image` 不写时以动画本身时长为准 |
-| `particles` | `6` | 粒子个数（`ripple` / `burst` 用） |
-| `texture` / `frames` / `frame_ms` / `size` | — | 仅 `image` 用：帧带路径（相对 `textures/cursor/`）、帧数、每帧时长、绘制边长 |
-
-- 每个字段都可以省略，整个 `click_effect` 段不写就用模组自带的水波纹。
-- `image` 类型的**淡出要画进图里**，贴图绘制不支持整体调透明度。
-- 界面底部的 `点击特效` 是总开关，关掉后任何包都不放特效；选 `默认（系统光标）` 时**也会播**模组自带那套水波纹，所以用原版光标也有点击反馈。
+颜色、半径、时长、粒子数、`image` 的帧带参数都在[《制作光标包》]({{ '/mods/cursorkit/packs/' | relative_url }})里。界面底部的 `点击特效` 是总开关；选 `默认（系统光标）` 时也会播模组自带的水波纹。
 
 ## 配置项 {: #config}
 

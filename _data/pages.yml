@@ -10,6 +10,9 @@ mods:
 cursorkit:
   zh: /mods/cursorkit/
   en: /en/mods/cursorkit/
+cursorkit_packs:
+  zh: /mods/cursorkit/packs/
+  en: /en/mods/cursorkit/packs/
 about:
   zh: /about/
   en: /en/about/
