@@ -29,7 +29,6 @@ permalink: /mods/
       <span class="mod-card-meta">
         <span class="badge">Minecraft 26.3</span>
         <span class="badge">Fabric · NeoForge</span>
-        <span class="badge">需要饰品模组</span>
       </span>
     </a>
   </li>
@@ -41,7 +40,6 @@ permalink: /mods/
       <span class="mod-card-meta">
         <span class="badge">Minecraft 26.3</span>
         <span class="badge">Fabric · NeoForge · Quilt</span>
-        <span class="badge">无前置</span>
       </span>
     </a>
   </li>

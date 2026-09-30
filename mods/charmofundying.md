@@ -13,7 +13,6 @@ permalink: /mods/charmofundying/
     <p class="mod-badges">
       <span class="badge">Minecraft 26.3</span>
       <span class="badge">Fabric · NeoForge</span>
-      <span class="badge">需要饰品模组</span>
     </p>
   </div>
   <p class="mod-actions">
@@ -22,19 +21,6 @@ permalink: /mods/charmofundying/
     <a class="btn" href="https://github.com/Fragmented-Chaos/Charm-of-Undying-Reborn/issues" target="_blank" rel="noopener">反馈问题</a>
   </p>
 </div>
-
-## 安装
-
-这个模组**依赖饰品槽模组**，得先装好其中一个：
-
-| 平台 | 前置 |
-|------|------|
-| Fabric | [Fabric API](https://modrinth.com/mod/fabric-api) + [Trinkets Updated](https://modrinth.com/mod/trinkets) |
-| NeoForge | [Curios API](https://modrinth.com/mod/curios) **或** [Trinkets Updated](https://modrinth.com/mod/trinkets)（任选其一） |
-
-1. 装好上面对应的前置
-2. 下载 `charmofundyingreborn-<版本>-universal.jar`（Fabric 与 NeoForge 通用），丢进 `.minecraft/mods/`
-3. 启动游戏
 
 ## 使用
 

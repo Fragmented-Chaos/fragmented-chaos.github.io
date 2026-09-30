@@ -28,7 +28,6 @@ permalink: /mods/cursorkit/
 <div class="mod-toc">
   <p>目录</p>
   <ul>
-    <li><a href="#install">安装</a></li>
     <li><a href="#start">快速上手</a></li>
     <li><a href="#features">功能</a></li>
     <li><a href="#packs">做自己的光标包</a></li>
@@ -39,14 +38,6 @@ permalink: /mods/cursorkit/
     <li><a href="#faq">常见问题</a></li>
   </ul>
 </div>
-
-<a id="install"></a>
-## 安装
-
-1. 下载 `cursorkit-<版本>-universal.jar`（三端通用），丢进 `.minecraft/mods/`
-2. 进游戏：**选项 → 视频设置 → `光标`**
-
-没有前置依赖，服务器也不用装。
 
 <a id="start"></a>
 ## 快速上手
@@ -251,7 +242,7 @@ CursorStateProviders.register((screen, mouseX, mouseY, context) -> {
 不用。这是纯客户端模组，服务器装了也不做任何事，联机时服务端没装也不会报错。
 
 **能在 NeoForge / Quilt 上用吗？**
-能。`universal.jar` 三端通用，Fabric 与 Quilt 用同一个 jar（Quilt 走 Fabric 兼容层）。NeoForge 上没有 Mod Menu，模组列表由 NeoForge 自己提供，界面入口（视频设置里的 `光标`）完全一样。
+能。同一个 jar 三端通用，Fabric 与 Quilt 共用（Quilt 走 Fabric 兼容层）；NeoForge 上没有 Mod Menu，模组列表由 NeoForge 自己提供。
 
 **怎么让自定义光标一直显示，不要突然变回系统光标？**
 指针靠近窗口边缘时模组会主动交还系统光标（`edge_margin`，默认 2 像素），这是为了避免鼠标贴边时点不到东西。把 `边界` 调到 `0` 就会一直用自定义光标。

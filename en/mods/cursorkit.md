@@ -28,7 +28,6 @@ Every state's image comes from an external pack — resource packs, cursor packs
 <div class="mod-toc">
   <p>Contents</p>
   <ul>
-    <li><a href="#install">Install</a></li>
     <li><a href="#start">Getting started</a></li>
     <li><a href="#features">Features</a></li>
     <li><a href="#packs">Authoring cursor packs</a></li>
@@ -39,14 +38,6 @@ Every state's image comes from an external pack — resource packs, cursor packs
     <li><a href="#faq">FAQ</a></li>
   </ul>
 </div>
-
-<a id="install"></a>
-## Install
-
-1. Download `cursorkit-<version>-universal.jar` (one jar for all three loaders) and drop it into `.minecraft/mods/`
-2. In game: **Options → Video Settings → `Cursor`**
-
-No dependencies, and nothing to install on the server.
 
 <a id="start"></a>
 ## Getting started
@@ -251,7 +242,7 @@ The `Click effect` switch at the bottom of the screen is the master switch, and 
 No. It is a client-side mod; installing it on a server does nothing, and joining a server without it does not error.
 
 **Does it work on NeoForge / Quilt?**
-Yes. The `universal.jar` covers all three loaders — Fabric and Quilt share one jar (Quilt through its Fabric compatibility layer). NeoForge has no Mod Menu, so the mod list comes from NeoForge itself, but the in-game entry (`Cursor` in video settings) is identical.
+Yes. One jar covers all three loaders — Fabric and Quilt share it (Quilt through its Fabric compatibility layer). NeoForge has no Mod Menu, so the mod list comes from NeoForge itself.
 
 **How do I keep the custom cursor from turning back into the system cursor?**
 Near the window edge the mod deliberately hands the cursor back (`edge_margin`, 2 pixels by default) so the mouse never gets stuck at the border. Set `edge margin` to `0` to keep the custom cursor everywhere.

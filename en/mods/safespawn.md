@@ -13,7 +13,6 @@ permalink: /en/mods/safespawn/
     <p class="mod-badges">
       <span class="badge">Minecraft 26.3</span>
       <span class="badge">Fabric · NeoForge · Quilt</span>
-      <span class="badge">No dependencies</span>
     </p>
   </div>
   <p class="mod-actions">
@@ -31,13 +30,6 @@ permalink: /en/mods/safespawn/
 | **MC-278261** | Respawning grants invulnerability again |
 
 Both were changed in 24w45a; SafeSpawn restores the earlier behaviour.
-
-## Install
-
-No dependencies at all:
-
-1. Download `safespawn-<version>-universal.jar` (one jar for Fabric / NeoForge / Quilt) and drop it into `.minecraft/mods/`
-2. Launch the game
 
 ## Configuration
 

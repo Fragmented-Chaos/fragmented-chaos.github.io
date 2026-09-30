@@ -13,7 +13,6 @@ permalink: /en/mods/charmofundying/
     <p class="mod-badges">
       <span class="badge">Minecraft 26.3</span>
       <span class="badge">Fabric · NeoForge</span>
-      <span class="badge">Trinket mod required</span>
     </p>
   </div>
   <p class="mod-actions">
@@ -22,19 +21,6 @@ permalink: /en/mods/charmofundying/
     <a class="btn" href="https://github.com/Fragmented-Chaos/Charm-of-Undying-Reborn/issues" target="_blank" rel="noopener">Report an issue</a>
   </p>
 </div>
-
-## Install
-
-This mod **requires a trinket/curio mod**, so install one of these first:
-
-| Platform | Requirement |
-|----------|-------------|
-| Fabric | [Fabric API](https://modrinth.com/mod/fabric-api) + [Trinkets Updated](https://modrinth.com/mod/trinkets) |
-| NeoForge | [Curios API](https://modrinth.com/mod/curios) **or** [Trinkets Updated](https://modrinth.com/mod/trinkets) (either one) |
-
-1. Install the matching requirement above
-2. Download `charmofundyingreborn-<version>-universal.jar` (works on Fabric and NeoForge) and drop it into `.minecraft/mods/`
-3. Launch the game
 
 ## Usage
 

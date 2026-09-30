@@ -13,7 +13,6 @@ permalink: /mods/safespawn/
     <p class="mod-badges">
       <span class="badge">Minecraft 26.3</span>
       <span class="badge">Fabric · NeoForge · Quilt</span>
-      <span class="badge">无前置依赖</span>
     </p>
   </div>
   <p class="mod-actions">
@@ -31,13 +30,6 @@ permalink: /mods/safespawn/
 | **MC-278261** | 重生后正常获得无敌时间 |
 
 这两条原先在 24w45a 被改掉了，SafeSpawn 把旧行为还原回来。
-
-## 安装
-
-没有任何前置依赖：
-
-1. 下载 `safespawn-<版本>-universal.jar`（Fabric / NeoForge / Quilt 通用），丢进 `.minecraft/mods/`
-2. 启动游戏即可
 
 ## 配置
 

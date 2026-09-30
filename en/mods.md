@@ -29,7 +29,6 @@ These are the mods I build for Minecraft.
       <span class="mod-card-meta">
         <span class="badge">Minecraft 26.3</span>
         <span class="badge">Fabric · NeoForge</span>
-        <span class="badge">Trinket mod required</span>
       </span>
     </a>
   </li>
@@ -41,7 +40,6 @@ These are the mods I build for Minecraft.
       <span class="mod-card-meta">
         <span class="badge">Minecraft 26.3</span>
         <span class="badge">Fabric · NeoForge · Quilt</span>
-        <span class="badge">No dependencies</span>
       </span>
     </a>
   </li>
