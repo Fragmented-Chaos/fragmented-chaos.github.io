@@ -44,7 +44,7 @@ Every state's image comes from an external pack — resource packs, cursor packs
 <a id="start"></a>
 ## Getting started
 
-**A fresh install only lists `Default (system cursor)`.** Add a cursor and it shows up:
+**A fresh install has no cursor sets at all** — the list holds just `Default (system cursor)` and `Custom (per-state paths)`. Drop a cursor pack in and the rest appear:
 
 - **Drag it in**: drop a `.zip`, a folder containing `assets/`, or loose PNG/JSON files onto the screen (name collisions get `-2`)
 - **Place it yourself**: cursor packs go into `config/cursorkit/packs/` (folder or `.zip`), loose JSON + PNGs into `config/cursorkit/`
