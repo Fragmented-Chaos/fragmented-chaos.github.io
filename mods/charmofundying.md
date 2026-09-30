@@ -4,7 +4,7 @@ lang: zh
 key: charmofundying
 title: Charm of Undying：Reborn
 permalink: /mods/charmofundying/
-card_mc: "26.1 起<br>26.1 / 26.2 / 26.3 各有版本"
+card_mc: "26.1–26.3"
 card_loaders: "Fabric · NeoForge"
 card_requires: "Fabric：Fabric API + Trinkets；NeoForge：Curios 或 Trinkets"
 card_license: "MIT"

@@ -4,8 +4,8 @@ lang: zh
 key: safespawn
 title: SafeSpawn
 permalink: /mods/safespawn/
-card_mc: "26.1 起<br>1.21.4 – 1.21.11"
-card_loaders: "Fabric · NeoForge<br>（1.21.4–1.21.11 仅 Fabric）"
+card_mc: "1.21.4–1.21.11, 26.1+"
+card_loaders: "Fabric · NeoForge"
 card_requires: "无"
 card_license: "MIT"
 ---
