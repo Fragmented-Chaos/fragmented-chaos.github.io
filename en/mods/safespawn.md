@@ -4,10 +4,9 @@ lang: en
 key: safespawn
 title: SafeSpawn
 permalink: /en/mods/safespawn/
-card_mc: "26.3 and newer"
+card_mc: "26.1+ (also 1.21.4–1.21.11)"
 card_loaders: "Fabric · NeoForge · Quilt"
 card_requires: "None"
-card_version: "1.0.2+26.3"
 card_license: "MIT"
 ---
 
@@ -15,10 +14,6 @@ card_license: "MIT"
   <img class="mod-icon" src="{{ '/assets/images/safespawn/icon.png' | relative_url }}" alt="SafeSpawn icon" width="96" height="96">
   <div>
     <p class="mod-tagline">Brings back the old behaviour for fall damage on relog, and fixes the missing spawn invulnerability.</p>
-    <p class="mod-badges">
-      <span class="badge">Minecraft 26.3</span>
-      <span class="badge">Fabric · NeoForge · Quilt</span>
-    </p>
   </div>
   <p class="mod-actions">
     <a class="btn btn-primary" href="https://modrinth.com/mod/safespawn" target="_blank" rel="noopener">Modrinth</a>
@@ -55,4 +50,3 @@ enableLoginImmunity=true
 | `enableRespawnImmunity` | `true` | Grant immunity when respawning after death |
 | `enableLoginImmunity` | `true` | Grant immunity when logging in / rejoining |
 
-Licensed under **MIT**.

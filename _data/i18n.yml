@@ -36,7 +36,6 @@ zh:
   card_mc: Minecraft
   card_loaders: 加载器
   card_requires: 前置
-  card_version: 当前版本
   card_license: 许可证
   error_msg: 页面不存在
   error_link: 返回起始页
@@ -79,7 +78,6 @@ en:
   card_mc: Minecraft
   card_loaders: Loaders
   card_requires: Requires
-  card_version: Version
   card_license: License
   error_msg: Page not found
   error_link: Back to home

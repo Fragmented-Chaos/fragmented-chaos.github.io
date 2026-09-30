@@ -4,10 +4,9 @@ lang: zh
 key: cursorkit
 title: Cursor Kit
 permalink: /mods/cursorkit/
-card_mc: "26.3 及以上"
+card_mc: "26.3"
 card_loaders: "Fabric · NeoForge · Quilt"
 card_requires: "无（纯客户端）"
-card_version: "0.1.0+26.3"
 card_license: "LGPL-3.0"
 ---
 
@@ -15,11 +14,6 @@ card_license: "LGPL-3.0"
   <img class="mod-icon" src="{{ '/assets/images/cursorkit/icon.png' | relative_url }}" alt="Cursor Kit 图标" width="96" height="96">
   <div>
     <p class="mod-tagline">把 Minecraft 的鼠标指针换成自定义高清光标：六个状态、帧动画、逐状态热区，点击特效跟随光标包。</p>
-    <p class="mod-badges">
-      <span class="badge">Minecraft 26.3</span>
-      <span class="badge">Fabric · NeoForge · Quilt</span>
-      <span class="badge">纯客户端</span>
-    </p>
   </div>
   <p class="mod-actions">
     <a class="btn btn-primary" href="https://github.com/Fragmented-Chaos/Cursor-Kit/releases" target="_blank" rel="noopener">下载</a>
@@ -252,4 +246,3 @@ CursorStateProviders.register((screen, mouseX, mouseY, context) -> {
 **怎么让自定义光标一直显示，不要突然变回系统光标？**
 指针靠近窗口边缘时模组会主动交还系统光标（`edge_margin`，默认 2 像素），这是为了避免鼠标贴边时点不到东西。把 `边界` 调到 `0` 就会一直用自定义光标。
 
-许可证 **LGPL-3.0** · 当前版本 **0.1.0+26.3**。

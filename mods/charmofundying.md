@@ -4,21 +4,16 @@ lang: zh
 key: charmofundying
 title: Charm of Undying：Reborn
 permalink: /mods/charmofundying/
-card_mc: "26.3 及以上"
+card_mc: "26.3（26.1.x / 26.2 另有版本）"
 card_loaders: "Fabric · NeoForge"
 card_requires: "Fabric：Fabric API + Trinkets；NeoForge：Curios 或 Trinkets"
-card_version: "1.1.0-alpha.2+26.3"
 card_license: "MIT"
 ---
 
 <div class="mod-hero">
   <img class="mod-icon" src="{{ '/assets/images/charmofundying/icon.png' | relative_url }}" alt="Charm of Undying: Reborn 图标" width="96" height="96">
   <div>
-    <p class="mod-tagline">把不死图腾放进饰品栏的护符槽，死亡时自动触发复活 —— 不用手持，放在饰品栏里就行。</p>
-    <p class="mod-badges">
-      <span class="badge">Minecraft 26.3</span>
-      <span class="badge">Fabric · NeoForge</span>
-    </p>
+    <p class="mod-tagline">不死图腾放进饰品栏的护符槽，死亡时自动复活。</p>
   </div>
   <p class="mod-actions">
     <a class="btn btn-primary" href="https://github.com/Fragmented-Chaos/Charm-of-Undying-Reborn/releases" target="_blank" rel="noopener">下载</a>
@@ -35,12 +30,10 @@ card_license: "MIT"
 2. 把**不死图腾**放进 **护符（Charm）** 槽
 3. 死亡时自动消耗图腾并复活
 
-图腾**不用拿在手上**，放在饰品栏里就会生效。
 
 ## 兼容性
 
-- 按 `c:totems` 标签识别图腾：**任何打了这个标签的物品**都能当图腾用，别的模组加的物品同样生效
-- 当前版本 `1.1.0-alpha.2+26.3`，对应 Minecraft 26.3
+- 按 `c:totems` 标签识别图腾：**任何打了这个标签的物品**都能当图腾用
 
 ## 给模组作者
 
@@ -49,4 +42,3 @@ card_license: "MIT"
 - [Integration guide（English）](https://github.com/Fragmented-Chaos/Charm-of-Undying-Reborn/blob/main/docs/INTEGRATION.md)
 - [集成文档（中文）](https://github.com/Fragmented-Chaos/Charm-of-Undying-Reborn/blob/main/docs/INTEGRATION.zh_CN.md)
 
-许可证 **MIT**。

@@ -4,10 +4,9 @@ lang: en
 key: cursorkit
 title: Cursor Kit
 permalink: /en/mods/cursorkit/
-card_mc: "26.3 and newer"
+card_mc: "26.3"
 card_loaders: "Fabric · NeoForge · Quilt"
 card_requires: "None (client-side)"
-card_version: "0.1.0+26.3"
 card_license: "LGPL-3.0"
 ---
 
@@ -15,11 +14,6 @@ card_license: "LGPL-3.0"
   <img class="mod-icon" src="{{ '/assets/images/cursorkit/icon.png' | relative_url }}" alt="Cursor Kit icon" width="96" height="96">
   <div>
     <p class="mod-tagline">Replaces Minecraft's mouse pointer with custom HD cursors: six states, frame animation, per-state hotspots, and click effects that follow the pack.</p>
-    <p class="mod-badges">
-      <span class="badge">Minecraft 26.3</span>
-      <span class="badge">Fabric · NeoForge · Quilt</span>
-      <span class="badge">Client-side only</span>
-    </p>
   </div>
   <p class="mod-actions">
     <a class="btn btn-primary" href="https://github.com/Fragmented-Chaos/Cursor-Kit/releases" target="_blank" rel="noopener">Download</a>
@@ -252,4 +246,3 @@ Yes. One jar covers all three loaders — Fabric and Quilt share it (Quilt throu
 **How do I keep the custom cursor from turning back into the system cursor?**
 Near the window edge the mod deliberately hands the cursor back (`edge_margin`, 2 pixels by default) so the mouse never gets stuck at the border. Set `edge margin` to `0` to keep the custom cursor everywhere.
 
-Licensed under **LGPL-3.0** · current version **0.1.0+26.3**.

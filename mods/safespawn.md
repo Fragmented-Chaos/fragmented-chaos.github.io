@@ -4,10 +4,9 @@ lang: zh
 key: safespawn
 title: SafeSpawn
 permalink: /mods/safespawn/
-card_mc: "26.3 及以上"
+card_mc: "26.1+（另有 1.21.4–1.21.11）"
 card_loaders: "Fabric · NeoForge · Quilt"
 card_requires: "无"
-card_version: "1.0.2+26.3"
 card_license: "MIT"
 ---
 
@@ -15,10 +14,6 @@ card_license: "MIT"
   <img class="mod-icon" src="{{ '/assets/images/safespawn/icon.png' | relative_url }}" alt="SafeSpawn 图标" width="96" height="96">
   <div>
     <p class="mod-tagline">把「重进存档摔死」和「重生后没有无敌」这两个原版问题修回来。</p>
-    <p class="mod-badges">
-      <span class="badge">Minecraft 26.3</span>
-      <span class="badge">Fabric · NeoForge · Quilt</span>
-    </p>
   </div>
   <p class="mod-actions">
     <a class="btn btn-primary" href="https://modrinth.com/mod/safespawn" target="_blank" rel="noopener">Modrinth</a>
@@ -55,4 +50,3 @@ enableLoginImmunity=true
 | `enableRespawnImmunity` | `true` | 死亡重生时是否启用无敌 |
 | `enableLoginImmunity` | `true` | 登录 / 重进存档时是否启用无敌 |
 
-许可证 **MIT**。

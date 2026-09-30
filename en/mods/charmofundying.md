@@ -4,21 +4,16 @@ lang: en
 key: charmofundying
 title: "Charm of Undying: Reborn"
 permalink: /en/mods/charmofundying/
-card_mc: "26.3 and newer"
+card_mc: "26.3 (separate builds for 26.1.x / 26.2)"
 card_loaders: "Fabric · NeoForge"
 card_requires: "Fabric: Fabric API + Trinkets; NeoForge: Curios or Trinkets"
-card_version: "1.1.0-alpha.2+26.3"
 card_license: "MIT"
 ---
 
 <div class="mod-hero">
   <img class="mod-icon" src="{{ '/assets/images/charmofundying/icon.png' | relative_url }}" alt="Charm of Undying: Reborn icon" width="96" height="96">
   <div>
-    <p class="mod-tagline">Put a Totem of Undying in your charm slot and it saves you from death automatically — no need to hold it.</p>
-    <p class="mod-badges">
-      <span class="badge">Minecraft 26.3</span>
-      <span class="badge">Fabric · NeoForge</span>
-    </p>
+    <p class="mod-tagline">A Totem of Undying in your charm slot saves you from death automatically.</p>
   </div>
   <p class="mod-actions">
     <a class="btn btn-primary" href="https://github.com/Fragmented-Chaos/Charm-of-Undying-Reborn/releases" target="_blank" rel="noopener">Download</a>
@@ -35,12 +30,10 @@ You need a trinket mod first: Trinkets (plus Fabric API) on Fabric, or Curios / 
 2. Put a **Totem of Undying** into the **Charm** slot
 3. On death the totem is consumed and you are revived
 
-The totem does **not** have to be held — sitting in the trinket slot is enough.
 
 ## Compatibility
 
-- Totems are recognised through the `c:totems` tag, so **any item carrying that tag** works, including items added by other mods
-- Current version `1.1.0-alpha.2+26.3` for Minecraft 26.3
+- Totems are recognised through the `c:totems` tag, so **any item carrying that tag** works
 
 ## For mod authors
 
@@ -49,4 +42,3 @@ To make your own item trigger, or to hook up another trinket system, see the int
 - [Integration guide (English)](https://github.com/Fragmented-Chaos/Charm-of-Undying-Reborn/blob/main/docs/INTEGRATION.md)
 - [集成文档（中文）](https://github.com/Fragmented-Chaos/Charm-of-Undying-Reborn/blob/main/docs/INTEGRATION.zh_CN.md)
 
-Licensed under **MIT**.
