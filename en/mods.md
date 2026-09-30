@@ -21,11 +21,28 @@ These are the mods I build for Minecraft.
       </span>
     </a>
   </li>
-</ul>
-
-## Other projects
-
-<ul class="mods-others">
-  <li><a href="https://github.com/Fragmented-Chaos/Charm-of-Undying-Reborn" target="_blank" rel="noopener">Charm of Undying Reborn</a> — put a Totem of Undying in your charm slot and it saves you from death automatically; any item tagged as a totem works.</li>
-  <li><a href="https://github.com/Fragmented-Chaos/SafeSpawn" target="_blank" rel="noopener">SafeSpawn</a> — restores MC-212 and MC-21650, and fixes MC-278261.</li>
+  <li>
+    <a class="mod-card" href="{{ '/en/mods/charmofundying/' | relative_url }}">
+      <img class="mod-card-icon" src="{{ '/assets/images/charmofundying/icon.png' | relative_url }}" alt="Charm of Undying: Reborn icon">
+      <span class="mod-card-title">Charm of Undying: Reborn</span>
+      <span class="mod-card-desc">A Totem of Undying in your charm slot saves you from death — no need to hold it.</span>
+      <span class="mod-card-meta">
+        <span class="badge">Minecraft 26.3</span>
+        <span class="badge">Fabric · NeoForge</span>
+        <span class="badge">Trinket mod required</span>
+      </span>
+    </a>
+  </li>
+  <li>
+    <a class="mod-card" href="{{ '/en/mods/safespawn/' | relative_url }}">
+      <img class="mod-card-icon" src="{{ '/assets/images/safespawn/icon.png' | relative_url }}" alt="SafeSpawn icon">
+      <span class="mod-card-title">SafeSpawn</span>
+      <span class="mod-card-desc">Restores fall-damage immunity on relog and fixes the missing spawn invulnerability.</span>
+      <span class="mod-card-meta">
+        <span class="badge">Minecraft 26.3</span>
+        <span class="badge">Fabric · NeoForge · Quilt</span>
+        <span class="badge">No dependencies</span>
+      </span>
+    </a>
+  </li>
 </ul>

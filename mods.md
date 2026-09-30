@@ -21,11 +21,28 @@ permalink: /mods/
       </span>
     </a>
   </li>
-</ul>
-
-## 其它项目
-
-<ul class="mods-others">
-  <li><a href="https://github.com/Fragmented-Chaos/Charm-of-Undying-Reborn" target="_blank" rel="noopener">Charm of Undying Reborn</a> —— 把不死图腾放进护符栏，死亡时自动救你一命；任何带图腾标签的物品都行。</li>
-  <li><a href="https://github.com/Fragmented-Chaos/SafeSpawn" target="_blank" rel="noopener">SafeSpawn</a> —— 恢复 MC-212 与 MC-21650，并修复 MC-278261。</li>
+  <li>
+    <a class="mod-card" href="{{ '/mods/charmofundying/' | relative_url }}">
+      <img class="mod-card-icon" src="{{ '/assets/images/charmofundying/icon.png' | relative_url }}" alt="Charm of Undying: Reborn 图标">
+      <span class="mod-card-title">Charm of Undying：Reborn</span>
+      <span class="mod-card-desc">不死图腾放进饰品栏的护符槽，死亡时自动复活，不用手持。</span>
+      <span class="mod-card-meta">
+        <span class="badge">Minecraft 26.3</span>
+        <span class="badge">Fabric · NeoForge</span>
+        <span class="badge">需要饰品模组</span>
+      </span>
+    </a>
+  </li>
+  <li>
+    <a class="mod-card" href="{{ '/mods/safespawn/' | relative_url }}">
+      <img class="mod-card-icon" src="{{ '/assets/images/safespawn/icon.png' | relative_url }}" alt="SafeSpawn 图标">
+      <span class="mod-card-title">SafeSpawn</span>
+      <span class="mod-card-desc">修回「重进存档摔死」和「重生后没有无敌」两个原版问题。</span>
+      <span class="mod-card-meta">
+        <span class="badge">Minecraft 26.3</span>
+        <span class="badge">Fabric · NeoForge · Quilt</span>
+        <span class="badge">无前置</span>
+      </span>
+    </a>
+  </li>
 </ul>

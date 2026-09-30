@@ -1,0 +1,61 @@
+---
+layout: page
+lang: en
+key: safespawn
+title: SafeSpawn
+permalink: /en/mods/safespawn/
+---
+
+<div class="mod-hero">
+  <img class="mod-icon" src="{{ '/assets/images/safespawn/icon.png' | relative_url }}" alt="SafeSpawn icon" width="96" height="96">
+  <div>
+    <p class="mod-tagline">Brings back the old behaviour for fall damage on relog, and fixes the missing spawn invulnerability.</p>
+    <p class="mod-badges">
+      <span class="badge">Minecraft 26.3</span>
+      <span class="badge">Fabric · NeoForge · Quilt</span>
+      <span class="badge">No dependencies</span>
+    </p>
+  </div>
+  <p class="mod-actions">
+    <a class="btn btn-primary" href="https://modrinth.com/mod/safespawn" target="_blank" rel="noopener">Modrinth</a>
+    <a class="btn" href="https://github.com/Fragmented-Chaos/SafeSpawn" target="_blank" rel="noopener">Source</a>
+    <a class="btn" href="https://github.com/Fragmented-Chaos/SafeSpawn/issues" target="_blank" rel="noopener">Report an issue</a>
+  </p>
+</div>
+
+## What it fixes
+
+| Vanilla issue | Behaviour now |
+|---------------|---------------|
+| **MC-212** / **MC-21650** | Leaving and rejoining grants fall-damage immunity — falling from a height and relogging no longer kills you |
+| **MC-278261** | Respawning grants invulnerability again |
+
+Both were changed in 24w45a; SafeSpawn restores the earlier behaviour.
+
+## Install
+
+No dependencies at all:
+
+1. Download `safespawn-<version>-universal.jar` (one jar for Fabric / NeoForge / Quilt) and drop it into `.minecraft/mods/`
+2. Launch the game
+
+## Configuration
+
+The config lives in `config/safespawn.properties`:
+
+```properties
+# Invulnerability duration in game ticks (20 ticks = 1 second)
+invulnerableTicks=60
+# Grant invulnerability when respawning after death
+enableRespawnImmunity=true
+# Grant invulnerability when logging in / rejoining
+enableLoginImmunity=true
+```
+
+| Field | Default | Meaning |
+|-------|---------|---------|
+| `invulnerableTicks` | `60` | How long the immunity lasts, in game ticks (20 ticks = 1 second, so 60 = 3 seconds) |
+| `enableRespawnImmunity` | `true` | Grant immunity when respawning after death |
+| `enableLoginImmunity` | `true` | Grant immunity when logging in / rejoining |
+
+Licensed under **MIT**.

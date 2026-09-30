@@ -40,14 +40,16 @@ permalink: /mods/cursorkit/
   </ul>
 </div>
 
-## 安装 {: #install}
+<a id="install"></a>
+## 安装
 
 1. 下载 `cursorkit-<版本>-universal.jar`（三端通用），丢进 `.minecraft/mods/`
 2. 进游戏：**选项 → 视频设置 → `光标`**
 
 没有前置依赖，服务器也不用装。
 
-## 快速上手 {: #start}
+<a id="start"></a>
+## 快速上手
 
 **首次进游戏时列表里只有「默认（系统光标）」**。放一个光标进去就会出现：
 
@@ -69,7 +71,8 @@ permalink: /mods/cursorkit/
   <figcaption>选择界面：左边是可搜索的包列表（每行标出来源与特效），右边是六个状态的预览和逐状态点击点。</figcaption>
 </figure>
 
-### 自定义光标 {: #custom}
+<a id="custom"></a>
+### 自定义光标
 
 不想做包、只想用现成的图片时，选列表第二行的 **`自定义（逐状态填写）`**，点 **`编辑路径…`**：
 
@@ -82,7 +85,8 @@ permalink: /mods/cursorkit/
   <figcaption>逐状态自定义：每个状态一个路径，找到的显示金色，没找到的红色带问号。</figcaption>
 </figure>
 
-### 逐状态热区编辑器 {: #hotspots}
+<a id="hotspots"></a>
+### 逐状态热区编辑器
 
 **点击点（热区）不一定要在 JSON 里写死**：选择界面右上角点 **`热点…`** 进入专门的编辑器，左边列出该集合每个状态的当前值（改过的显示金色），右边是放大后的图片 + 像素网格。
 
@@ -97,7 +101,8 @@ permalink: /mods/cursorkit/
   <figcaption>点击点编辑器：点或拖就能改，方向键微调，改完立刻生效。</figcaption>
 </figure>
 
-## 功能 {: #features}
+<a id="features"></a>
+## 功能
 
 <ul class="feature-grid">
   <li class="feature">
@@ -134,7 +139,8 @@ permalink: /mods/cursorkit/
   </li>
 </ul>
 
-## 做自己的光标包 {: #packs}
+<a id="packs"></a>
+## 做自己的光标包
 
 一个光标集 = 一份 JSON + 若干贴图。想先试效果：把一张 32×32 的 PNG 丢进 `config/cursorkit/` 就能用，再加一份同名 JSON 补其它状态。
 
@@ -148,7 +154,8 @@ permalink: /mods/cursorkit/
 
 **完整的字段表、图片规格、热区、动画与特效参数见[《制作光标包》]({{ '/mods/cursorkit/packs/' | relative_url }})**；仓库 `examples/` 里也有现成包可以直接改。
 
-## 点击特效 {: #effects}
+<a id="effects"></a>
+## 点击特效
 
 `click_effect` 是光标集 JSON 里的可选段，**跟着光标包走**：换一个包就换一套点击反馈。每次按下鼠标时在**点击位置**生成特效，光标本身不动，不影响瞄准。
 
@@ -162,7 +169,8 @@ permalink: /mods/cursorkit/
 
 颜色、半径、时长、粒子数、`image` 的帧带参数都在[《制作光标包》]({{ '/mods/cursorkit/packs/' | relative_url }})里。界面底部的 `点击特效` 是总开关；选 `默认（系统光标）` 时也会播模组自带的水波纹。
 
-## 配置项 {: #config}
+<a id="config"></a>
+## 配置项
 
 配置在 `config/cursorkit.json`（首次启动自动生成）：
 
@@ -189,7 +197,8 @@ permalink: /mods/cursorkit/
 | `custom_effect` | 水波纹 | 手工集合自己的点击特效，写法与包里的 `click_effect` 相同 |
 | `hotspots` | 无 | 在热区编辑器里改过的点击点，形如 `{"集合id": {"状态": [x, y]}}` |
 
-## 状态判定 {: #states}
+<a id="states"></a>
+## 状态判定
 
 | 状态 | 何时显示 | 判定来源 |
 |------|----------|----------|
@@ -206,7 +215,8 @@ Minecraft 26.3 起会为每个控件请求光标类型，所以**任何模组的
 
 两个边界行为：**进入游戏（视角被锁定时）光标完全不接管**；把指针推到窗口最边缘时系统光标会回来（`edge_margin` 控制这个范围）。
 
-## 给其它模组用的 API {: #api}
+<a id="api"></a>
+## 给其它模组用的 API
 
 ```java
 CursorStateProviders.register((screen, mouseX, mouseY, context) -> {
@@ -219,7 +229,8 @@ CursorStateProviders.register((screen, mouseX, mouseY, context) -> {
 
 按注册顺序询问，第一个返回非 `null` 的胜出；`context` 里能看到原版请求的类型、是否拖拽、是否忙碌。`CursorState`、`CursorSet` 等模型类都与 Minecraft 无关，方便书写与测试。
 
-## 常见问题 {: #faq}
+<a id="faq"></a>
+## 常见问题
 
 **装了模组但光标没变？**
 列表里选中项是不是 `默认（系统光标）`？`config/cursorkit.json` 的 `enabled` 是不是 `false`？另外先确认已经有光标集可选 —— 刚装好模组时一个包都还没有，往 `config/cursorkit/packs/` 放一个就会出现。

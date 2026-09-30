@@ -13,6 +13,12 @@ cursorkit:
 cursorkit_packs:
   zh: /mods/cursorkit/packs/
   en: /en/mods/cursorkit/packs/
+charmofundying:
+  zh: /mods/charmofundying/
+  en: /en/mods/charmofundying/
+safespawn:
+  zh: /mods/safespawn/
+  en: /en/mods/safespawn/
 about:
   zh: /about/
   en: /en/about/

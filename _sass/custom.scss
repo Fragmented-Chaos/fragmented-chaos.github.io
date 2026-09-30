@@ -1143,6 +1143,18 @@ a:hover {
 }
 
 /* ---------- 文档型正文（表格 / 代码） ---------- */
+/* 目录锚点：跳到标题时给吸顶导航留出空间 */
+.page-body a[id] {
+  display: block;
+  height: 0;
+  scroll-margin-top: 4.5rem;
+}
+
+.page-body h2,
+.page-body h3 {
+  scroll-margin-top: 4.5rem;
+}
+
 .page-body h2 {
   margin: 2.25rem 0 0.75rem;
   padding-top: 1.25rem;

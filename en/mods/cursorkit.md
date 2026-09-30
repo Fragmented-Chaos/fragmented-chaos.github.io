@@ -40,14 +40,16 @@ Every state's image comes from an external pack — resource packs, cursor packs
   </ul>
 </div>
 
-## Install {: #install}
+<a id="install"></a>
+## Install
 
 1. Download `cursorkit-<version>-universal.jar` (one jar for all three loaders) and drop it into `.minecraft/mods/`
 2. In game: **Options → Video Settings → `Cursor`**
 
 No dependencies, and nothing to install on the server.
 
-## Getting started {: #start}
+<a id="start"></a>
+## Getting started
 
 **A fresh install only lists `Default (system cursor)`.** Add a cursor and it shows up:
 
@@ -69,7 +71,8 @@ Controls:
   <figcaption>The picker: a searchable pack list on the left (each row shows its origin and effect), the six state previews and per-state hotspots on the right.</figcaption>
 </figure>
 
-### Custom cursors {: #custom}
+<a id="custom"></a>
+### Custom cursors
 
 If you would rather use existing images than author a pack, select **`Custom (per-state paths)`** (second row) and click **`Edit paths…`**:
 
@@ -82,7 +85,8 @@ If you would rather use existing images than author a pack, select **`Custom (pe
   <figcaption>The per-state path editor: one path per state, gold when found and red with a question mark when not.</figcaption>
 </figure>
 
-### Per-state hotspot editor {: #hotspots}
+<a id="hotspots"></a>
+### Per-state hotspot editor
 
 **Hotspots do not have to be hardcoded in JSON.** Click **`Hotspots…`** in the top-right corner of the picker to open a dedicated editor: every state of that set with its current value on the left (changed ones in gold), a magnified image with a pixel grid on the right.
 
@@ -97,7 +101,8 @@ Because this edits your config rather than the pack itself, **sets that live ins
   <figcaption>The hotspot editor: click or drag to move it, arrow keys to fine-tune — every change applies instantly.</figcaption>
 </figure>
 
-## Features {: #features}
+<a id="features"></a>
+## Features
 
 <ul class="feature-grid">
   <li class="feature">
@@ -134,7 +139,8 @@ Because this edits your config rather than the pack itself, **sets that live ins
   </li>
 </ul>
 
-## Authoring cursor packs {: #packs}
+<a id="packs"></a>
+## Authoring cursor packs
 
 A cursor set is one JSON file plus its textures. For a quick look: drop a 32×32 PNG into `config/cursorkit/` and it works, then add a JSON file with the same name for the other states.
 
@@ -148,7 +154,8 @@ Resource packs and cursor packs share the same internal layout (`assets/<namespa
 
 **The full field table, image rules, hotspots, animation and effect parameters live in [Authoring cursor packs]({{ '/en/mods/cursorkit/packs/' | relative_url }})**; the repository's `examples/` folder has packs to copy from.
 
-## Click effects {: #effects}
+<a id="effects"></a>
+## Click effects
 
 `click_effect` is an optional block in the cursor set JSON and **travels with the pack**: a different pack gives different click feedback. Each press spawns the effect **at the click position**; the cursor itself never moves, so aiming is unaffected.
 
@@ -162,7 +169,8 @@ Resource packs and cursor packs share the same internal layout (`assets/<namespa
 
 Colour, radius, duration, particle count and the `image` strip parameters are in [Authoring cursor packs]({{ '/en/mods/cursorkit/packs/' | relative_url }}). The `Click effect` switch at the bottom of the screen is the master switch, and it also plays for `Default (system cursor)`.
 
-## Configuration {: #config}
+<a id="config"></a>
+## Configuration
 
 The config lives in `config/cursorkit.json` (created on first launch):
 
@@ -189,7 +197,8 @@ The config lives in `config/cursorkit.json` (created on first launch):
 | `custom_effect` | ripple | The handmade set's own click effect; same syntax as a pack's `click_effect` |
 | `hotspots` | none | Click points changed in the hotspot editor, shaped `{"set-id": {"state": [x, y]}}` |
 
-## State resolution {: #states}
+<a id="states"></a>
+## State resolution
 
 | State | Shown when | Source |
 |-------|-----------|--------|
@@ -206,7 +215,8 @@ Since Minecraft 26.3 requests a cursor type for every widget, this works **in ev
 
 Two edge behaviours: **while in-game with the camera locked the cursor is not taken over at all**, and pushing the pointer to the very edge of the window brings the system cursor back (`edge_margin` controls how wide that band is).
 
-## API for other mods {: #api}
+<a id="api"></a>
+## API for other mods
 
 ```java
 CursorStateProviders.register((screen, mouseX, mouseY, context) -> {
@@ -219,7 +229,8 @@ CursorStateProviders.register((screen, mouseX, mouseY, context) -> {
 
 Providers are asked in registration order and the first non-`null` answer wins; `context` exposes the vanilla request type, whether a drag is in progress and whether the game is busy. The model classes (`CursorState`, `CursorSet`, …) are free of Minecraft types, which keeps them easy to write against and easy to test.
 
-## FAQ {: #faq}
+<a id="faq"></a>
+## FAQ
 
 **I installed the mod but the cursor did not change.**
 Is the selected entry `Default (system cursor)`? Is `enabled` in `config/cursorkit.json` set to `false`? And check that there is anything to pick at all — a fresh install has no packs, so put one into `config/cursorkit/packs/` and it will show up.
