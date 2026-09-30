@@ -4,8 +4,8 @@ lang: en
 key: safespawn
 title: SafeSpawn
 permalink: /en/mods/safespawn/
-card_mc: "26.1+ (also 1.21.4–1.21.11)"
-card_loaders: "Fabric · NeoForge · Quilt"
+card_mc: "26.1 and newer<br>1.21.4 – 1.21.11"
+card_loaders: "Fabric · NeoForge<br>(1.21.4–1.21.11 Fabric only)"
 card_requires: "None"
 card_license: "MIT"
 ---

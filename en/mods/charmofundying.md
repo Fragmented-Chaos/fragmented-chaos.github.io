@@ -4,7 +4,7 @@ lang: en
 key: charmofundying
 title: "Charm of Undying: Reborn"
 permalink: /en/mods/charmofundying/
-card_mc: "26.3 (separate builds for 26.1.x / 26.2)"
+card_mc: "26.1 and newer<br>dedicated builds for 26.1 / 26.2 / 26.3"
 card_loaders: "Fabric · NeoForge"
 card_requires: "Fabric: Fabric API + Trinkets; NeoForge: Curios or Trinkets"
 card_license: "MIT"
