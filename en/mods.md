@@ -15,7 +15,6 @@ These are the mods I build for Minecraft.
       <span class="mod-card-title">Cursor Kit</span>
       <span class="mod-card-desc">Custom HD cursors with six states, frame animation and per-state hotspots; click effects follow the cursor pack.</span>
       <span class="mod-card-meta">
-        <span class="badge">Minecraft 26.3</span>
         <span class="badge">Fabric · NeoForge · Quilt</span>
         <span class="badge">Read the guide →</span>
       </span>
@@ -27,7 +26,6 @@ These are the mods I build for Minecraft.
       <span class="mod-card-title">Charm of Undying: Reborn</span>
       <span class="mod-card-desc">A Totem of Undying in your charm slot saves you from death — no need to hold it.</span>
       <span class="mod-card-meta">
-        <span class="badge">Minecraft 26.3</span>
         <span class="badge">Fabric · NeoForge</span>
       </span>
     </a>
@@ -38,7 +36,6 @@ These are the mods I build for Minecraft.
       <span class="mod-card-title">SafeSpawn</span>
       <span class="mod-card-desc">Restores fall-damage immunity on relog and fixes the missing spawn invulnerability.</span>
       <span class="mod-card-meta">
-        <span class="badge">Minecraft 26.3</span>
         <span class="badge">Fabric · NeoForge · Quilt</span>
       </span>
     </a>
