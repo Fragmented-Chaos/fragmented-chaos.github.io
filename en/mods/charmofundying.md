@@ -6,6 +6,7 @@ title: "Charm of Undying: Reborn"
 permalink: /en/mods/charmofundying/
 modrinth: "charm-of-undying-reborn"
 curseforge: "charm-of-undying-reborn"
+curseforge_id: ""
 card_mc: "26.1–26.3"
 card_loaders: "Fabric · NeoForge"
 card_requires: "Fabric: Fabric API + Trinkets; NeoForge: Curios or Trinkets"

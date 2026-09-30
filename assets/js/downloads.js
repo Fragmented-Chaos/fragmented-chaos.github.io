@@ -49,6 +49,7 @@
   Array.prototype.forEach.call(cards, function (card) {
     var modrinth = card.getAttribute('data-modrinth');
     var curseforge = card.getAttribute('data-curseforge');
+    var curseforgeId = card.getAttribute('data-curseforge-id');
     var jobs = [];
 
     if (modrinth) {
@@ -59,9 +60,14 @@
       drop(card, 'modrinth');
     }
 
-    if (curseforge) {
+    // 数字 ID 比 slug 稳（slug 会变），有 ID 就优先用 ID
+    var cfUrl = curseforgeId
+      ? 'https://api.cfwidget.com/' + encodeURIComponent(curseforgeId)
+      : (curseforge ? 'https://api.cfwidget.com/minecraft/mc-mods/' + encodeURIComponent(curseforge) : null);
+
+    if (cfUrl) {
       jobs.push(load(card, 'curseforge',
-        'https://api.cfwidget.com/minecraft/mc-mods/' + encodeURIComponent(curseforge),
+        cfUrl,
         function (d) { return d && d.downloads ? d.downloads.total : null; }));
     } else {
       drop(card, 'curseforge');
