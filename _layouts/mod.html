@@ -1,0 +1,32 @@
+---
+layout: default
+---
+{%- assign lang = page.lang | default: site.lang -%}
+{%- assign t = site.data.i18n[lang] -%}
+
+<div class="mod-layout">
+  <article class="mod-main page-body">
+    {% if page.title %}
+    <h1 class="page-title">{{ page.title }}</h1>
+    {% endif %}
+    {{ content }}
+  </article>
+
+  <aside class="mod-side">
+    <div class="version-card">
+      <h2 class="version-card-title">{{ t.card_title }}</h2>
+      <dl class="version-list">
+        <dt>{{ t.card_mc }}</dt>
+        <dd>{{ page.card_mc }}</dd>
+        <dt>{{ t.card_loaders }}</dt>
+        <dd>{{ page.card_loaders }}</dd>
+        <dt>{{ t.card_requires }}</dt>
+        <dd>{{ page.card_requires }}</dd>
+        <dt>{{ t.card_version }}</dt>
+        <dd>{{ page.card_version }}</dd>
+        <dt>{{ t.card_license }}</dt>
+        <dd>{{ page.card_license }}</dd>
+      </dl>
+    </div>
+  </aside>
+</div>

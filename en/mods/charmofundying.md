@@ -1,9 +1,14 @@
 ---
-layout: page
+layout: mod
 lang: en
 key: charmofundying
 title: "Charm of Undying: Reborn"
 permalink: /en/mods/charmofundying/
+card_mc: "26.3 and newer"
+card_loaders: "Fabric · NeoForge"
+card_requires: "Fabric: Fabric API + Trinkets; NeoForge: Curios or Trinkets"
+card_version: "1.1.0-alpha.2+26.3"
+card_license: "MIT"
 ---
 
 <div class="mod-hero">
@@ -23,6 +28,8 @@ permalink: /en/mods/charmofundying/
 </div>
 
 ## Usage
+
+You need a trinket mod first: Trinkets (plus Fabric API) on Fabric, or Curios / Trinkets on NeoForge.
 
 1. Open the trinket screen (Trinkets' / Curios' default key)
 2. Put a **Totem of Undying** into the **Charm** slot

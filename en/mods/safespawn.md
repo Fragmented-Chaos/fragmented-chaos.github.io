@@ -1,9 +1,14 @@
 ---
-layout: page
+layout: mod
 lang: en
 key: safespawn
 title: SafeSpawn
 permalink: /en/mods/safespawn/
+card_mc: "26.3 and newer"
+card_loaders: "Fabric · NeoForge · Quilt"
+card_requires: "None"
+card_version: "1.0.2+26.3"
+card_license: "MIT"
 ---
 
 <div class="mod-hero">

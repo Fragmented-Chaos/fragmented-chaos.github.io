@@ -1256,3 +1256,71 @@ a:hover {
     font-size: 0.8rem;
   }
 }
+
+/* ---------- 模组介绍页：正文 + 右侧支持版本信息卡 ---------- */
+.mod-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 15rem;
+  gap: 2.5rem;
+  max-width: 62rem;
+  margin: 0 auto;
+  padding: 1rem 1.25rem;
+  align-items: start;
+}
+
+.mod-main {
+  min-width: 0;
+}
+
+.mod-side {
+  position: sticky;
+  top: 4.5rem;
+}
+
+.version-card {
+  padding: 1rem 1.1rem;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background-color: var(--card);
+  box-shadow: var(--shadow-sm);
+}
+
+.version-card .version-card-title {
+  margin: 0 0 0.75rem;
+  padding: 0;
+  border: 0;
+  font-size: 0.95rem;
+  font-weight: 700;
+}
+
+.version-list {
+  margin: 0;
+  font-size: 0.85rem;
+  line-height: 1.5;
+}
+
+.version-list dt {
+  margin-top: 0.65rem;
+  color: var(--muted-foreground);
+  font-weight: 600;
+}
+
+.version-list dt:first-child {
+  margin-top: 0;
+}
+
+.version-list dd {
+  margin: 0.15rem 0 0;
+  color: var(--foreground);
+}
+
+@media screen and (max-width: 900px) {
+  .mod-layout {
+    grid-template-columns: 1fr;
+    gap: 1.75rem;
+  }
+
+  .mod-side {
+    position: static;
+  }
+}

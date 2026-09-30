@@ -1,9 +1,14 @@
 ---
-layout: page
+layout: mod
 lang: en
 key: cursorkit
 title: Cursor Kit
 permalink: /en/mods/cursorkit/
+card_mc: "26.3 and newer"
+card_loaders: "Fabric · NeoForge · Quilt"
+card_requires: "None (client-side)"
+card_version: "0.1.0+26.3"
+card_license: "LGPL-3.0"
 ---
 
 <div class="mod-hero">

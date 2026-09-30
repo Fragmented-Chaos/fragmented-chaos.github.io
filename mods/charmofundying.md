@@ -1,9 +1,14 @@
 ---
-layout: page
+layout: mod
 lang: zh
 key: charmofundying
 title: Charm of Undying：Reborn
 permalink: /mods/charmofundying/
+card_mc: "26.3 及以上"
+card_loaders: "Fabric · NeoForge"
+card_requires: "Fabric：Fabric API + Trinkets；NeoForge：Curios 或 Trinkets"
+card_version: "1.1.0-alpha.2+26.3"
+card_license: "MIT"
 ---
 
 <div class="mod-hero">
@@ -23,6 +28,8 @@ permalink: /mods/charmofundying/
 </div>
 
 ## 使用
+
+需要先装饰品模组：Fabric 用 Trinkets（并装 Fabric API），NeoForge 用 Curios 或 Trinkets。
 
 1. 打开饰品界面（Trinkets / Curios 的快捷键）
 2. 把**不死图腾**放进 **护符（Charm）** 槽
