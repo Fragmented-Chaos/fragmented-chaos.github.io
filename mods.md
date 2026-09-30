@@ -34,7 +34,7 @@ permalink: /mods/
     <a class="mod-card" href="{{ '/mods/safespawn/' | relative_url }}">
       <img class="mod-card-icon" src="{{ '/assets/images/safespawn/icon.png' | relative_url }}" alt="SafeSpawn 图标">
       <span class="mod-card-title">SafeSpawn</span>
-      <span class="mod-card-desc">还原 MC-212 与 MC-21650（24w45a 被改掉的行为），并修复 MC-278261。</span>
+      <span class="mod-card-desc">还原 MC-212 与 MC-21650（在 24w45a 版本被修复），并修复 MC-278261。</span>
       <span class="mod-card-meta">
         <span class="badge">Fabric · NeoForge · Quilt</span>
       </span>
