@@ -16,7 +16,7 @@ card_license: "MIT"
 <div class="mod-hero">
   <img class="mod-icon" src="{{ '/assets/images/safespawn/icon.png' | relative_url }}" alt="SafeSpawn 图标" width="96" height="96">
   <div>
-    <p class="mod-tagline">把「重进存档摔死」和「重生后没有无敌」这两个原版问题修回来。</p>
+    <p class="mod-tagline">还原 MC-212 与 MC-21650（24w45a 被改掉的行为），并修复 MC-278261。</p>
   </div>
   <p class="mod-actions">
     <a class="btn btn-primary" href="https://modrinth.com/mod/safespawn" target="_blank" rel="noopener">Modrinth</a>

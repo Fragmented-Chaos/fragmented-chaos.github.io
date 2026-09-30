@@ -16,7 +16,7 @@ card_license: "MIT"
 <div class="mod-hero">
   <img class="mod-icon" src="{{ '/assets/images/safespawn/icon.png' | relative_url }}" alt="SafeSpawn icon" width="96" height="96">
   <div>
-    <p class="mod-tagline">Brings back the old behaviour for fall damage on relog, and fixes the missing spawn invulnerability.</p>
+    <p class="mod-tagline">This mod restores MC-212 and MC-21650 (which were fixed in 24w45a), and also fixes MC-278261.</p>
   </div>
   <p class="mod-actions">
     <a class="btn btn-primary" href="https://modrinth.com/mod/safespawn" target="_blank" rel="noopener">Modrinth</a>

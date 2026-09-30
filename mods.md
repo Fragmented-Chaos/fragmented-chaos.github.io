@@ -24,7 +24,7 @@ permalink: /mods/
     <a class="mod-card" href="{{ '/mods/charmofundying/' | relative_url }}">
       <img class="mod-card-icon" src="{{ '/assets/images/charmofundying/icon.png' | relative_url }}" alt="Charm of Undying: Reborn 图标">
       <span class="mod-card-title">Charm of Undying：Reborn</span>
-      <span class="mod-card-desc">不死图腾放进饰品栏的护符槽，死亡时自动复活，不用手持。</span>
+      <span class="mod-card-desc">为不死图腾新增一个饰品槽位。</span>
       <span class="mod-card-meta">
         <span class="badge">Fabric · NeoForge</span>
       </span>
@@ -34,7 +34,7 @@ permalink: /mods/
     <a class="mod-card" href="{{ '/mods/safespawn/' | relative_url }}">
       <img class="mod-card-icon" src="{{ '/assets/images/safespawn/icon.png' | relative_url }}" alt="SafeSpawn 图标">
       <span class="mod-card-title">SafeSpawn</span>
-      <span class="mod-card-desc">修回「重进存档摔死」和「重生后没有无敌」两个原版问题。</span>
+      <span class="mod-card-desc">还原 MC-212 与 MC-21650（24w45a 被改掉的行为），并修复 MC-278261。</span>
       <span class="mod-card-meta">
         <span class="badge">Fabric · NeoForge · Quilt</span>
       </span>

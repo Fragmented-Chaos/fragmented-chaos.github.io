@@ -16,7 +16,7 @@ card_license: "MIT"
 <div class="mod-hero">
   <img class="mod-icon" src="{{ '/assets/images/charmofundying/icon.png' | relative_url }}" alt="Charm of Undying: Reborn icon" width="96" height="96">
   <div>
-    <p class="mod-tagline">A Totem of Undying in your charm slot saves you from death automatically.</p>
+    <p class="mod-tagline">Adds a slot for Totems of Undying</p>
   </div>
   <p class="mod-actions">
     <a class="btn btn-primary" href="https://github.com/Fragmented-Chaos/Charm-of-Undying-Reborn/releases" target="_blank" rel="noopener">Download</a>

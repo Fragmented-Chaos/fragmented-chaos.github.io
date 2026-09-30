@@ -16,7 +16,7 @@ card_license: "MIT"
 <div class="mod-hero">
   <img class="mod-icon" src="{{ '/assets/images/charmofundying/icon.png' | relative_url }}" alt="Charm of Undying: Reborn 图标" width="96" height="96">
   <div>
-    <p class="mod-tagline">不死图腾放进饰品栏的护符槽，死亡时自动复活。</p>
+    <p class="mod-tagline">为不死图腾新增一个饰品槽位。</p>
   </div>
   <p class="mod-actions">
     <a class="btn btn-primary" href="https://github.com/Fragmented-Chaos/Charm-of-Undying-Reborn/releases" target="_blank" rel="noopener">下载</a>
