@@ -4,6 +4,8 @@ lang: zh
 key: safespawn
 title: SafeSpawn
 permalink: /mods/safespawn/
+modrinth: "safespawn"
+curseforge: "safespawn"
 card_mc: "1.21.4–1.21.11, 26.1–26.3"
 card_loaders: "Fabric · NeoForge · Quilt"
 card_requires: "无"

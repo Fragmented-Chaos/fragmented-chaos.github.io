@@ -37,6 +37,7 @@ zh:
   card_loaders: 加载器
   card_requires: 前置
   card_license: 许可证
+  card_downloads: 下载量
   error_msg: 页面不存在
   error_link: 返回起始页
 
@@ -79,5 +80,6 @@ en:
   card_loaders: Loaders
   card_requires: Requires
   card_license: License
+  card_downloads: Downloads
   error_msg: Page not found
   error_link: Back to home

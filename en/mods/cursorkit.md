@@ -4,6 +4,8 @@ lang: en
 key: cursorkit
 title: Cursor Kit
 permalink: /en/mods/cursorkit/
+modrinth: ""
+curseforge: ""
 card_mc: "26.3"
 card_loaders: "Fabric · NeoForge · Quilt"
 card_requires: "None (client-side)"

@@ -1324,3 +1324,21 @@ a:hover {
     position: static;
   }
 }
+
+.version-downloads .dl-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.version-downloads .dl-row + .dl-row {
+  margin-top: 0.15rem;
+}
+
+.dl-platform {
+  color: var(--muted-foreground);
+}
+
+.dl-count {
+  font-variant-numeric: tabular-nums;
+}
