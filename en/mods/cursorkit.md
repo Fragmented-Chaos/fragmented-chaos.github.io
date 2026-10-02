@@ -181,7 +181,7 @@ The config lives in `config/cursorkit.json` (created on first launch):
 | Field | Default | Meaning |
 |-------|---------|---------|
 | `enabled` | `true` | Master switch; when off the system cursor is fully restored |
-| `selected_set` | `""` | Id of the current set (file name without extension). **Empty = system cursor**; if it points at a deleted set the loader falls back to the first available one |
+| `selected_set` | `""` | Id of the current set (file name without extension). **Empty = system cursor**; if it points at a deleted set the cursor is handed back to the system instead of jumping to another set |
 | `scale` | `1` | Extra integer scale, multiplied with the set's own `scale` |
 | `animate` | `true` | When off the cursor is **pinned to the static `default` image**: no state switching and no animation |
 | `click_effect` | `true` | Master switch for click effects (a boolean) |
