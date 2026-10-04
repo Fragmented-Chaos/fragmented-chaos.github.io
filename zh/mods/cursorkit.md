@@ -3,7 +3,7 @@ layout: mod
 lang: zh
 key: cursorkit
 title: Cursor Kit
-permalink: /mods/cursorkit/
+permalink: /zh/mods/cursorkit/
 modrinth: ""
 curseforge: ""
 curseforge_id: ""
@@ -11,6 +11,9 @@ card_mc: "26.3"
 card_loaders: "Fabric · NeoForge · Quilt"
 card_requires: "无（纯客户端）"
 card_license: "LGPL-3.0"
+# 旧地址保留 301 重定向（原来在 /mods/cursorkit/）
+redirect_from:
+  - /mods/cursorkit/
 ---
 
 <div class="mod-hero">

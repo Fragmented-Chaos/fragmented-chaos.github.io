@@ -3,7 +3,10 @@ layout: page
 lang: zh
 key: mods
 title: 模组
-permalink: /mods/
+permalink: /zh/mods/
+# 旧地址保留 301 重定向（原来在 /mods/）
+redirect_from:
+  - /mods/
 ---
 
 这是我为 Minecraft 写的模组。

@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 {%- assign lang = page.lang | default: site.lang -%}
-{%- assign other = "en" -%}
-{%- if lang == "en" -%}{%- assign other = "zh" -%}{%- endif -%}
+{%- assign t = site.data.i18n[lang] -%}
 <html lang="{{ lang }}">
   <head>
     <meta charset="utf-8">
@@ -9,10 +8,10 @@
     <title>{{ site.title }}</title>
     <meta name="description" content="{{ site.description | strip_html | strip_newlines | truncate: 160 }}">
     <link rel="stylesheet" href="{{ '/assets/main.css' | relative_url }}">
-    <link rel="icon" href="{{ '/assets/images/logo.png' | relative_url }}">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" href="{{ '/assets/images/logo.jpg' | relative_url }}">
+    <!-- 字体自托管（assets/fonts/，许可见 OFL.txt），不再外链 Google Fonts。 -->
+    <link rel="preload" href="{{ '/assets/fonts/quicksand-latin.woff2' | relative_url }}" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="{{ '/assets/fonts/caveat-latin.woff2' | relative_url }}" as="font" type="font/woff2" crossorigin>
   </head>
   <body class="bare-body">
     <main class="page-content">
@@ -21,20 +20,40 @@
 
     <script>
     (function () {
+      // 首次访问按浏览器语言挑版本；繁体（zh-TW/HK/MO/Hant）优先判断，否则会落到简体
       var KEY = 'fragmentedchaos-lang';
       var current = '{{ lang }}';
-      var otherHref = '{% if page.key %}{{ site.data.pages[page.key][other] | relative_url }}{% endif %}';
+      var urls = {
+        'zh': '{% if page.key %}{{ site.data.pages[page.key]["zh"] | relative_url }}{% endif %}',
+        'zh-hant': '{% if page.key %}{{ site.data.pages[page.key]["zh-hant"] | relative_url }}{% endif %}',
+        'en': '{% if page.key %}{{ site.data.pages[page.key]["en"] | relative_url }}{% endif %}'
+      };
       var saved = null;
       try { saved = localStorage.getItem(KEY); } catch (e) {}
-      var pref = saved;
-      if (!pref) {
-        var nav = ((navigator.language || (navigator.languages && navigator.languages[0]) || '') + '').toLowerCase();
-        pref = nav.indexOf('zh') === 0 ? 'zh' : 'en';
+
+      function fromBrowser() {
+        var tags = navigator.languages && navigator.languages.length
+          ? navigator.languages : [navigator.language || ''];
+        for (var i = 0; i < tags.length; i++) {
+          var tag = String(tags[i]).toLowerCase();
+          if (/^zh-(tw|hk|mo|hant)/.test(tag)) return 'zh-hant';
+          if (/^zh/.test(tag)) return 'zh';
+          if (/^en/.test(tag)) return 'en';
+        }
+        return 'en';
       }
-      if (pref !== current && otherHref) {
+
+      var pref = saved || fromBrowser();
+      if (urls[pref] && pref !== current) {
         try { localStorage.setItem(KEY, pref); } catch (e) {}
-        window.location.replace(otherHref);
+        window.location.replace(urls[pref]);
       }
+
+      document.addEventListener('click', function (event) {
+        var link = event.target.closest ? event.target.closest('.lang-link[data-lang]') : null;
+        if (!link) return;
+        try { localStorage.setItem(KEY, link.getAttribute('data-lang')); } catch (e) {}
+      });
     })();
     (function () {
       var btn = document.getElementById('theme-toggle');

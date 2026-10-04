@@ -6,13 +6,43 @@ layout: default
 
 <div class="about">
   <header class="about-header">
-    <img class="about-avatar" src="{{ '/assets/images/logo.png' | relative_url }}" alt="Fragmented_Chaos 头像" />
+    <img class="about-avatar" src="{{ '/assets/images/logo.jpg' | relative_url }}" alt="Fragmented_Chaos 头像" />
     <h1 class="about-name">Fragmented_Chaos</h1>
   </header>
 
   <div class="about-body">
     {{ content }}
   </div>
+
+  {%- comment -%}
+    站点统计小卡：数字都在渲染时算，不用手工维护。
+    - 页面数：全部页面减去两个 404 与 sitemap
+    - 运行天数：建站日期到本次构建时间；除以 86400 后取整（Jekyll 是整数除法、
+      liquidjs 会得到小数，所以显式 floor，保证本地预览与线上一致）
+  {%- endcomment -%}
+  {%- assign stats_pages = 0 -%}
+  {%- for p in site.pages -%}
+    {%- unless p.url contains "404" or p.url contains "sitemap" -%}
+      {%- assign stats_pages = stats_pages | plus: 1 -%}
+    {%- endunless -%}
+  {%- endfor -%}
+  {%- assign since_epoch = site.data.site.since | date: "%s" -%}
+  {%- assign now_epoch = site.time | date: "%s" -%}
+  {%- assign stats_days = now_epoch | minus: since_epoch | divided_by: 86400 | floor -%}
+
+  <section class="site-stats">
+    <h2 class="site-stats-title">{{ t.stats_title }}</h2>
+    <ul class="site-stats-list">
+      <li>
+        <span class="site-stats-value">{{ stats_pages }}</span>
+        <span class="site-stats-label">{{ t.stats_pages }}</span>
+      </li>
+      <li>
+        <span class="site-stats-value">{{ stats_days }}<small class="site-stats-unit">{{ t.stats_days_unit }}</small></span>
+        <span class="site-stats-label">{{ t.stats_days }}</span>
+      </li>
+    </ul>
+  </section>
 
   <section class="about-social">
     <h2>{{ t.about_follow }}</h2>

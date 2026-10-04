@@ -1,6 +1,8 @@
 title: Fragmented_Chaos
 author: Fragmented_Chaos
 lang: zh
+# 构建时间按国内时区显示，否则 GitHub Pages 用 UTC，凌晨推送会显示成前一天。
+timezone: Asia/Shanghai
 email: ""
 description: 个人主页 of Fragmented_Chaos，欢迎交流。
 baseurl: ""
@@ -11,8 +13,12 @@ github_username: Fragmented-Chaos
 markdown: kramdown
 plugins:
   - jekyll-seo-tag
+  # 简体页面挪到 /zh/ 后，旧地址用 301 重定向保留（该插件在 GitHub Pages 白名单里）
+  - jekyll-redirect-from
 
 exclude:
+  - README.md # 仓库说明，不属于站点内容
+  - scripts # 构建脚本，不需要发布到站点上
   - Gemfile
   - Gemfile.lock
   - node_modules
@@ -20,4 +26,3 @@ exclude:
   - vendor/cache/
   - vendor/gems/
   - vendor/ruby/
-  - _sass/custom.scss.bak

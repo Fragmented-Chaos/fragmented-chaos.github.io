@@ -79,4 +79,47 @@
     }
     Promise.all(jobs).then(function () { hideIfEmpty(card); });
   });
+
+  /* 最新版本号：从 Modrinth 读，省得每次发版都回来手改站点。
+     没有 Modrinth 项目（或接口失败）时整行连同标签一起消失，不留空壳。 */
+  Array.prototype.forEach.call(document.querySelectorAll('.version-latest'), function (row) {
+    var slug = row.getAttribute('data-modrinth');
+    if (!slug) {
+      dropLatest(row);
+      return;
+    }
+    fetch('https://api.modrinth.com/v2/project/' + encodeURIComponent(slug) + '/version?limit=1',
+      { headers: { Accept: 'application/json' } })
+      .then(function (res) {
+        if (!res.ok) throw new Error(String(res.status));
+        return res.json();
+      })
+      .then(function (data) {
+        if (!data || !data.length) throw new Error('no versions');
+        var latest = data[0];
+        row.textContent = '';
+        var link = document.createElement('a');
+        link.className = 'version-latest-link';
+        link.href = 'https://modrinth.com/mod/' + encodeURIComponent(slug) + '/version/' + latest.id;
+        link.target = '_blank';
+        link.rel = 'noopener';
+        link.textContent = latest.version_number;
+        row.appendChild(link);
+        if (latest.date_published) {
+          var when = document.createElement('span');
+          when.className = 'version-latest-date';
+          when.textContent = latest.date_published.slice(0, 10);
+          row.appendChild(when);
+        }
+      })
+      .catch(function () {
+        dropLatest(row);
+      });
+  });
+
+  function dropLatest(row) {
+    var label = row.previousElementSibling;
+    if (label && label.classList.contains('version-latest-label')) label.parentNode.removeChild(label);
+    if (row.parentNode) row.parentNode.removeChild(row);
+  }
 })();

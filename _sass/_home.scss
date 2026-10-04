@@ -1,0 +1,221 @@
+/* ---------- 起始页 ---------- */
+.bare-body {
+  background-image: radial-gradient(
+      circle at 20% 0%,
+      rgba(37, 99, 235, 0.08),
+      transparent 45%
+    ),
+    radial-gradient(
+      circle at 80% 100%,
+      rgba(37, 99, 235, 0.06),
+      transparent 45%
+    );
+}
+
+.landing {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+}
+
+.landing-inner {
+  max-width: 30rem;
+  width: 100%;
+  text-align: center;
+  padding: 3rem 2rem;
+}
+
+.landing-title {
+  margin: 0 0 0.75rem;
+  font-family: var(--font-hand);
+  font-size: 3rem;
+  font-weight: 700;
+  color: var(--foreground);
+  line-height: 1.1;
+}
+
+.landing-sub {
+  margin: 0 0 2rem;
+  color: var(--muted-foreground);
+  font-size: 1.05rem;
+}
+
+.landing-btn {
+  display: inline-block;
+  padding: 0.7rem 2rem;
+  border: 2px solid var(--foreground);
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: var(--foreground);
+  background-color: transparent;
+  transition: background-color 0.15s ease, color 0.15s ease,
+    border-color 0.15s ease;
+}
+
+.landing-btn:visited {
+  color: var(--foreground);
+}
+
+.landing-btn:hover {
+  background-color: var(--foreground);
+  color: var(--background);
+  text-decoration: none;
+  border-color: var(--foreground);
+}
+
+.landing-theme-toggle {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  z-index: 20;
+  background-color: color-mix(in srgb, var(--card) 80%, transparent);
+  backdrop-filter: blur(4px);
+}
+
+/* ---------- 介绍页 ---------- */
+.hero {
+  max-width: 44rem;
+  margin: 0 auto;
+  padding: 2rem 1.25rem;
+  display: grid;
+  grid-template-columns: 0.9fr 1.1fr;
+  align-items: center;
+  gap: 3rem;
+  min-height: calc(100vh - 8rem);
+}
+
+.hero-visual {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  grid-column: 1;
+  grid-row: 1;
+}
+
+.hero-text {
+  grid-column: 2;
+  grid-row: 1;
+}
+
+.hero-title {
+  margin: 0 0 0.6rem;
+  font-family: var(--font-hand);
+  font-size: 3.2rem;
+  font-weight: 700;
+  color: var(--foreground);
+  letter-spacing: 0.5px;
+  line-height: 1.1;
+}
+
+.hero-aliases {
+  margin: 0 0 1rem;
+  color: var(--muted-foreground);
+  font-size: 0.95rem;
+}
+
+.alias {
+  font-weight: 600;
+  color: var(--foreground);
+}
+
+.hero-intro {
+  margin: 0 0 1.75rem;
+  font-size: 1.1rem;
+  line-height: 1.7;
+  max-width: 26rem;
+}
+
+.hero-intro strong {
+  color: var(--accent);
+}
+
+.hero-social {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.85rem;
+}
+
+.hero-visual {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.hero-avatar-frame {
+  display: block;
+  width: 16rem;
+  height: 16rem;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.hero-avatar-frame:hover {
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent) 40%, transparent),
+    var(--shadow-md);
+}
+
+.hero-avatar-frame:visited {
+  color: inherit;
+}
+
+.hero-avatar {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.social-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 3rem;
+  height: 3rem;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  color: var(--muted-foreground);
+  background-color: var(--card);
+  box-shadow: var(--shadow-sm);
+  transition: color 0.15s ease, border-color 0.15s ease,
+    transform 0.15s ease, box-shadow 0.2s ease;
+}
+
+.social-btn svg {
+  width: 1.4rem;
+  height: 1.4rem;
+}
+
+.social-btn:visited {
+  color: var(--muted-foreground);
+}
+
+.social-btn:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+  text-decoration: none;
+}
+
+.social-btn:hover::after {
+  content: attr(aria-label);
+  position: absolute;
+  bottom: calc(100% + 0.5rem);
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 0.25rem 0.5rem;
+  border-radius: 5px;
+  background-color: var(--foreground);
+  color: var(--background);
+  font-size: 0.75rem;
+  font-weight: 600;
+  white-space: nowrap;
+  z-index: 10;
+}

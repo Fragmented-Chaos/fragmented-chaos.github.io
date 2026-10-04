@@ -1,0 +1,167 @@
+/* ---------- 音乐页 ---------- */
+/* 页面上只有两样东西：顶部那句说明，和一张卡片。
+   卡片里是"选曲列表 + 官方播放器槽"—— 没有自建播放控件，
+   因为平台播放器是跨域 iframe，播放/暂停/进度/音量从外部控制不了。 */
+
+/* 顶部说明（“这是测试页”）用提示色，和普通说明文字区分开 */
+.music-note {
+  margin: 0 0 1.25rem;
+  padding: 0.75rem 1rem;
+  border: 1px dashed color-mix(in srgb, var(--danger) 55%, transparent);
+  border-radius: 10px;
+  color: var(--danger);
+  font-size: 0.85rem;
+  line-height: 1.7;
+}
+
+.music-card {
+  padding: 1.1rem 1.25rem 1.25rem;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background-color: var(--card);
+  box-shadow: var(--shadow-sm);
+}
+
+/* 官方播放器槽：选中某首后才出现 */
+.embed-slot {
+  margin-bottom: 0.9rem;
+}
+
+.embed-slot-empty {
+  margin: 0;
+  padding: 0.8rem 1rem;
+  border: 1px dashed var(--border);
+  border-radius: 10px;
+  color: var(--muted-foreground);
+  font-size: 0.85rem;
+  line-height: 1.7;
+}
+
+.embed-frame {
+  width: 100%;
+  border: 0;
+  border-radius: 10px;
+  background-color: var(--muted);
+}
+
+.embed-external {
+  display: inline-block;
+  margin-top: 0.4rem;
+  font-size: 0.8rem;
+  color: var(--muted-foreground);
+}
+
+/* 选曲列表 */
+.player-list-title {
+  margin: 0 0 0.5rem;
+  color: var(--muted-foreground);
+  font-size: 0.82rem;
+}
+
+.player-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.player-track {
+  display: flex;
+  align-items: baseline;
+  gap: 0.6rem;
+  width: 100%;
+  padding: 0.5rem 0.6rem;
+  border: 0;
+  border-radius: 8px;
+  background: none;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.player-track:hover {
+  background-color: var(--muted);
+}
+
+.player-track.is-active {
+  background-color: var(--muted);
+}
+
+.player-track.is-active .player-track-name {
+  color: var(--accent);
+  font-weight: 700;
+}
+
+/* 正在播的那首：序号换成小三角 */
+.player-track.is-active .player-track-index {
+  color: var(--accent);
+  font-size: 0;
+}
+
+.player-track.is-active .player-track-index::before {
+  content: "▸";
+  font-size: 0.8rem;
+}
+
+.player-track-index {
+  flex: 0 0 1.2rem;
+  color: var(--muted-foreground);
+  font-size: 0.8rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.player-track-name {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.player-track-artist {
+  flex: 0 0 auto;
+  color: var(--muted-foreground);
+  font-size: 0.78rem;
+}
+
+/* 标明来源：现在只有网易云，留着以后加别的平台 */
+.player-track-source {
+  flex: 0 0 auto;
+  padding: 0.05rem 0.35rem;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  color: var(--muted-foreground);
+  font-size: 0.68rem;
+  line-height: 1.5;
+}
+
+/* 未配置时的提示 */
+.embed-hint {
+  margin: 0.75rem 0 0;
+  padding: 0.7rem 0.9rem;
+  border: 1px dashed var(--border);
+  border-radius: 10px;
+  color: var(--muted-foreground);
+  font-size: 0.85rem;
+  line-height: 1.7;
+}
+
+/* VIP 与音量的说明 */
+.embed-note {
+  margin: 0.75rem 0 0;
+  color: var(--muted-foreground);
+  font-size: 0.8rem;
+  line-height: 1.7;
+}
+
+@media screen and (max-width: 30rem) {
+  /* 窄屏：歌手名换行显示，别把歌名挤没 */
+  .player-track {
+    flex-wrap: wrap;
+  }
+
+  .player-track-artist {
+    flex-basis: 100%;
+    padding-left: 1.8rem;
+  }
+}

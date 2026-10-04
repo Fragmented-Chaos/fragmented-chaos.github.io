@@ -1,4 +1,29 @@
 ---
 ---
 
-@import "custom";
+// 样式入口。这里只负责按顺序引入 partial，具体规则在 _sass/ 里。
+// 顺序会影响层叠（后面的规则覆盖前面的），所以不要随意调整。
+//
+// base       全局：重置、hidden 兜底、配色变量、自托管字体、基础元素
+// header     顶部导航、主题/语言切换、移动端菜单按钮
+// footer     主内容容器与页脚（含页脚文字、时钟、访问量、最后更新的排版）
+// home       起始页（bare 布局）与介绍页（hero、社交按钮）
+// pages      关于页、经历页时间线、404 页
+// tetris     俄罗斯方块彩蛋
+// responsive 移动端适配（各页面在小屏下的调整）
+// mods       模组列表卡片与模组页（正文 + 右侧信息卡布局）
+// docs       文档型正文：标题、表格、代码块，以及代码块的复制按钮
+// widgets    全站小元素：跳过导航兜底、阅读进度条、回到顶部、站点统计卡
+// player     音乐播放器
+
+@import "base";
+@import "header";
+@import "footer";
+@import "home";
+@import "pages";
+@import "tetris";
+@import "responsive";
+@import "mods";
+@import "docs";
+@import "widgets";
+@import "player";

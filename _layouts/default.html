@@ -1,14 +1,28 @@
 <!DOCTYPE html>
 {%- assign lang = page.lang | default: site.lang -%}
 {%- assign t = site.data.i18n[lang] -%}
-{%- assign other = "en" -%}
-{%- if lang == "en" -%}{%- assign other = "zh" -%}{%- endif -%}
+{%- comment -%}
+  三种语言。名称用各自的写法（不翻译），这样任何语言的访客都认得自己那一项。
+  codes 的顺序就是切换器里显示的顺序。
+{%- endcomment -%}
+{%- assign lang_codes = "zh,zh-hant,en" | split: "," -%}
+{%- comment -%}
+    语言名各写各的字形：简体那条用简体字，繁体那条用繁体字 —— 看的人一眼能认出自己那项。
+  {%- endcomment -%}
+  {%- assign lang_names = "中文(简体),中文(繁體),English" | split: "," -%}
 <html lang="{{ lang }}">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{% if page.title %}{{ page.title }} · {% endif %}{{ site.title }}</title>
     <meta name="description" content="{{ page.excerpt | default: site.description | strip_html | strip_newlines | truncate: 160 }}">
+    {%- comment -%}
+      404 页不收录：GitHub Pages 通过 404.html 响应所有不存在的地址，被收录的话搜索结果里会多出一条
+      指向不存在页面的条目。永久重定向页同样不收录。
+    {%- endcomment -%}
+    {%- if page.permalink contains "404" or page.redirect_to -%}
+    <meta name="robots" content="noindex">
+    {%- endif -%}
     {%- if page.title -%}
     <meta property="og:title" content="{{ page.title }} · {{ site.title }}">
     {%- else -%}
@@ -16,10 +30,10 @@
     {%- endif -%}
     <meta property="og:type" content="website">
     <link rel="stylesheet" href="{{ '/assets/main.css' | relative_url }}">
-    <link rel="icon" href="{{ '/assets/images/logo.png' | relative_url }}">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" href="{{ '/assets/images/logo.jpg' | relative_url }}">
+    <!-- 字体自托管（assets/fonts/，许可见 OFL.txt），不再外链 Google Fonts。 -->
+    <link rel="preload" href="{{ '/assets/fonts/quicksand-latin.woff2' | relative_url }}" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="{{ '/assets/fonts/caveat-latin.woff2' | relative_url }}" as="font" type="font/woff2" crossorigin>
   </head>
   <body>
     <header class="site-header">
@@ -41,38 +55,107 @@
             <svg class="icon-sun" id="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
           </button>
           {%- if page.key -%}
-          <a class="nav-link lang-switch" href="{{ site.data.pages[page.key][other] | relative_url }}" onclick="try{localStorage.setItem('fragmentedchaos-lang','{{ other }}');}catch(e){}">{{ t.lang_switch }}</a>
+          {%- assign lang_current_name = lang -%}
+          {%- for code in lang_codes -%}{%- if code == lang -%}{%- assign lang_current_name = lang_names[forloop.index0] -%}{%- endif -%}{%- endfor -%}
+          <details class="lang-menu">
+            <summary class="lang-current" aria-label="{{ t.aria_lang }}">{{ lang_current_name }}<span class="lang-caret" aria-hidden="true">▾</span></summary>
+            <ul class="lang-list">
+              {%- for code in lang_codes -%}
+                {%- assign lname = lang_names[forloop.index0] -%}
+                <li>
+                {%- if code == lang -%}
+                  <span class="lang-link is-current" aria-current="true">{{ lname }}</span>
+                {%- else -%}
+                  <a class="lang-link" href="{{ site.data.pages[page.key][code] | relative_url }}" data-lang="{{ code }}">{{ lname }}</a>
+                {%- endif -%}
+                </li>
+              {%- endfor -%}
+            </ul>
+          </details>
           {%- endif -%}
         </nav>
       </div>
     </header>
 
-    <main class="page-content">
+    <main class="page-content" id="main">
       {{ content }}
     </main>
 
     <footer class="site-footer">
       <div class="container">
         <p class="footer-text">{{ t.footer }}</p>
+        <!-- 右侧一组：实时时钟 + 访问量。宽屏时整组贴到窗口右缘（见 custom.scss）。 -->
+        <p class="footer-meta">
+          <!-- 最后更新时间＝本站最后一次构建（GitHub Pages 每次推送都会重建） -->
+          <span class="footer-updated">
+            <span class="footer-updated-label">{{ t.footer_updated }}</span>
+            <time class="footer-updated-value" datetime="{{ site.time | date_to_xmlschema }}">{{ site.time | date: "%Y-%m-%d %H:%M:%S" }}</time>
+          </span>
+          <span class="footer-clock-item">
+            <span class="footer-clock-label">{{ t.footer_time }}</span>
+            <!-- 具体时间由脚本按访客本地时区填入；title 里带完整日期 -->
+            <time class="footer-clock" data-clock></time>
+          </span>
+          <!-- 访客计数：数据来自自建 Cloudflare Worker（见 ~/Dwvelop/visitor-worker）。
+               地址没配或 worker 不可用时整块隐藏；站长访问一次 /?owner=1 后本机不再计数。 -->
+          <span class="footer-visits" data-counter-api="https://cursorkit-visits.gentle-feather-b7ac.workers.dev" data-counter-target="cursorkit-site" hidden>
+            <span class="footer-visits-label">{{ t.footer_visits }}</span>
+            <span class="footer-visits-value"></span>
+          </span>
+        </p>
       </div>
     </footer>
 
     <script>
     (function () {
+      // 首次访问按浏览器语言挑一个版本；之后以 localStorage 里的选择为准。
+      // 但仅限“记得用户选过”或“浏览器语言和当前页不同”——避免来回弹跳。
       var KEY = 'fragmentedchaos-lang';
       var current = '{{ lang }}';
-      var otherHref = '{% if page.key %}{{ site.data.pages[page.key][other] | relative_url }}{% endif %}';
+      var urls = {
+        'zh': '{% if page.key %}{{ site.data.pages[page.key]["zh"] | relative_url }}{% endif %}',
+        'zh-hant': '{% if page.key %}{{ site.data.pages[page.key]["zh-hant"] | relative_url }}{% endif %}',
+        'en': '{% if page.key %}{{ site.data.pages[page.key]["en"] | relative_url }}{% endif %}'
+      };
       var saved = null;
       try { saved = localStorage.getItem(KEY); } catch (e) {}
-      var pref = saved;
-      if (!pref) {
-        var nav = ((navigator.language || (navigator.languages && navigator.languages[0]) || '') + '').toLowerCase();
-        pref = nav.indexOf('zh') === 0 ? 'zh' : 'en';
+
+      function fromBrowser() {
+        var tags = navigator.languages && navigator.languages.length
+          ? navigator.languages : [navigator.language || ''];
+        for (var i = 0; i < tags.length; i++) {
+          var tag = String(tags[i]).toLowerCase();
+          // 繁体优先判断：zh-tw / zh-hk / zh-mo / zh-hant 都属于繁体
+          if (/^zh-(tw|hk|mo|hant)/.test(tag)) return 'zh-hant';
+          if (/^zh/.test(tag)) return 'zh';
+          if (/^en/.test(tag)) return 'en';
+        }
+        return 'en';
       }
-      if (pref !== current && otherHref) {
+
+      var pref = saved || fromBrowser();
+      if (urls[pref] && pref !== current) {
         try { localStorage.setItem(KEY, pref); } catch (e) {}
-        window.location.replace(otherHref);
+        window.location.replace(urls[pref]);
       }
+
+      // 用户主动点语言链接时记住选择
+      document.addEventListener('click', function (event) {
+        var link = event.target.closest ? event.target.closest('.lang-link[data-lang]') : null;
+        if (link) {
+          try { localStorage.setItem(KEY, link.getAttribute('data-lang')); } catch (e) {}
+        }
+        // 原生 details 不会因为点别处而收起，这里补上（点菜单外面就关掉）
+        Array.prototype.forEach.call(document.querySelectorAll('details.lang-menu[open]'), function (menu) {
+          if (!menu.contains(event.target)) menu.removeAttribute('open');
+        });
+      });
+      document.addEventListener('keydown', function (event) {
+        if (event.key !== 'Escape') return;
+        Array.prototype.forEach.call(document.querySelectorAll('details.lang-menu[open]'), function (menu) {
+          menu.removeAttribute('open');
+        });
+      });
     })();
     (function () {
       var btn = document.getElementById('theme-toggle');
@@ -116,5 +199,16 @@
       }
     })();
     </script>
+
+    <script>window.__CURSORKIT_SITE_LABELS__ = {
+      copy: {{ t.copy_code | jsonify }},
+      copied: {{ t.copied_code | jsonify }},
+      failed: {{ t.copy_failed | jsonify }},
+      backToTop: {{ t.back_to_top | jsonify }},
+      progress: {{ t.a11y_progress | jsonify }},
+      visitsConnecting: {{ t.footer_connecting | jsonify }},
+      visitsFailed: {{ t.footer_failed | jsonify }}
+    };</script>
+    <script src="{{ '/assets/js/site.js' | relative_url }}" defer></script>
   </body>
 </html>

@@ -3,7 +3,7 @@ layout: mod
 lang: zh
 key: charmofundying
 title: Charm of Undying：Reborn
-permalink: /mods/charmofundying/
+permalink: /zh/mods/charmofundying/
 modrinth: "charm-of-undying-reborn"
 curseforge: "charm-of-undying-reborn"
 curseforge_id: ""
@@ -11,6 +11,9 @@ card_mc: "26.1–26.3"
 card_loaders: "Fabric · NeoForge"
 card_requires: "Fabric：Fabric API + Trinkets；NeoForge：Curios 或 Trinkets"
 card_license: "MIT"
+# 旧地址保留 301 重定向（原来在 /mods/charmofundying/）
+redirect_from:
+  - /mods/charmofundying/
 ---
 
 <div class="mod-hero">

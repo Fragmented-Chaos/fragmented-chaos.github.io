@@ -1,0 +1,162 @@
+/* ---------- 移动端 ---------- */
+@media screen and (max-width: 640px) {
+  .page-content {
+    padding: 1.5rem 0;
+  }
+
+  .header-inner {
+    flex-wrap: wrap;
+    gap: 0;
+  }
+
+  .menu-toggle {
+    display: inline-flex;
+  }
+
+  .site-nav {
+    display: none;
+    flex-basis: 100%;
+    flex-direction: column;
+    align-items: stretch;
+    padding: 0.75rem 0;
+    margin-top: 0.5rem;
+    border-top: 1px solid var(--border);
+  }
+
+  .site-nav.is-open {
+    display: flex;
+  }
+
+  .nav-link {
+    min-height: 2.75rem;
+    display: flex;
+    align-items: center;
+    padding: 0.5rem 0.25rem;
+    font-size: 0.95rem;
+    border-radius: 8px;
+  }
+
+  .theme-toggle {
+    align-self: flex-start;
+    width: 2.75rem;
+    height: 2.75rem;
+    margin: 0.25rem 0 0;
+  }
+
+  .landing-title {
+    font-size: 2.4rem;
+  }
+
+  .landing-inner {
+    padding: 2.5rem 1.25rem;
+  }
+
+  .hero {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    text-align: center;
+    padding: 1.5rem 1.25rem;
+    min-height: auto;
+  }
+
+  .hero-visual {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .hero-text {
+    grid-column: 1;
+    grid-row: 2;
+  }
+
+  .hero-intro {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .hero-social {
+    justify-content: center;
+  }
+
+  .hero-title {
+    font-size: 2.5rem;
+  }
+
+  .hero-avatar-frame {
+    width: 12rem;
+    height: 12rem;
+  }
+
+  .error-code {
+    font-size: 3.5rem;
+  }
+
+  .timeline {
+    margin-left: 1rem;
+    padding-left: 0.75rem;
+  }
+
+  .tetris-game {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .tetris-side {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    min-width: 0;
+  }
+
+  .tetris-panel {
+    min-width: 5.5rem;
+  }
+
+  .tetris-next {
+    flex-basis: 100%;
+  }
+
+  .tetris-keys {
+    display: none;
+  }
+
+  .tetris-touch {
+    display: grid;
+    grid-template-columns: repeat(3, 3.5rem);
+    gap: 0.5rem;
+  }
+
+  .tetris-touch-btn {
+    height: 3.5rem;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    background-color: var(--card);
+    color: var(--foreground);
+    font-size: 1.1rem;
+    cursor: pointer;
+    touch-action: manipulation;
+    user-select: none;
+    -webkit-user-select: none;
+  }
+
+  .tetris-touch-btn:active {
+    background-color: var(--muted);
+  }
+
+  .tetris-touch-drop {
+    grid-column: span 2;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation: none !important;
+    transition: none !important;
+  }
+
+  /* 上面开了平滑滚动；这条让“减少动态效果”对它也生效。 */
+  html {
+    scroll-behavior: auto;
+  }
+}
+

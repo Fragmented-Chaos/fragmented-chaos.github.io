@@ -1,6 +1,0 @@
----
-layout: home
-lang: zh
-key: home
-permalink: /home/
----

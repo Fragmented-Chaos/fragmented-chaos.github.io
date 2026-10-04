@@ -1,0 +1,283 @@
+/* ---------- 关于页 ---------- */
+
+/* 站点统计小卡：三个数字一排，数字大、标签小，窄屏自动竖排。 */
+.site-stats {
+  max-width: 44rem;
+  margin: 0 auto 2rem;
+  padding: 1rem 1.25rem;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background-color: var(--card);
+  box-shadow: var(--shadow-sm);
+}
+
+.site-stats-title {
+  margin: 0 0 0.75rem;
+  font-size: 0.95rem;
+  font-weight: 700;
+}
+
+.site-stats-list {
+  display: grid;
+  /* 自适应列数：卡片里加减项目不用回头改 CSS */
+  grid-template-columns: repeat(auto-fit, minmax(7rem, 1fr));
+  gap: 0.75rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  text-align: center;
+}
+
+.site-stats-list li {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  padding: 0.35rem 0;
+  border-left: 1px solid var(--border);
+}
+
+.site-stats-list li:first-child {
+  border-left: 0;
+}
+
+.site-stats-value {
+  color: var(--foreground);
+  font-size: 1.5rem;
+  font-weight: 700;
+  line-height: 1.2;
+  font-variant-numeric: tabular-nums;
+}
+
+.site-stats-unit {
+  margin-left: 0.15rem;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--muted-foreground);
+}
+
+.site-stats-label {
+  color: var(--muted-foreground);
+  font-size: 0.8rem;
+}
+
+@media screen and (max-width: 30rem) {
+  .site-stats-list {
+    grid-template-columns: 1fr;
+  }
+
+  .site-stats-list li {
+    border-left: 0;
+    border-top: 1px solid var(--border);
+    padding-top: 0.6rem;
+  }
+
+  .site-stats-list li:first-child {
+    border-top: 0;
+    padding-top: 0.35rem;
+  }
+}
+.about {
+  max-width: 44rem;
+  margin: 0 auto;
+  padding: 1rem 1.25rem;
+}
+
+.about-header {
+  text-align: center;
+  padding-bottom: 1.75rem;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 1.75rem;
+}
+
+.about-avatar {
+  width: 5.5rem;
+  height: 5.5rem;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--border);
+  box-shadow: var(--shadow-md);
+  margin-bottom: 0.75rem;
+}
+
+.about-name {
+  margin: 0;
+  font-family: var(--font-hand);
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--foreground);
+}
+
+.about-body {
+  line-height: 1.8;
+}
+
+.about-body ul {
+  padding-left: 1.25rem;
+}
+
+.about-social {
+  margin-top: 2.25rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border);
+}
+
+.about-social h2 {
+  font-size: 1.05rem;
+  font-weight: 700;
+  margin: 0 0 0.75rem;
+  color: var(--foreground);
+}
+
+.about-links {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.about-links li {
+  margin-bottom: 0.4rem;
+}
+
+.about-links a {
+  font-weight: 600;
+}
+
+.about-links a:visited {
+  color: var(--accent);
+}
+
+.page {
+  max-width: 44rem;
+  margin: 0 auto;
+  padding: 1rem 1.25rem;
+}
+
+.page-title {
+  font-family: var(--font-hand);
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--foreground);
+  margin: 0 0 1.5rem;
+}
+
+.page-body {
+  line-height: 1.8;
+}
+
+/* ---------- 经历页 ---------- */
+.timeline {
+  max-width: 44rem;
+  margin: 0 auto;
+  padding: 1rem 1.25rem;
+  border-left: 2px solid var(--border);
+  margin-left: 1.5rem;
+}
+
+.timeline-item {
+  position: relative;
+  padding: 0 0 2rem 1.5rem;
+}
+
+.timeline-item:last-child {
+  padding-bottom: 0;
+}
+
+.timeline-dot {
+  position: absolute;
+  left: -1.45rem;
+  top: 0.3rem;
+  width: 0.8rem;
+  height: 0.8rem;
+  border-radius: 50%;
+  background-color: var(--accent);
+  border: 2px solid var(--background);
+}
+
+.timeline-title {
+  margin: 0 0 0.25rem;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--foreground);
+}
+
+.timeline-time {
+  margin: 0 0 0.5rem;
+  font-size: 0.82rem;
+  color: var(--muted-foreground);
+  font-weight: 600;
+}
+
+.timeline-content p:last-child {
+  margin-bottom: 0;
+}
+
+/* ---------- 404 ---------- */
+.error-page {
+  max-width: 44rem;
+  margin: 4rem auto;
+  text-align: center;
+  padding: 2rem 1.25rem;
+}
+
+.error-code {
+  font-family: var(--font-hand);
+  font-size: 4.5rem;
+  font-weight: 700;
+  margin: 0 0 0.5rem;
+  color: var(--foreground);
+}
+
+.error-msg {
+  font-size: 1.1rem;
+  margin: 0 0 2rem;
+  color: var(--muted-foreground);
+}
+
+/* 两个按钮并排；窄屏时换行，不然会挤出屏幕。 */
+.error-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  justify-content: center;
+  margin: 0;
+}
+
+/* 次要按钮：随机传送。做成虚线边框，和“返回起始页”这个主操作区分开。 */
+.error-random {
+  border-style: dashed;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+  background: none;
+}
+
+.error-random:hover {
+  background-color: var(--muted);
+  color: var(--foreground);
+}
+
+.error-random:disabled {
+  cursor: default;
+  opacity: 0.7;
+}
+
+.error-link {
+  display: inline-block;
+  padding: 0.6rem 1.5rem;
+  border: 1px solid var(--foreground);
+  border-radius: 8px;
+  font-weight: 700;
+  color: var(--foreground);
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.error-link:visited {
+  color: var(--foreground);
+}
+
+.error-link:hover {
+  background-color: var(--foreground);
+  color: var(--background);
+  text-decoration: none;
+}
+

@@ -1,33 +1,48 @@
 landing:
   zh: /
+  zh-hant: /
   en: /en/
 home:
-  zh: /home/
+  zh: /zh/home/
+  zh-hant: /zh-hant/home/
   en: /en/home/
 mods:
-  zh: /mods/
+  zh: /zh/mods/
+  zh-hant: /zh-hant/mods/
   en: /en/mods/
 cursorkit:
-  zh: /mods/cursorkit/
+  zh: /zh/mods/cursorkit/
+  zh-hant: /zh-hant/mods/cursorkit/
   en: /en/mods/cursorkit/
 cursorkit_packs:
-  zh: /mods/cursorkit/packs/
+  zh: /zh/mods/cursorkit/packs/
+  zh-hant: /zh-hant/mods/cursorkit/packs/
   en: /en/mods/cursorkit/packs/
 charmofundying:
-  zh: /mods/charmofundying/
+  zh: /zh/mods/charmofundying/
+  zh-hant: /zh-hant/mods/charmofundying/
   en: /en/mods/charmofundying/
 safespawn:
-  zh: /mods/safespawn/
+  zh: /zh/mods/safespawn/
+  zh-hant: /zh-hant/mods/safespawn/
   en: /en/mods/safespawn/
 about:
-  zh: /about/
+  zh: /zh/about/
+  zh-hant: /zh-hant/about/
   en: /en/about/
 experience:
-  zh: /experience/
+  zh: /zh/experience/
+  zh-hant: /zh-hant/experience/
   en: /en/experience/
 tetris:
-  zh: /tetris/
+  zh: /zh/tetris/
+  zh-hant: /zh-hant/tetris/
   en: /en/tetris/
+music:
+  zh: /zh/music/
+  zh-hant: /zh-hant/music/
+  en: /en/music/
 error:
   zh: /404.html
+  zh-hant: /zh-hant/404.html
   en: /en/404.html

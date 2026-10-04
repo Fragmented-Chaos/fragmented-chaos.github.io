@@ -1,0 +1,19 @@
+---
+permalink: /sitemap.xml
+sitemap: false
+---
+{%- comment -%}
+  站点地图：给爬虫一份完整的页面清单。中英两套页面都列出来，让它们各自被收录。
+  刻意不写 <lastmod>：GitHub Pages 上拿不到各页面真实的修改时间，退化后会变成“每次构建时间”，
+  等于告诉搜索引擎每一页都刚更新过，反而有害。没有这一项时爬虫按自己的节奏判断。
+{%- endcomment -%}
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+{%- for p in site.pages -%}
+{%- unless p.url contains ".css" or p.url contains ".js" or p.url contains "sitemap" or p.url contains "404" or p.url contains ".txt" or p.url contains "feed" -%}
+  <url>
+    <loc>{{ p.url | absolute_url }}</loc>
+  </url>
+{%- endunless -%}
+{%- endfor -%}
+</urlset>

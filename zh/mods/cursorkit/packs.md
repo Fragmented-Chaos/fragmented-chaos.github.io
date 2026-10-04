@@ -3,7 +3,10 @@ layout: page
 lang: zh
 key: cursorkit_packs
 title: 制作光标包
-permalink: /mods/cursorkit/packs/
+permalink: /zh/mods/cursorkit/packs/
+# 旧地址保留 301 重定向（原来在 /mods/cursorkit/packs/）
+redirect_from:
+  - /mods/cursorkit/packs/
 ---
 
 <p class="mods-others"><a href="{{ '/mods/cursorkit/' | relative_url }}">← Cursor Kit 使用说明</a></p>

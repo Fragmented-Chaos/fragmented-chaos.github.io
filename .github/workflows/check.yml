@@ -1,0 +1,20 @@
+name: 检查
+
+# 每次推到 main、以及每个 PR 都跑一遍。
+# 注意：GitHub Pages 是它自己独立构建的，这个 workflow 不会拦住发布 ——
+# 它的作用是**在提交上亮红叉**，让你在推送后立刻发现多语言数据坏了。
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  i18n:
+    name: 多语言数据完整性
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: 检查 i18n 键与页面路由
+        run: node scripts/check-i18n.mjs

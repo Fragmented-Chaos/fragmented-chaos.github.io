@@ -1,0 +1,257 @@
+/* ---------- 文档型正文（表格 / 代码） ---------- */
+/* 目录锚点：跳到标题时给吸顶导航留出空间 */
+.page-body a[id] {
+  display: block;
+  height: 0;
+  scroll-margin-top: 4.5rem;
+}
+
+.page-body h2,
+.page-body h3 {
+  scroll-margin-top: 4.5rem;
+}
+
+.page-body h2 {
+  margin: 2.25rem 0 0.75rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--border);
+  font-size: 1.25rem;
+}
+
+.page-body h2:first-child {
+  margin-top: 0;
+  padding-top: 0;
+  border-top: 0;
+}
+
+.page-body h3 {
+  margin: 1.5rem 0 0.5rem;
+  font-size: 1.05rem;
+}
+
+.page-body code {
+  padding: 0.05rem 0.32rem;
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  background-color: var(--muted);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.86em;
+}
+
+.page-body pre {
+  margin: 1rem 0 1.75rem;
+  padding: 0.85rem 1rem;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background-color: var(--muted);
+  overflow-x: auto;
+  line-height: 1.55;
+}
+
+.page-body pre code {
+  padding: 0;
+  border: 0;
+  background: none;
+  font-size: 0.85rem;
+}
+
+.page-body table {
+  width: 100%;
+  margin: 1rem 0 1.75rem;
+  border-collapse: collapse;
+  font-size: 0.88rem;
+}
+
+.page-body th,
+.page-body td {
+  padding: 0.45rem 0.6rem;
+  border: 1px solid var(--border);
+  text-align: left;
+  vertical-align: top;
+}
+
+.page-body th {
+  background-color: var(--muted);
+  font-weight: 700;
+}
+
+@media screen and (max-width: 640px) {
+  .mod-hero {
+    grid-template-columns: 1fr;
+    text-align: center;
+    padding: 1.25rem;
+  }
+
+  .mod-icon {
+    grid-row: auto;
+    width: 4.5rem;
+    height: 4.5rem;
+    margin: 0 auto 0.5rem;
+  }
+
+  .mod-badges,
+  .mod-actions {
+    justify-content: center;
+  }
+
+  .feature-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .mod-card {
+    grid-template-columns: 1fr;
+  }
+
+  .mod-card-icon {
+    grid-row: auto;
+    width: 3rem;
+    height: 3rem;
+  }
+
+  .page-body table {
+    font-size: 0.8rem;
+  }
+}
+
+/* ---------- 模组介绍页：正文 + 右侧支持版本信息卡 ---------- */
+.mod-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 15rem;
+  gap: 2.5rem;
+  max-width: 62rem;
+  margin: 0 auto;
+  padding: 1rem 1.25rem;
+  align-items: start;
+}
+
+.mod-main {
+  min-width: 0;
+}
+
+.mod-side {
+  position: sticky;
+  top: 4.5rem;
+}
+
+.version-card {
+  padding: 1rem 1.1rem;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background-color: var(--card);
+  box-shadow: var(--shadow-sm);
+}
+
+.version-card .version-card-title {
+  margin: 0 0 0.75rem;
+  padding: 0;
+  border: 0;
+  font-size: 0.95rem;
+  font-weight: 700;
+}
+
+.version-list {
+  margin: 0;
+  font-size: 0.85rem;
+  line-height: 1.5;
+}
+
+.version-list dt {
+  margin-top: 0.65rem;
+  color: var(--muted-foreground);
+  font-weight: 600;
+}
+
+.version-list dt:first-child {
+  margin-top: 0;
+}
+
+.version-list dd {
+  margin: 0.15rem 0 0;
+  color: var(--foreground);
+}
+
+@media screen and (max-width: 900px) {
+  .mod-layout {
+    grid-template-columns: 1fr;
+    gap: 1.75rem;
+  }
+
+  .mod-side {
+    position: static;
+  }
+}
+
+.version-downloads .dl-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.version-downloads .dl-row + .dl-row {
+  margin-top: 0.15rem;
+}
+
+.dl-platform {
+  color: var(--muted-foreground);
+}
+
+.dl-count {
+  font-variant-numeric: tabular-nums;
+}
+
+/* 最新版本行：版本号可点（跳到该版本在 Modrinth 上的页面），日期跟在后面做次要信息。 */
+.version-latest-link {
+  font-weight: 700;
+}
+
+.version-latest-date {
+  display: block;
+  color: var(--muted-foreground);
+  font-size: 0.78rem;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---------- 文档页代码块：悬停时出现的复制按钮 ---------- */
+/* 复制按钮贴在代码块右上角，平日淡出，悬停或键盘聚焦时才实心，避免遮住代码。 */
+.page-body pre {
+  position: relative;
+}
+
+.page-body .code-copy {
+  position: absolute;
+  top: 0.4rem;
+  right: 0.4rem;
+  padding: 0.15rem 0.5rem;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background-color: var(--card);
+  color: var(--muted-foreground);
+  font-family: inherit;
+  font-size: 0.72rem;
+  line-height: 1.5;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+}
+
+/* 键盘用户靠 Tab 也能聚焦到它，所以不能只做 hover。 */
+.page-body pre:hover .code-copy,
+.page-body .code-copy:focus-visible {
+  opacity: 1;
+}
+
+.page-body .code-copy:hover {
+  color: var(--foreground);
+  border-color: var(--muted-foreground);
+}
+
+.page-body .code-copy.is-copied {
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
+.page-body .code-copy.is-failed {
+  color: var(--danger);
+  border-color: var(--danger);
+}
+

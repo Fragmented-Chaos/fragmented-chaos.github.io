@@ -1,0 +1,14 @@
+User-agent: *
+Allow: /
+
+# 俄罗斯方块是藏在头像后面的彩蛋，没必要出现在搜索结果里
+Disallow: /zh/tetris/
+Disallow: /zh-hant/tetris/
+Disallow: /en/tetris/
+
+# 404 页本身（GitHub Pages 用它响应所有不存在的地址）
+Disallow: /404.html
+Disallow: /zh-hant/404.html
+Disallow: /en/404.html
+
+Sitemap: https://fragmented-chaos.github.io/sitemap.xml

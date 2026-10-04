@@ -16,6 +16,8 @@ layout: default
     <div class="version-card">
       <h2 class="version-card-title">{{ t.card_title }}</h2>
       <dl class="version-list">
+        <dt class="version-latest-label">{{ t.card_version }}</dt>
+        <dd class="version-latest" data-modrinth="{{ page.modrinth }}"></dd>
         <dt>{{ t.card_mc }}</dt>
         <dd>{{ page.card_mc }}</dd>
         <dt>{{ t.card_loaders }}</dt>

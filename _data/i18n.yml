@@ -1,5 +1,5 @@
 zh:
-  lang_switch: EN
+  aria_lang: 语言
   nav_home: 主页
   nav_mods: 模组
   nav_about: 关于我
@@ -7,13 +7,25 @@ zh:
   nav_surprise: 点这里有惊喜
   nav_surprise_url: https://www.bilibili.com/video/BV1GJ411x7h7/
   aria_theme: 切换主题
+  a11y_progress: 阅读进度
   aria_menu: 菜单
   footer: 个人主页 of Fragmented_Chaos，欢迎交流。
+  footer_visits: 访问量
+  footer_time: 时间
+  footer_updated: 最后更新
+  footer_connecting: 连接中…
+  footer_failed: 连接失败
   landing_sub: 我的个人主页 · 博客
   landing_enter: 进入
   hero_aliases: 亦用名：
   hero_intro: 你好，我是 <strong>Fragmented_Chaos</strong>，欢迎来到我的个人主页。
   about_follow: 关注我
+  stats_title: 站点统计
+  music_note: 这是音乐播放器的<strong>测试页</strong>：用来验证播放器与各平台嵌入是否正常工作，不是正式的歌单页面。
+  music_playlist: 播放列表
+  stats_pages: 页面
+  stats_days: 已运行
+  stats_days_unit: 天
   tetris_title: 俄罗斯方块
   tetris_aria: 玩俄罗斯方块
   tetris_score: 分数
@@ -33,16 +45,93 @@ zh:
   tetris_aria_down: 软降
   tetris_aria_drop: 硬降
   card_title: 支持版本
+  card_version: 最新版本
   card_mc: Minecraft
   card_loaders: 加载器
   card_requires: 前置
   card_license: 许可证
   card_downloads: 下载量
+  copy_code: 复制
+  copied_code: 已复制
+  copy_failed: 复制失败
+  back_to_top: 回到顶部
   error_msg: 页面不存在
   error_link: 返回起始页
+  error_random: 随便看看
+  embed_slot_empty: 从下面选一首开始播放 —— 播放器用的是网易官方的，VIP 歌曲需要登录你的网易云账号。
+  embed_song_untitled: 未命名曲目
+  embed_netease_note: 免费歌曲可直接播放；标着 VIP 或版权受限的，需要在播放器里登录你自己的网易云账号（这是网易的限制，不是本站坏了）。
+  embed_hint: 未配置：在 <code>_data/music.yml</code> 里填入 ID 后这里会出现播放器（只嵌入平台官方播放器）。
+  embed_external: 在新标签打开
+
+zh-hant:
+  aria_lang: 語言
+  nav_home: 主頁
+  nav_mods: 模組
+  nav_about: 關於我
+  nav_experience: 經歷
+  nav_surprise: 點這裡有驚喜
+  nav_surprise_url: https://www.bilibili.com/video/BV1GJ411x7h7/
+  aria_theme: 切換主題
+  a11y_progress: 閱讀進度
+  aria_menu: 選單
+  footer: 個人主頁 of Fragmented_Chaos，歡迎交流。
+  footer_visits: 瀏覽人次
+  footer_time: 時間
+  footer_updated: 最後更新
+  footer_connecting: 連線中…
+  footer_failed: 連線失敗
+  landing_sub: 我的個人主頁 · 部落格
+  landing_enter: 進入
+  hero_aliases: 亦用名：
+  hero_intro: 你好，我是 <strong>Fragmented_Chaos</strong>，歡迎來到我的個人主頁。
+  about_follow: 追蹤我
+  stats_title: 站點統計
+  music_note: 這是音樂播放器的<strong>測試頁</strong>：用來驗證播放器與各平臺嵌入是否正常運作，不是正式的歌曲清單頁面。
+  music_playlist: 播放列表
+  stats_pages: 頁面
+  stats_days: 已運行
+  stats_days_unit: 天
+  tetris_title: 俄羅斯方塊
+  tetris_aria: 玩俄羅斯方塊
+  tetris_score: 分數
+  tetris_level: 等級
+  tetris_lines: 消行
+  tetris_next: 下一個
+  tetris_start: "&gt;點選開始遊戲&lt;"
+  tetris_paused: 已暫停
+  tetris_resume: 按 P 或點選繼續
+  tetris_over: 遊戲結束
+  tetris_result_score: 得分
+  tetris_result_lines: 消行
+  tetris_keys: 操作：← → 移動 · ↑ / X 旋轉 · ↓ 軟降 · 空格 硬降 · P 暫停
+  tetris_aria_left: 左移
+  tetris_aria_rotate: 旋轉
+  tetris_aria_right: 右移
+  tetris_aria_down: 軟降
+  tetris_aria_drop: 硬降
+  card_title: 支援版本
+  card_version: 最新版本
+  card_mc: Minecraft
+  card_loaders: 載入器
+  card_requires: 前置
+  card_license: 許可證
+  card_downloads: 下載量
+  copy_code: 複製
+  copied_code: 已複製
+  copy_failed: 複製失敗
+  back_to_top: 回到頂部
+  error_msg: 頁面不存在
+  error_link: 返回起始頁
+  error_random: 隨便看看
+  embed_slot_empty: 從下面選一首開始播放 —— 播放器用的是網易官方的，VIP 歌曲需要登入你的網易雲帳號。
+  embed_song_untitled: 未命名曲目
+  embed_netease_note: 免費歌曲可直接播放；標著 VIP 或版權受限的，需要在播放器裡登入你自己的網易雲帳號（這是網易的限制，不是本站壞了）。
+  embed_hint: 未配置：在 <code>_data/music.yml</code> 裡填入 ID 後這裡會出現播放器（只嵌入平臺官方播放器）。
+  embed_external: 在新標籤開啟
 
 en:
-  lang_switch: 中文
+  aria_lang: Language
   nav_home: Home
   nav_mods: Mods
   nav_about: About
@@ -50,13 +139,25 @@ en:
   nav_surprise: Click for a surprise
   nav_surprise_url: https://www.bilibili.com/video/BV1GJ411x7h7/
   aria_theme: Toggle theme
+  a11y_progress: Reading progress
   aria_menu: Menu
   footer: Personal homepage of Fragmented_Chaos. Welcome!
+  footer_visits: Visits
+  footer_time: Time
+  footer_updated: Last updated
+  footer_connecting: Connecting…
+  footer_failed: Connection failed
   landing_sub: My personal homepage · Blog
   landing_enter: Enter
   hero_aliases: "Also known as:"
   hero_intro: Hi, I'm <strong>Fragmented_Chaos</strong>, welcome to my personal homepage.
   about_follow: Follow me
+  stats_title: Site stats
+  music_note: "This is a <strong>test page</strong> for the music player: it checks that the player and the platform embeds work, not a real playlist."
+  music_playlist: Playlist
+  stats_pages: Pages
+  stats_days: Running for
+  stats_days_unit: days
   tetris_title: Tetris
   tetris_aria: Play Tetris
   tetris_score: Score
@@ -76,10 +177,21 @@ en:
   tetris_aria_down: Soft drop
   tetris_aria_drop: Hard drop
   card_title: Supported versions
+  card_version: Latest version
   card_mc: Minecraft
   card_loaders: Loaders
   card_requires: Requires
   card_license: License
   card_downloads: Downloads
+  copy_code: Copy
+  copied_code: Copied
+  copy_failed: Copy failed
+  back_to_top: Back to top
   error_msg: Page not found
   error_link: Back to home
+  error_random: Take me anywhere
+  embed_slot_empty: Pick a song below to play. The player itself is NetEase official; VIP tracks need you to sign in to your NetEase account.
+  embed_song_untitled: Untitled track
+  embed_netease_note: Free songs play right away. VIP or region-restricted ones ask you to sign in to your own NetEase account inside the player — that limit comes from NetEase, not from this site.
+  embed_hint: "Not configured: put an ID in <code>_data/music.yml</code> and a player will appear here (official embeds only)."
+  embed_external: Open in a new tab

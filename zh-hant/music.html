@@ -1,0 +1,79 @@
+---
+layout: page
+lang: zh-hant
+key: music
+title: 音樂
+permalink: /zh-hant/music/
+---
+{%- comment -%}
+  正文裡要用 t.xxx 必須自己先取一次（佈局裡的 t 在正文看不到）。
+  曲目列表來自 _data/music.yml，加歌只改那個檔案。
+{%- endcomment -%}
+{%- assign lang = page.lang | default: site.lang -%}
+{%- assign t = site.data.i18n[lang] -%}
+
+<p class="music-note">{{ t.music_note }}</p>
+
+{%- assign ne = site.data.music.netease -%}
+{%- comment -%}数出真正填了 id 的条目（占位不算配置好）{%- endcomment -%}
+{%- assign ne_count = 0 -%}
+{%- for song in ne.songs -%}
+  {%- if song.id != blank -%}{%- assign ne_count = ne_count | plus: 1 -%}{%- endif -%}
+{%- endfor -%}
+{%- if ne.playlist_id != blank -%}{%- assign ne_count = ne_count | plus: 1 -%}{%- endif -%}
+
+<div class="music-card">
+  {%- comment -%}
+    不做自建播放控件：平台播放器的播放/暂停/进度/音量无法从跨域 iframe 外部控制，
+    与其摆一排点了没反应的按钮，不如只留"选曲"这件事。
+  {%- endcomment -%}
+  <div class="embed-slot" data-embed-slot data-height="86" hidden>
+    <p class="embed-slot-empty">{{ t.embed_slot_empty }}</p>
+  </div>
+
+  <p class="player-list-title" id="player-list-title">{{ t.music_playlist }}</p>
+  <ol class="player-list" data-list aria-labelledby="player-list-title">
+    {%- assign ne_no = 0 -%}
+    {%- for song in ne.songs -%}
+    {%- if song.id != blank -%}
+    {%- assign ne_no = ne_no | plus: 1 -%}
+    <li>
+      <button type="button" class="player-track" data-kind="netease"
+              data-src="https://music.163.com/outchain/player?type=2&amp;id={{ song.id }}&amp;auto=0&amp;height=66"
+              data-external="https://music.163.com/#/song?id={{ song.id }}"
+              data-external-label="{{ t.embed_external }}"
+              data-title-text="{% if song.title != blank %}{{ song.title }}{% else %}{{ t.embed_song_untitled }}{% endif %}"
+              data-artist-text="{{ song.artist }}">
+        <span class="player-track-index">{{ ne_no }}</span>
+        <span class="player-track-name">{% if song.title != blank %}{{ song.title }}{% else %}{{ t.embed_song_untitled }}{% endif %}</span>
+        <span class="player-track-artist">{{ song.artist }}</span>
+        <span class="player-track-source">网易云</span>
+      </button>
+    </li>
+    {%- endif -%}
+    {%- endfor -%}
+
+    {%- if ne.playlist_id != blank -%}
+    <li>
+      <button type="button" class="player-track" data-kind="netease"
+              data-src="https://music.163.com/outchain/player?type=0&amp;id={{ ne.playlist_id }}&amp;auto=0&amp;height=66"
+              data-external="https://music.163.com/#/playlist?id={{ ne.playlist_id }}"
+              data-external-label="{{ t.embed_external }}"
+              data-title-text="{% if ne.label != blank %}{{ ne.label }}{% else %}Playlist{% endif %}"
+              data-artist-text="">
+        <span class="player-track-index">{{ ne_count }}</span>
+        <span class="player-track-name">{% if ne.label != blank %}{{ ne.label }}{% else %}Playlist{% endif %}</span>
+        <span class="player-track-source">网易云</span>
+      </button>
+    </li>
+    {%- endif -%}
+  </ol>
+
+  {%- if ne_count == 0 -%}
+  <p class="embed-hint">{{ t.embed_hint }}</p>
+  {%- else -%}
+  <p class="embed-note">{{ t.embed_netease_note }}</p>
+  {%- endif -%}
+</div>
+
+<script src="{{ '/assets/js/music.js' | relative_url }}" defer></script>

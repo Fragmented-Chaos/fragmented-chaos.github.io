@@ -3,7 +3,10 @@ layout: page
 lang: zh
 key: experience
 title: 经历
-permalink: /experience/
+permalink: /zh/experience/
+# 旧地址保留 301 重定向（原来在 /experience/）
+redirect_from:
+  - /experience/
 ---
 
 <div class="timeline">

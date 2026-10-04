@@ -1,0 +1,62 @@
+/* ---------- Main ---------- */
+/* 目录、页脚锚点这类页内跳转平滑滚动；关掉“减少动态效果”的系统设置在下面单独复位。 */
+html {
+  scroll-behavior: smooth;
+}
+
+.page-content {
+  flex: 1;
+  padding: 2.5rem 0;
+}
+
+/* ---------- Footer ---------- */
+.site-footer {
+  position: relative;
+  border-top: 1px solid var(--border);
+  background-color: var(--background);
+  padding: 1.25rem 0;
+}
+
+/* 页脚文字在左，右侧一组（时钟 + 访问量）在右；窄屏放不下时那组换行但仍靠右。 */
+.site-footer .container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.35rem 1.5rem;
+}
+
+.footer-meta {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin: 0 0 0 auto;
+  color: var(--muted-foreground);
+  font-size: 0.82rem;
+  white-space: nowrap;
+}
+
+.footer-updated,
+.footer-clock-item,
+.footer-visits {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.35rem;
+}
+
+.footer-updated-value {
+  color: var(--foreground);
+  font-variant-numeric: tabular-nums;
+}
+
+.footer-clock {
+  color: var(--foreground);
+  font-variant-numeric: tabular-nums;
+}
+
+.footer-text {
+  margin: 0;
+  color: var(--muted-foreground);
+  font-size: 0.85rem;
+}
+

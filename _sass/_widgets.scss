@@ -1,0 +1,122 @@
+/* ---------- 全站小元素 ---------- */
+/* 阅读进度条：长文档页顶部一条细线，短页面由脚本判断，不创建。 */
+.reading-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 45;
+  width: 100%;
+  height: 3px;
+  background-color: var(--accent);
+  transform: scaleX(0);
+  transform-origin: 0 50%;
+  pointer-events: none;
+}
+
+/* 滚过一屏后右下角浮出；短页面由脚本判断，根本不建这个按钮。 */
+.back-to-top {
+  position: fixed;
+  right: 1rem;
+  bottom: 1.5rem;
+  z-index: 40;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.4rem;
+  height: 2.4rem;
+  padding: 0;
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  background-color: var(--card);
+  color: var(--foreground);
+  box-shadow: var(--shadow-md);
+  cursor: pointer;
+  opacity: 0;
+  transform: translateY(0.5rem);
+  pointer-events: none;
+  transition: opacity 0.18s ease, transform 0.18s ease, border-color 0.18s ease;
+}
+
+.back-to-top.is-visible {
+  opacity: 1;
+  transform: none;
+  pointer-events: auto;
+}
+
+.back-to-top:hover {
+  border-color: var(--muted-foreground);
+}
+
+.back-to-top svg {
+  width: 1.05rem;
+  height: 1.05rem;
+}
+
+/* 选中文字的底色跟着强调色走，和右上角那几个链接是一套。 */
+::selection {
+  background-color: var(--accent);
+  color: var(--on-accent);
+}
+
+/* 滚动条（Firefox 用上面两条标准属性，Chrome/Edge 用下面那条）。 */
+html {
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) transparent;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  border: 2px solid transparent;
+  border-radius: 8px;
+  background-color: var(--border);
+  background-clip: content-box;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: var(--muted-foreground);
+}
+
+@media screen and (max-width: 640px) {
+  .back-to-top {
+    right: 0.75rem;
+    bottom: 0.9rem;
+  }
+}
+
+
+/* 页脚访问量：数字用等宽数字，避免跳动时宽度变化。 */
+/* 宽屏：整页范围里最靠右 —— 整组脱离居中的内容栏，贴窗口右边缘（与页头同样的边距）。 */
+@media screen and (min-width: 48rem) {
+  .footer-meta {
+    position: absolute;
+    right: 1.25rem;
+    top: 50%;
+    margin: 0;
+    transform: translateY(-50%);
+  }
+}
+
+/* 小屏：三项（最后更新 / 时间 / 访问量）一行放不下，允许组内换行，整体仍靠右。 */
+@media screen and (max-width: 30rem) {
+  .footer-meta {
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    white-space: normal;
+    row-gap: 0.2rem;
+  }
+}
+
+.footer-visits-value {
+  color: var(--foreground);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
