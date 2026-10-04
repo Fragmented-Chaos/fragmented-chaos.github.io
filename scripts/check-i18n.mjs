@@ -187,6 +187,22 @@ for (const [name, langs] of Object.entries(pages)) {
   }
 }
 
+/* ---------- 3b. 同一个页面的各语言地址不能重复 ---------- */
+// 语言切换靠这些地址。两个语言指向同一个地址时，切换脚本会"跳到当前页 → 又判断该跳"
+// → 无限重载（起始页就踩过这个坑：landing 的 zh-hant 被写成了 /）。
+for (const [name, langs] of Object.entries(pages)) {
+  const seen = new Map();
+  for (const lang of Object.keys(langs)) {
+    const url = String(langs[lang]).trim();
+    if (!url) continue;
+    if (seen.has(url)) {
+      fail(`_data/pages.yml: 页面 "${name}" 的 ${seen.get(url)} 和 ${lang} 指向同一个地址 ${url} —— 语言切换会陷入无限重载`);
+    } else {
+      seen.set(url, lang);
+    }
+  }
+}
+
 /* ---------- 4. 页面里写的 key 必须能在 pages.yml 里找到 ---------- */
 // default 布局的语言切换按钮靠 site.data.pages[page.key][other] 取另一语言地址。
 // key 拼错或漏登记时，那个链接会变成空的（线上不报错，只是点了没反应）。
