@@ -15,7 +15,7 @@ zh:
   footer_updated: 最后更新
   footer_connecting: 连接中…
   footer_failed: 连接失败
-  landing_sub: 个人主页 · 模组与作品
+  landing_sub: 我的个人主页 · 博客
   landing_enter: 进入
   hero_aliases: 亦用名：
   hero_intro: 你好，我是 <strong>Fragmented_Chaos</strong>，欢迎来到我的个人主页。
@@ -81,7 +81,7 @@ zh-hant:
   footer_updated: 最後更新
   footer_connecting: 連線中…
   footer_failed: 連線失敗
-  landing_sub: 個人主頁 · 模組與作品
+  landing_sub: 我的個人主頁 · 博客
   landing_enter: 進入
   hero_aliases: 亦用名：
   hero_intro: 你好，我是 <strong>Fragmented_Chaos</strong>，歡迎來到我的個人主頁。
@@ -147,7 +147,7 @@ en:
   footer_updated: Last updated
   footer_connecting: Connecting…
   footer_failed: Connection failed
-  landing_sub: Personal homepage · mods and projects
+  landing_sub: My personal homepage · Blog
   landing_enter: Enter
   hero_aliases: "Also known as:"
   hero_intro: Hi, I'm <strong>Fragmented_Chaos</strong>, welcome to my personal homepage.
