@@ -4,24 +4,24 @@ sitemap: false
 ---
 {%- comment -%}
   站点地图：给爬虫一份完整的页面清单。
-  直接按 _data/pages.yml 的路由表生成，而不是遍历 site.pages ——
-  GitHub Pages 上 jekyll-redirect-from 生成的旧地址跳转页也会出现在 site.pages 里，
-  遍历的话会把它们一并提交（线上实测多出 10 条），而跳转页对爬虫没有价值。
-  刻意不写 <lastmod>：GitHub Pages 上拿不到各页面真实的修改时间，退化后会变成
-  “每次构建时间”，等于告诉搜索引擎每一页都刚更新过，反而有害。
+
+  筛选条件是「这个页面自己有没有 key」：真页面都在 _data/pages.yml 里登记过，
+  front matter 里带 key；而 jekyll-redirect-from 为旧地址生成的跳转页、
+  以及 assets/main.scss、robots.txt 这类带 front matter 的资源文件都没有 key，
+  于是自动被排除。全局遍历 + 简单属性访问，不依赖插件内部字段。
+
+  早先按 URL 关键字过滤，线上因此混进 10 个旧地址跳转页（sitemap 变成 43 条）。
+
+  刻意不写 <lastmod>：GitHub Pages 上拿不到各页面真实的修改时间，
+  退化后会变成「每次构建时间」，等于告诉搜索引擎每一页都刚更新过，反而有害。
 {%- endcomment -%}
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-{%- for route in site.data.pages -%}
-{%- unless route[0] == "error" -%}
-{%- for lang in site.data.i18n -%}
-{%- assign target = route[1][lang[0]] -%}
-{%- if target -%}
+{%- for p in site.pages -%}
+{%- if p.key and p.key != "error" -%}
   <url>
-    <loc>{{ target | absolute_url }}</loc>
+    <loc>{{ p.url | absolute_url }}</loc>
   </url>
 {%- endif -%}
-{%- endfor -%}
-{%- endunless -%}
 {%- endfor -%}
 </urlset>

@@ -21,19 +21,20 @@ layout: default
       liquidjs 会得到小数，所以显式 floor，保证本地预览与线上一致）
   {%- endcomment -%}
   {%- comment -%}
-    页面数按「路由表 × 语言数」算，不再遍历 site.pages。
-    原因：GitHub Pages 上 jekyll-redirect-from 会为每个旧地址各生成一个跳转页，
-    它们同样出现在 site.pages 里（线上因此多算了 10 个）；而 assets/main.scss、
-    robots.txt 这类带 front matter 的文件也是 page，会被算成"页面"。
-    按路由表算则从根上不受这些影响：一条路由在每种语言里就是一页。
+    页面数 = 有 key 的页面数，与 sitemap 用同一条规则（两者不该出现不一致）。
+
+    为什么不用 site.pages 里所有页面：GitHub Pages 上 jekyll-redirect-from 会为每个
+    旧地址各生成一个跳转页，它们同样出现在 site.pages 里（线上因此多算 10 个）；
+    assets/main.scss、robots.txt 这类带 front matter 的文件也是 page。
+    真页面都在 _data/pages.yml 登记过、front matter 里有 key，用这个筛最稳；
+    error（各语言的 404）单独排除。
   {%- endcomment -%}
-  {%- assign stats_routes = 0 -%}
-  {%- for route in site.data.pages -%}
-    {%- unless route[0] == "error" -%}
-      {%- assign stats_routes = stats_routes | plus: 1 -%}
-    {%- endunless -%}
+  {%- assign stats_pages = 0 -%}
+  {%- for p in site.pages -%}
+    {%- if p.key and p.key != "error" -%}
+      {%- assign stats_pages = stats_pages | plus: 1 -%}
+    {%- endif -%}
   {%- endfor -%}
-  {%- assign stats_pages = stats_routes | times: site.data.i18n.size -%}
   {%- assign since_epoch = site.data.site.since | date: "%s" -%}
   {%- assign now_epoch = site.time | date: "%s" -%}
   {%- assign stats_days = now_epoch | minus: since_epoch | divided_by: 86400 | floor -%}
