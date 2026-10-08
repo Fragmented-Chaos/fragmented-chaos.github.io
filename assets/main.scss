@@ -15,6 +15,8 @@
 // docs       文档型正文：标题、表格、代码块，以及代码块的复制按钮
 // widgets    全站小元素：跳过导航兜底、阅读进度条、回到顶部、站点统计卡
 // player     音乐播放器
+// motion     动画：入场、滚动淡入、站内页面过渡
+// polish     交互手感：键盘焦点环、按压反馈
 
 @import "base";
 @import "header";
@@ -27,3 +29,5 @@
 @import "docs";
 @import "widgets";
 @import "player";
+@import "motion";
+@import "polish";

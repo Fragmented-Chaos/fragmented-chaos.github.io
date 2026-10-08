@@ -14,7 +14,7 @@ card_license: "MIT"
 ---
 
 <div class="mod-hero">
-  <img class="mod-icon" src="{{ '/assets/images/charmofundying/icon.png' | relative_url }}" alt="Charm of Undying: Reborn icon" width="96" height="96">
+  <img class="mod-icon" src="{{ '/assets/images/charmofundying/icon.png' | relative_url }}" alt="Charm of Undying: Reborn icon" width="96" height="96" loading="lazy" decoding="async">
   <div>
     <p class="mod-tagline">Adds a slot for Totems of Undying</p>
   </div>

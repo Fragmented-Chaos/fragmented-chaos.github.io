@@ -17,7 +17,7 @@ redirect_from:
 ---
 
 <div class="mod-hero">
-  <img class="mod-icon" src="{{ '/assets/images/cursorkit/icon.png' | relative_url }}" alt="Cursor Kit 图标" width="96" height="96">
+  <img class="mod-icon" src="{{ '/assets/images/cursorkit/icon.png' | relative_url }}" alt="Cursor Kit 图标" width="96" height="96" loading="lazy" decoding="async">
   <div>
     <p class="mod-tagline">把 Minecraft 的鼠标指针换成自定义高清光标：六个状态、帧动画、逐状态热区，点击特效跟随光标包。</p>
   </div>
@@ -63,7 +63,7 @@ redirect_from:
 - `完成` 保存，`取消` 恢复到打开界面时的状态
 
 <figure class="shot">
-  <img src="{{ '/assets/images/cursorkit/picker.png' | relative_url }}" alt="光标选择界面：左侧列表、右侧六个状态预览">
+  <img src="{{ '/assets/images/cursorkit/picker.webp' | relative_url }}" width="760" height="1005" decoding="async" loading="lazy" alt="光标选择界面：左侧列表、右侧六个状态预览">
   <figcaption>选择界面：左边是可搜索的包列表（每行标出来源与特效），右边是六个状态的预览和逐状态点击点。</figcaption>
 </figure>
 
@@ -77,7 +77,7 @@ redirect_from:
 - 这些路径存在 `config/cursorkit.json` 的 `custom_states` 里，例如 `{"default": "D:/cursors/arrow.png", "clickable": "hand.cur"}`。
 
 <figure class="shot">
-  <img src="{{ '/assets/images/cursorkit/states.png' | relative_url }}" alt="逐状态路径编辑界面">
+  <img src="{{ '/assets/images/cursorkit/states.webp' | relative_url }}" width="760" height="499" decoding="async" loading="lazy" alt="逐状态路径编辑界面">
   <figcaption>逐状态自定义：每个状态一个路径，找到的显示金色，没找到的红色带问号。</figcaption>
 </figure>
 
@@ -93,7 +93,7 @@ redirect_from:
 因为改的是配置而不是包本身，**资源包里的集合也能这样调**，不用去动别人的文件。没有自己图片的状态（例如 `text (default)`）会借用 `default` 的图片，但**点击点是独立的**，改一个不会牵动别的。
 
 <figure class="shot">
-  <img src="{{ '/assets/images/cursorkit/hotspots.png' | relative_url }}" alt="点击点编辑器：左侧状态列表，右侧放大图片与像素网格">
+  <img src="{{ '/assets/images/cursorkit/hotspots.webp' | relative_url }}" width="760" height="1005" decoding="async" loading="lazy" alt="点击点编辑器：左侧状态列表，右侧放大图片与像素网格">
   <figcaption>点击点编辑器：点或拖就能改，方向键微调，改完立刻生效。</figcaption>
 </figure>
 

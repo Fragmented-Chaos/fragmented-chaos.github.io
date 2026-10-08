@@ -17,7 +17,7 @@ redirect_from:
 ---
 
 <div class="mod-hero">
-  <img class="mod-icon" src="{{ '/assets/images/safespawn/icon.png' | relative_url }}" alt="SafeSpawn 图标" width="96" height="96">
+  <img class="mod-icon" src="{{ '/assets/images/safespawn/icon.png' | relative_url }}" alt="SafeSpawn 图标" width="96" height="96" loading="lazy" decoding="async">
   <div>
     <p class="mod-tagline">还原 MC-212 与 MC-21650（在 24w45a 版本被修复），并修复 MC-278261。</p>
   </div>

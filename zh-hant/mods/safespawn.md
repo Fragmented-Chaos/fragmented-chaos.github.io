@@ -14,7 +14,7 @@ card_license: "MIT"
 ---
 
 <div class="mod-hero">
-  <img class="mod-icon" src="{{ '/assets/images/safespawn/icon.png' | relative_url }}" alt="SafeSpawn 圖示" width="96" height="96">
+  <img class="mod-icon" src="{{ '/assets/images/safespawn/icon.png' | relative_url }}" alt="SafeSpawn 圖示" width="96" height="96" loading="lazy" decoding="async">
   <div>
     <p class="mod-tagline">還原 MC-212 與 MC-21650（在 24w45a 版本被修復），並修復 MC-278261。</p>
   </div>

@@ -1,0 +1,68 @@
+/* ---------- 交互手感：焦点环与按压反馈 ---------- */
+
+/* 统一的键盘焦点环。
+   鼠标点击不显示（:focus-visible 本身就不在鼠标点击时匹配），
+   所以不会平白多出一圈描边，键盘 Tab 导航时又清清楚楚。 */
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* 老浏览器不支持 :focus-visible 时，别把默认焦点样式也一起抹掉 */
+:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* 按下去有轻微下沉，比"只有颜色变化"更像真的按到了东西。
+   这里把常见的过渡属性一并列出，避免覆盖掉各组件自己的悬停过渡。 */
+.nav-link,
+.lang-link,
+.lang-current,
+.social-btn,
+.landing-btn,
+.theme-toggle,
+.player-track,
+.code-copy,
+.back-to-top,
+.tetris-btn,
+.tetris-touch-btn,
+.mod-card-link,
+.about-link {
+  transition: transform 0.12s ease, background-color 0.15s ease,
+    color 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.nav-link:active,
+.lang-link:active,
+.lang-current:active,
+.social-btn:active,
+.landing-btn:active,
+.theme-toggle:active,
+.player-track:active,
+.code-copy:active,
+.back-to-top:active,
+.tetris-btn:active,
+.tetris-touch-btn:active,
+.mod-card-link:active,
+.about-link:active {
+  transform: scale(0.96);
+}
+
+/* 减少动态效果：不要这个下沉动作 */
+@media (prefers-reduced-motion: reduce) {
+  .nav-link:active,
+  .lang-link:active,
+  .lang-current:active,
+  .social-btn:active,
+  .landing-btn:active,
+  .theme-toggle:active,
+  .player-track:active,
+  .code-copy:active,
+  .back-to-top:active,
+  .tetris-btn:active,
+  .tetris-touch-btn:active,
+  .mod-card-link:active,
+  .about-link:active {
+    transform: none;
+  }
+}

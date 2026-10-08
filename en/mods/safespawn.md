@@ -14,7 +14,7 @@ card_license: "MIT"
 ---
 
 <div class="mod-hero">
-  <img class="mod-icon" src="{{ '/assets/images/safespawn/icon.png' | relative_url }}" alt="SafeSpawn icon" width="96" height="96">
+  <img class="mod-icon" src="{{ '/assets/images/safespawn/icon.png' | relative_url }}" alt="SafeSpawn icon" width="96" height="96" loading="lazy" decoding="async">
   <div>
     <p class="mod-tagline">This mod restores MC-212 and MC-21650 (which were fixed in 24w45a), and also fixes MC-278261.</p>
   </div>

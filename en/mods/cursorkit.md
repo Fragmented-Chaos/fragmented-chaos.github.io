@@ -14,7 +14,7 @@ card_license: "LGPL-3.0"
 ---
 
 <div class="mod-hero">
-  <img class="mod-icon" src="{{ '/assets/images/cursorkit/icon.png' | relative_url }}" alt="Cursor Kit icon" width="96" height="96">
+  <img class="mod-icon" src="{{ '/assets/images/cursorkit/icon.png' | relative_url }}" alt="Cursor Kit icon" width="96" height="96" loading="lazy" decoding="async">
   <div>
     <p class="mod-tagline">Replaces Minecraft's mouse pointer with custom HD cursors: six states, frame animation, per-state hotspots, and click effects that follow the pack.</p>
   </div>
@@ -60,7 +60,7 @@ Controls:
 - `Done` saves, `Cancel` restores the state from when the screen was opened
 
 <figure class="shot">
-  <img src="{{ '/assets/images/cursorkit/picker.png' | relative_url }}" alt="The cursor picker: pack list on the left, six state previews on the right">
+  <img src="{{ '/assets/images/cursorkit/picker.webp' | relative_url }}" width="760" height="1005" decoding="async" loading="lazy" alt="The cursor picker: pack list on the left, six state previews on the right">
   <figcaption>The picker: a searchable pack list on the left (each row shows its origin and effect), the six state previews and per-state hotspots on the right.</figcaption>
 </figure>
 
@@ -74,7 +74,7 @@ If you would rather use existing images than author a pack, select **`Custom (pe
 - The paths live in `custom_states` inside `config/cursorkit.json`, e.g. `{"default": "D:/cursors/arrow.png", "clickable": "hand.cur"}`.
 
 <figure class="shot">
-  <img src="{{ '/assets/images/cursorkit/states.png' | relative_url }}" alt="The per-state path editor">
+  <img src="{{ '/assets/images/cursorkit/states.webp' | relative_url }}" width="760" height="499" decoding="async" loading="lazy" alt="The per-state path editor">
   <figcaption>The per-state path editor: one path per state, gold when found and red with a question mark when not.</figcaption>
 </figure>
 
@@ -90,7 +90,7 @@ If you would rather use existing images than author a pack, select **`Custom (pe
 Because this edits your config rather than the pack itself, **sets that live inside resource packs can be adjusted the same way** without touching somebody else's files. A state without its own image (say `text (default)`) borrows the `default` image, but its **hotspot is independent** — changing one never moves another.
 
 <figure class="shot">
-  <img src="{{ '/assets/images/cursorkit/hotspots.png' | relative_url }}" alt="The hotspot editor: state list on the left, magnified image with pixel grid on the right">
+  <img src="{{ '/assets/images/cursorkit/hotspots.webp' | relative_url }}" width="760" height="1005" decoding="async" loading="lazy" alt="The hotspot editor: state list on the left, magnified image with pixel grid on the right">
   <figcaption>The hotspot editor: click or drag to move it, arrow keys to fine-tune — every change applies instantly.</figcaption>
 </figure>
 

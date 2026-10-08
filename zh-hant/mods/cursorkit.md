@@ -14,7 +14,7 @@ card_license: "LGPL-3.0"
 ---
 
 <div class="mod-hero">
-  <img class="mod-icon" src="{{ '/assets/images/cursorkit/icon.png' | relative_url }}" alt="Cursor Kit 圖示" width="96" height="96">
+  <img class="mod-icon" src="{{ '/assets/images/cursorkit/icon.png' | relative_url }}" alt="Cursor Kit 圖示" width="96" height="96" loading="lazy" decoding="async">
   <div>
     <p class="mod-tagline">把 Minecraft 的滑鼠指標換成自定義高畫質游標：六個狀態、幀動畫、逐狀態熱區，點選特效跟隨游標包。</p>
   </div>
@@ -60,7 +60,7 @@ card_license: "LGPL-3.0"
 - `完成` 儲存，`取消` 恢復到開啟介面時的狀態
 
 <figure class="shot">
-  <img src="{{ '/assets/images/cursorkit/picker.png' | relative_url }}" alt="游標選擇介面：左側列表、右側六個狀態預覽">
+  <img src="{{ '/assets/images/cursorkit/picker.webp' | relative_url }}" width="760" height="1005" decoding="async" loading="lazy" alt="游標選擇介面：左側列表、右側六個狀態預覽">
   <figcaption>選擇介面：左邊是可搜尋的包列表（每行標出來源與特效），右邊是六個狀態的預覽和逐狀態點選點。</figcaption>
 </figure>
 
@@ -74,7 +74,7 @@ card_license: "LGPL-3.0"
 - 這些路徑存在 `config/cursorkit.json` 的 `custom_states` 裡，例如 `{"default": "D:/cursors/arrow.png", "clickable": "hand.cur"}`。
 
 <figure class="shot">
-  <img src="{{ '/assets/images/cursorkit/states.png' | relative_url }}" alt="逐狀態路徑編輯介面">
+  <img src="{{ '/assets/images/cursorkit/states.webp' | relative_url }}" width="760" height="499" decoding="async" loading="lazy" alt="逐狀態路徑編輯介面">
   <figcaption>逐狀態自定義：每個狀態一個路徑，找到的顯示金色，沒找到的紅色帶問號。</figcaption>
 </figure>
 
@@ -90,7 +90,7 @@ card_license: "LGPL-3.0"
 因為改的是配置而不是包本身，**資源包裡的集合也能這樣調**，不用去動別人的檔案。沒有自己圖片的狀態（例如 `text (default)`）會借用 `default` 的圖片，但**點選點是獨立的**，改一個不會牽動別的。
 
 <figure class="shot">
-  <img src="{{ '/assets/images/cursorkit/hotspots.png' | relative_url }}" alt="點選點編輯器：左側狀態列表，右側放大圖片與畫素網格">
+  <img src="{{ '/assets/images/cursorkit/hotspots.webp' | relative_url }}" width="760" height="1005" decoding="async" loading="lazy" alt="點選點編輯器：左側狀態列表，右側放大圖片與畫素網格">
   <figcaption>點選點編輯器：點或拖就能改，方向鍵微調，改完立刻生效。</figcaption>
 </figure>
 

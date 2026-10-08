@@ -6,7 +6,7 @@ layout: default
 
 <div class="about">
   <header class="about-header">
-    <img class="about-avatar" src="{{ '/assets/images/logo.jpg' | relative_url }}" alt="Fragmented_Chaos 头像" />
+    <img class="about-avatar" src="{{ '/assets/images/logo.jpg' | relative_url }}" width="512" height="512" decoding="async" alt="Fragmented_Chaos 头像" />
     <h1 class="about-name">Fragmented_Chaos</h1>
   </header>
 
@@ -20,12 +20,20 @@ layout: default
     - 运行天数：建站日期到本次构建时间；除以 86400 后取整（Jekyll 是整数除法、
       liquidjs 会得到小数，所以显式 floor，保证本地预览与线上一致）
   {%- endcomment -%}
-  {%- assign stats_pages = 0 -%}
-  {%- for p in site.pages -%}
-    {%- unless p.url contains "404" or p.url contains "sitemap" -%}
-      {%- assign stats_pages = stats_pages | plus: 1 -%}
+  {%- comment -%}
+    页面数按「路由表 × 语言数」算，不再遍历 site.pages。
+    原因：GitHub Pages 上 jekyll-redirect-from 会为每个旧地址各生成一个跳转页，
+    它们同样出现在 site.pages 里（线上因此多算了 10 个）；而 assets/main.scss、
+    robots.txt 这类带 front matter 的文件也是 page，会被算成"页面"。
+    按路由表算则从根上不受这些影响：一条路由在每种语言里就是一页。
+  {%- endcomment -%}
+  {%- assign stats_routes = 0 -%}
+  {%- for route in site.data.pages -%}
+    {%- unless route[0] == "error" -%}
+      {%- assign stats_routes = stats_routes | plus: 1 -%}
     {%- endunless -%}
   {%- endfor -%}
+  {%- assign stats_pages = stats_routes | times: site.data.i18n.size -%}
   {%- assign since_epoch = site.data.site.since | date: "%s" -%}
   {%- assign now_epoch = site.time | date: "%s" -%}
   {%- assign stats_days = now_epoch | minus: since_epoch | divided_by: 86400 | floor -%}
@@ -38,7 +46,12 @@ layout: default
         <span class="site-stats-label">{{ t.stats_pages }}</span>
       </li>
       <li>
-        <span class="site-stats-value">{{ stats_days }}<small class="site-stats-unit">{{ t.stats_days_unit }}</small></span>
+        {%- comment -%}
+          data-since 交给浏览器：GitHub Pages 只在推送时重建，
+          只靠构建值的话，两次推送之间天数一直是旧的。
+          这里的构建值保留为无 JS 时的兜底。
+        {%- endcomment -%}
+        <span class="site-stats-value" data-since="{{ site.data.site.since | date: '%Y-%m-%d' }}">{{ stats_days }}<small class="site-stats-unit">{{ t.stats_days_unit }}</small></span>
         <span class="site-stats-label">{{ t.stats_days }}</span>
       </li>
     </ul>

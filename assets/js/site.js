@@ -185,6 +185,16 @@
     var box = document.querySelector('.footer-visits');
     if (!box) return;
 
+    // 预渲染（<script type="speculationrules">）时会先把页面在后台渲染好，
+    // 但访客可能根本没点进来 —— 那样就会多算一次访问。
+    // 所以预渲染阶段什么都不做，等页面真的被激活再继续。
+    if (document.prerendering) {
+      document.addEventListener('prerenderingchange', function () {
+        setupVisitorCounter(labels);
+      }, { once: true });
+      return;
+    }
+
     var api = (box.getAttribute('data-counter-api') || '').replace(/\/+$/, '');
     var target = box.getAttribute('data-counter-target') || 'site';
     var OWNER_KEY = 'fragmentedchaos-owner';
@@ -294,6 +304,78 @@
   // 显示访客自己时区的时间，每秒走一格。用 <time> 标签，datetime 放机器可读值、
   // title 放完整日期，鼠标停上去能看到"2026年10月4日 星期日"。
   // 时钟是纯装饰，页面里没有这个元素时什么都不做。
+  // 关于页的统计数字：滚到眼前时从 0 递增到实际值。
+  // 只是"数一下"的观感，所以数字本身在 HTML 里就是最终值 ——
+  // 万一这段脚本没跑（禁用 JS、旧浏览器、减少动态效果），看到的也是正确数字。
+  function setupStatsCountUp() {
+    var nodes = document.querySelectorAll('.site-stats-value');
+    if (!nodes.length) return;
+
+    function numberNode(el) {
+      var first = el.firstChild;
+      return first && first.nodeType === 3 ? first : null; // 只动最前面的纯文本数字
+    }
+
+    // 「已运行天数」是构建时算出来的，而 GitHub Pages 只在推送时重建 ——
+    // 两次推送之间这个数字不会变。所以带 data-since 的数字在这里按建站日期重算，
+    // 访客看到的永远是当前天数（构建值作为无 JS 时的兜底）。
+    function liveTarget(el) {
+      var since = el.getAttribute('data-since');
+      if (!since) return null;
+      var start = new Date(since + 'T00:00:00');
+      if (isNaN(start.getTime())) return null;
+      var days = Math.floor((Date.now() - start.getTime()) / 86400000);
+      return days >= 0 ? days : null;
+    }
+
+    // 第一步与动画无关：先把数字改对。
+    // 这样"减少动态效果"或没有 rAF 的环境下，看到的也是正确天数。
+    Array.prototype.forEach.call(nodes, function (el) {
+      var node = numberNode(el);
+      var live = liveTarget(el);
+      if (node && live !== null) node.nodeValue = String(live);
+    });
+
+    if (reducedMotion() || !window.requestAnimationFrame) return;
+
+    function animate(el) {
+      var node = numberNode(el);
+      if (!node) return;
+
+      var target = liveTarget(el);
+      if (target === null) target = parseInt(node.nodeValue.replace(/[^0-9]/g, ''), 10);
+      if (!target || target > 100000) return;
+
+      var duration = 900;
+      var started = null;
+      function step(now) {
+        if (started === null) started = now;
+        var progress = Math.min((now - started) / duration, 1);
+        var eased = 1 - Math.pow(1 - progress, 3); // 先快后慢
+        node.nodeValue = String(Math.round(target * eased));
+        if (progress < 1) {
+          window.requestAnimationFrame(step);
+        } else {
+          node.nodeValue = String(target); // 收尾对回精确值
+        }
+      }
+      window.requestAnimationFrame(step);
+    }
+
+    if (!window.IntersectionObserver) {
+      Array.prototype.forEach.call(nodes, animate);
+      return;
+    }
+    var observer = new window.IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (!entry.isIntersecting) return;
+        observer.unobserve(entry.target);
+        animate(entry.target);
+      });
+    }, { threshold: 0.4 });
+    Array.prototype.forEach.call(nodes, function (node) { observer.observe(node); });
+  }
+
   function setupClock() {
     var el = document.querySelector('[data-clock]');
     if (!el) return;
@@ -355,5 +437,6 @@
       copied: labels.copied || 'Copied',
       failed: labels.failed || 'Copy failed',
     });
+    setupStatsCountUp();
   });
 })();

@@ -3,17 +3,25 @@ permalink: /sitemap.xml
 sitemap: false
 ---
 {%- comment -%}
-  站点地图：给爬虫一份完整的页面清单。中英两套页面都列出来，让它们各自被收录。
-  刻意不写 <lastmod>：GitHub Pages 上拿不到各页面真实的修改时间，退化后会变成“每次构建时间”，
-  等于告诉搜索引擎每一页都刚更新过，反而有害。没有这一项时爬虫按自己的节奏判断。
+  站点地图：给爬虫一份完整的页面清单。
+  直接按 _data/pages.yml 的路由表生成，而不是遍历 site.pages ——
+  GitHub Pages 上 jekyll-redirect-from 生成的旧地址跳转页也会出现在 site.pages 里，
+  遍历的话会把它们一并提交（线上实测多出 10 条），而跳转页对爬虫没有价值。
+  刻意不写 <lastmod>：GitHub Pages 上拿不到各页面真实的修改时间，退化后会变成
+  “每次构建时间”，等于告诉搜索引擎每一页都刚更新过，反而有害。
 {%- endcomment -%}
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-{%- for p in site.pages -%}
-{%- unless p.url contains ".css" or p.url contains ".js" or p.url contains "sitemap" or p.url contains "404" or p.url contains ".txt" or p.url contains "feed" -%}
+{%- for route in site.data.pages -%}
+{%- unless route[0] == "error" -%}
+{%- for lang in site.data.i18n -%}
+{%- assign target = route[1][lang[0]] -%}
+{%- if target -%}
   <url>
-    <loc>{{ p.url | absolute_url }}</loc>
+    <loc>{{ target | absolute_url }}</loc>
   </url>
+{%- endif -%}
+{%- endfor -%}
 {%- endunless -%}
 {%- endfor -%}
 </urlset>

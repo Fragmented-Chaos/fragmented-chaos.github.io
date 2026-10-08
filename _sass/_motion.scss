@@ -1,0 +1,180 @@
+/* ---------- 入场动画：内容从下方升入到位 ---------- */
+/* 只用 transform + opacity：不改变任何布局，所以锚点跳转、阅读进度条、页脚位置都不受影响。
+   不用 JS：纯 CSS 在解析时就跑，不会出现"内容先出现在位置上、再跳回去重播"的闪动。
+   "减少动态效果"由 _responsive.scss 里的全局规则关掉（animation: none !important），
+   所以这里不用再单独写一遍。 */
+
+@keyframes rise-in {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 1.15rem, 0);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+$rise-duration: 0.46s;
+$rise-easing: cubic-bezier(0.22, 0.61, 0.36, 1);
+
+/* 同一块里的兄弟元素依次升入，每块比上一块晚一点。
+   $count 之后的不再往后推（长文档不必等很久才显示），$step 为 0 时不做错开。 */
+@mixin rise($base: 0ms, $step: 55ms, $count: 6) {
+  animation: rise-in $rise-duration $rise-easing both;
+
+  @if $step > 0 {
+    @for $i from 1 through $count {
+      &:nth-child(#{$i}) {
+        animation-delay: $base + ($i - 1) * $step;
+      }
+    }
+
+    /* 第 $count 个之后的都停在同一延迟：长文档不该越等越久，
+       也不能给它们 0 延迟 —— 那样页面下方的块会比上方的先出现。 */
+    &:nth-child(n + #{$count + 1}) {
+      animation-delay: $base + ($count - 1) * $step;
+    }
+  } @else {
+    animation-delay: $base;
+  }
+}
+
+/* 起始页：标题 → 副标题 → 进入按钮 */
+.landing-inner > * {
+  @include rise(0ms, 70ms, 4);
+}
+
+/* 正文页：标题先出来，正文各块随后跟上 */
+.page-title {
+  @include rise(0ms, 0ms, 1);
+}
+
+.page-body > * {
+  @include rise(50ms, 60ms, 6);
+}
+
+/* 介绍页：左侧文字逐行升入，头像稍后 */
+.hero-text > * {
+  @include rise(0ms, 60ms, 5);
+}
+
+.hero-visual {
+  @include rise(140ms, 0ms, 1);
+}
+
+/* 关于页：头像与名字先出来，下面的内容再跟上 */
+.about-header {
+  @include rise(0ms, 0ms, 1);
+}
+
+.about-body > * {
+  @include rise(70ms, 60ms, 6);
+}
+
+/* 打印时不要动画，直接出终态 */
+@media print {
+  .landing-inner > *,
+  .page-title,
+  .page-body > *,
+  .hero-text > *,
+  .hero-visual,
+  .about-header,
+  .about-body > * {
+    animation: none;
+  }
+}
+
+/* ---------- 站内页面过渡（View Transitions） ---------- */
+/* 点站内链接时旧页淡出、新页淡入，不再"白闪一下"。
+   只有 Chromium 126+ 认这段；其它浏览器照常跳转，功能不受影响。 */
+@view-transition {
+  navigation: auto;
+}
+
+::view-transition-old(root) {
+  animation-duration: 0.16s;
+}
+
+::view-transition-new(root) {
+  animation-duration: 0.3s;
+}
+
+/* 已经在做页面过渡时，就别再播入场动画了 —— 两层叠在一起会互相打架。
+   html 上的 is-vt 由 pagereveal 事件加上（只有支持跨文档过渡的浏览器会触发）。 */
+html.is-vt .landing-inner > *,
+html.is-vt .page-title,
+html.is-vt .page-body > *,
+html.is-vt .hero-text > *,
+html.is-vt .hero-visual,
+html.is-vt .about-header,
+html.is-vt .about-body > * {
+  animation: none;
+}
+
+/* ---------- 滚到视口才淡入（长页面） ---------- */
+/* 只给"卡片类"元素：它们没有入场动画，不会和上面的 rise-in 抢 animation 属性。
+   不支持 animation-timeline 的浏览器直接显示终态 —— 内容本来就在，不会少东西。 */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .mod-card,
+    .timeline-item,
+    .site-stats,
+    .page-body img {
+      animation: reveal-in linear both;
+      animation-timeline: view();
+      animation-range: entry 8% cover 26%;
+    }
+  }
+}
+
+@keyframes reveal-in {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 1.4rem, 0);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+/* 减少动态效果：页面过渡也关掉 */
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
+  }
+}
+
+/* ---------- 主题切换：从按钮位置圆形扩散 ---------- */
+/* 只有支持 View Transitions 的浏览器会走这条路（脚本里的 startViewTransition），
+   html 上的 vt-theme 由脚本加、切换结束就摘掉，所以不会影响站内页面过渡。 */
+html.vt-theme::view-transition-old(root),
+html.vt-theme::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+/* 旧主题垫在下面不动，新主题从点击处像水面一样铺开 */
+html.vt-theme::view-transition-old(root) {
+  z-index: 1;
+}
+
+html.vt-theme::view-transition-new(root) {
+  z-index: 2;
+  animation: theme-circle 0.42s ease-out;
+}
+
+@keyframes theme-circle {
+  from {
+    clip-path: circle(0% at var(--vt-x, 50%) var(--vt-y, 50%));
+  }
+
+  to {
+    clip-path: circle(150% at var(--vt-x, 50%) var(--vt-y, 50%));
+  }
+}

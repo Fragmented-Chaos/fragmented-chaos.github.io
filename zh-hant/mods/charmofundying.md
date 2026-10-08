@@ -14,7 +14,7 @@ card_license: "MIT"
 ---
 
 <div class="mod-hero">
-  <img class="mod-icon" src="{{ '/assets/images/charmofundying/icon.png' | relative_url }}" alt="Charm of Undying: Reborn 圖示" width="96" height="96">
+  <img class="mod-icon" src="{{ '/assets/images/charmofundying/icon.png' | relative_url }}" alt="Charm of Undying: Reborn 圖示" width="96" height="96" loading="lazy" decoding="async">
   <div>
     <p class="mod-tagline">為不死圖騰新增一個飾品槽位。</p>
   </div>

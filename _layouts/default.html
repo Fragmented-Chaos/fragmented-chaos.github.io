@@ -30,6 +30,37 @@
     {%- endif -%}
     <meta property="og:type" content="website">
     <link rel="stylesheet" href="{{ '/assets/main.css' | relative_url }}">
+    {%- comment -%}
+      站内链接预渲染：鼠标悬停一下就把目标页提前渲染好，点开几乎瞬间到位。
+        · 排除俄罗斯方块页 —— 预渲染会在后台把它的游戏循环跑起来，白耗性能
+        · 计数器脚本会跳过预渲染阶段（见 assets/js/site.js），不会多算访问量
+      不认这段的浏览器会忽略它，只是没有加速。
+    {%- endcomment -%}
+    <script type="speculationrules">
+      {
+        "prerender": [{
+          "where": {
+            "and": [
+              { "href_matches": "/*" },
+              { "not": { "href_matches": "/*/tetris/" } }
+            ]
+          },
+          "eagerness": "moderate"
+        }]
+      }
+    </script>
+    <script>
+      // 跨文档页面过渡进行时给 html 加个标记：这时不再播入场动画，
+      // 免得页面级淡入淡出和"内容从下方升入"两层动画互相打架。
+      //
+      // 必须判断 event.viewTransition —— pagereveal 在每次正常加载时也会触发，
+      // 不判断的话每次打开页面都会被标记，入场动画就永远不播了。
+      window.addEventListener('pagereveal', function (event) {
+        if (event.viewTransition) {
+          document.documentElement.classList.add('is-vt');
+        }
+      });
+    </script>
     <link rel="icon" href="{{ '/assets/images/logo.jpg' | relative_url }}">
     <!-- 字体自托管（assets/fonts/，许可见 OFL.txt），不再外链 Google Fonts。 -->
     <link rel="preload" href="{{ '/assets/fonts/quicksand-latin.woff2' | relative_url }}" as="font" type="font/woff2" crossorigin>
@@ -173,28 +204,36 @@
       var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
       apply(saved || (prefersDark ? 'dark' : 'light'));
       if (btn) {
-        btn.addEventListener('click', function () {
+        btn.addEventListener('click', function (event) {
           var next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
-          apply(next);
-          try { localStorage.setItem(KEY, next); } catch (e) {}
-        });
-      }
-      var menuBtn = document.getElementById('menu-toggle');
-      var nav = document.getElementById('site-nav');
-      if (menuBtn && nav) {
-        function closeMenu() {
-          nav.classList.remove('is-open');
-          menuBtn.setAttribute('aria-expanded', 'false');
-        }
-        menuBtn.addEventListener('click', function () {
-          var open = nav.classList.toggle('is-open');
-          menuBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
-        });
-        nav.addEventListener('click', function (e) {
-          if (e.target.closest('a')) closeMenu();
-        });
-        window.addEventListener('resize', function () {
-          if (window.innerWidth > 640) closeMenu();
+          function swap() {
+            apply(next);
+            try { localStorage.setItem(KEY, next); } catch (e) {}
+          }
+
+          // 从按钮位置圆形扩散着换主题。
+          // 用 View Transitions 实现；不支持的浏览器与"减少动态效果"直接切换，功能一样。
+          var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+          if (reduce || !document.startViewTransition) {
+            swap();
+            return;
+          }
+
+          var rect = btn.getBoundingClientRect();
+          var x = event.clientX || (rect.left + rect.width / 2);
+          var y = event.clientY || (rect.top + rect.height / 2);
+          var root = document.documentElement;
+          root.style.setProperty('--vt-x', x + 'px');
+          root.style.setProperty('--vt-y', y + 'px');
+          root.classList.add('vt-theme'); // 只让"主题切换"用圆形扩散，别影响站内页面过渡
+          var vt = document.startViewTransition(swap);
+          function clearFlag() { root.classList.remove('vt-theme'); }
+          if (vt.finished && typeof vt.finished.finally === 'function') {
+            vt.finished.finally(clearFlag);
+          }
+          // 兜底：万一 finished 迟迟不兑现（不同实现、标签页被节流），
+          // 也不能让这个标记一直留在 html 上 —— 否则下次站内跳转会被它带偏。
+          window.setTimeout(clearFlag, 1000);
         });
       }
     })();

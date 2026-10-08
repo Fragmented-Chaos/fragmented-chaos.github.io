@@ -17,7 +17,7 @@ redirect_from:
 ---
 
 <div class="mod-hero">
-  <img class="mod-icon" src="{{ '/assets/images/charmofundying/icon.png' | relative_url }}" alt="Charm of Undying: Reborn 图标" width="96" height="96">
+  <img class="mod-icon" src="{{ '/assets/images/charmofundying/icon.png' | relative_url }}" alt="Charm of Undying: Reborn 图标" width="96" height="96" loading="lazy" decoding="async">
   <div>
     <p class="mod-tagline">为不死图腾新增一个饰品槽位。</p>
   </div>
