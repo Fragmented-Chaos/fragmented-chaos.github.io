@@ -29,8 +29,8 @@
   --bg: #0c0d10;
   --bg-soft: #12141a;
   --ink: #f1ede5;
-  --soft: #b6b0a4;
-  --muted: #8b8578;
+  --soft: #d3cec4;   /* 背景图压暗后，次要文字再提亮一档以维持 AA */
+  --muted: #bdb6a8;
   --line: #23262d;
   --line-soft: #1a1c22;
   --accent: #c85a2e;
@@ -41,6 +41,9 @@
   --mono: ui-monospace, SFMono-Regular, "SF Mono", Consolas,
           "Liberation Mono", monospace;
   --max: 1080px;
+  --bg-image: url("images/bg-dark.webp");   /* 两套图：暗图/亮图各自原生分辨率生成，互不将就 */
+
+
   color-scheme: dark;
 }
 
@@ -64,12 +67,15 @@
     --bg: #faf8f4;
     --bg-soft: #f1ede5;
     --ink: #17150f;
-    --soft: #55524a;
-    --muted: #7d7869;
+    --soft: #413e39;   /* 同理：亮色下压深一档 */
+    --muted: #605c51;
     --line: #e2ddd2;
     --line-soft: #ece7dc;
     --accent: #b8442a;
     --accent-ink: #7c2d1b;
+    --bg-image: url("images/bg-light.webp");
+
+
     color-scheme: light;
   }
 }
@@ -85,7 +91,7 @@ body {
   /* 整页纵向 flex：内容短时页脚也贴底，不会紧贴在内容下面 */
   display: flex;
   flex-direction: column;
-  background-color: var(--bg);
+    background-color: transparent;
   color: var(--ink);
   font-family: var(--font);
   font-size: 16px;
@@ -544,7 +550,15 @@ button:focus-visible {
 .post-body pre { margin: 0 0 1.25rem; padding: 1rem 1.1rem; border: 1px solid var(--line); border-radius: 12px; background-color: var(--bg-soft); overflow: auto; }
 .post-body pre code { padding: 0; border: 0; background: none; font-size: 0.82rem; line-height: 1.6; }
 .post-body blockquote { margin: 0 0 1.25rem; padding: 0.35rem 0 0.35rem 1rem; border-left: 2px solid var(--accent); color: var(--soft); }
-.post-body img { max-width: 100%; height: auto; border: 1px solid var(--line); border-radius: 12px; }
+.post-body img {
+  max-width: 100%;
+  height: auto;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  /* 图片加载中或加载失败时显示一块柔和底色，避免裂图难看 */
+  background-color: var(--bg-soft);
+  min-height: 3rem;
+}
 .post-body hr { margin: 2rem 0; border: 0; border-top: 1px solid var(--line); }
 
 .comments { margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(--line); }
@@ -682,3 +696,144 @@ body.doc .post-body { max-width: none; }
   .two { grid-template-columns: 1fr; gap: 2rem; }
   .sec { padding-top: 3rem; padding-bottom: 3rem; }
 }
+
+/* ============================================================
+   全屏背景图 + 内容区毛玻璃托盘（纯 CSS，零 HTML 改动）
+   ------------------------------------------------------------
+   三条踩坑约束，先说清为什么：
+   1) body 的底色必须挪到 html。body 的背景会画在「负 z-index 后代」之后 ——
+      若留在 body 上，下面 z-index: -2 / -1 的两个背景层会被它整个盖住，
+      表现为「CSS 明明写了，屏幕上毫无反应」。
+   2) 背景层用 position: fixed 伪元素，**不要** background-attachment: fixed ——
+      iOS Safari 不支持后者（当成 scroll，滚动时背景跟着跑）。
+   3) 玻璃感来自 backdrop-filter: blur()，不是靠调低不透明度：
+      blur 模糊的是「元素背后已经画好的像素」，元素自身与文字保持清晰；
+      只调透明度会让背景图直接透过来，正文对比度跟着掉。
+      调参顺序：正文读不清 → 先加 blur 像素值 → 再考虑加不透明度；
+                背景图看不见 → 先减下面那层蒙版。
+   ============================================================ */
+
+/* ---------- ① 底色归位：html 持有不透明底色，body 透明 ---------- */
+html { background-color: var(--bg); }
+body { background-color: transparent; }
+
+/* ---------- ② 背景两层：::before 放图（最底），::after 放主题色蒙版 ---------- */
+body::before,
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;   /* 纯装饰层，绝不吃掉点击/滚动 */
+  z-index: -2;
+}
+body::before {
+  background-image: var(--bg-image);   /* 由主题决定：images/bg-dark.webp / bg-light.webp */
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  filter: saturate(0.7) contrast(0.95);      /* 照片褪一点色，别和主题色打架 */
+}
+body::after {
+  z-index: -1;                               /* 压在图上、在内容之下 */
+  /* 四段而不是两段：顶栏与页脚区域需要更实（那里没有托盘托底、文字直接压在图上），
+     中间留薄（托盘区域有 blur 兜底，可以更透，让背景图看得清）。
+     这是量出来的：两段式下顶栏文字只有 2.8:1（浅色主题），四段式后回到 AA。 */
+  background-image: linear-gradient(180deg,
+    color-mix(in srgb, var(--bg) 78%, transparent) 0%,
+    color-mix(in srgb, var(--bg) 56%, transparent) 20%,
+    color-mix(in srgb, var(--bg) 52%, transparent) 80%,
+    color-mix(in srgb, var(--bg) 78%, transparent) 100%);
+}
+
+/* ---------- ③ 三层共用同一种玻璃材质：内容托盘 / 顶栏 / 页脚 ----------
+   为什么必须共用：三者透明度不一致时（例如顶栏更实、内容更透），接缝处会露出
+   一道材质分界线，看着像"没对齐"；同一组值则整页是一套玻璃体系。
+   托盘独有的盒模型（宽度/圆角/描边/阴影/外边距）写在下面单独一条，别传染给整条栏。 */
+main:not(.start-main), .top, .site-footer {
+  background-color: transparent;   /* 0%：只留 blur，玻璃感全部来自模糊 */
+  -webkit-backdrop-filter: blur(16px) saturate(120%);
+  backdrop-filter: blur(16px) saturate(120%);
+}
+
+/* ---------- ③b 托盘形状 + 与顶栏/页脚之间的空隙 ----------
+   托盘比内容列略宽（托盘感），窄视口左右各留 1.5rem 永不贴边；
+   空隙用 margin 而不是 padding —— padding 会撑大托盘本身，空隙必须在托盘之外。 */
+/* 起始页（语言选择页）不加托盘：它本身就是一屏居中的门厅，
+   套一层带圆角/描边/阴影的玻璃框反而像"内容还没加载出来"。 */
+main:not(.start-main) {
+  width: min(calc(var(--max) + 2.5rem), calc(100% - 3rem));
+  margin-inline: auto;
+  margin-block: 1.5rem;
+  border: 1px solid var(--line-soft);
+  border-radius: 24px;
+  box-shadow: 0 24px 60px -32px rgba(0, 0, 0, 0.5);
+}
+
+/* ---------- ③c 托盘内的次级玻璃面 ----------
+   同样由 color-mix(--bg) 派生 —— 明暗主题自动跟随，不用写两遍。 */
+.panel, .chips a, .post-body pre, .theme-toggle, .nav-toggle, .comments {
+  background-color: color-mix(in srgb, var(--bg) 10%, transparent);
+  -webkit-backdrop-filter: blur(10px) saturate(115%);
+  backdrop-filter: blur(10px) saturate(115%);
+}
+
+/* 不支持 backdrop-filter 的浏览器：退化为更不透明的底，保证文字清晰 */
+@supports not ((backdrop-filter: blur(4px)) or (-webkit-backdrop-filter: blur(4px))) {
+  main:not(.start-main), .top, .site-footer { background-color: color-mix(in srgb, var(--bg) 92%, transparent); }
+  .panel, .chips a, .post-body pre, .theme-toggle, .nav-toggle, .comments { background-color: var(--bg-soft); }
+}
+
+/* ---------- ④ 降级：窄屏 / 减少透明 / 提高对比 / 打印 ---------- */
+/* 窄屏关掉模糊：整屏 backdrop-filter 在低端机上很贵，滚动会掉帧；
+   三层一起提到 88% 保持材质一致，蒙版同步加重兜住对比度。 */
+@media (max-width: 760px) {
+  main:not(.start-main), .top, .site-footer {
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+    background-color: color-mix(in srgb, var(--bg) 18%, transparent);
+  }
+  main:not(.start-main) { width: 88%; margin-block: 1rem; }   /* 窄屏纵向更宝贵，空隙收紧一档 */
+  .panel, .chips a, .post-body pre, .theme-toggle, .nav-toggle, .comments {
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+    background-color: color-mix(in srgb, var(--bg) 20%, transparent);   /* 无 blur 兜底，略高一点 */
+  }
+  body::after {
+    background-image: linear-gradient(180deg,
+      color-mix(in srgb, var(--bg) 42%, transparent) 0%,
+      color-mix(in srgb, var(--bg) 54%, transparent) 100%);
+  }
+}
+/* 用户明确要求减少透明 / 更高对比：三层一起退回不透明（可读性优先于效果） */
+@media (prefers-reduced-transparency: reduce), (prefers-contrast: more) {
+  main:not(.start-main), .top, .site-footer { background-color: var(--bg); -webkit-backdrop-filter: none; backdrop-filter: none; }
+  .panel, .chips a, .post-body pre, .theme-toggle, .nav-toggle, .comments { background-color: var(--bg-soft); }
+  body::after { background-image: none; background-color: color-mix(in srgb, var(--bg) 90%, transparent); }
+}
+/* 打印：两层背景都不要，三层玻璃全部去掉底色/模糊，托盘再去掉描边与阴影 */
+@media print {
+  body::before, body::after { display: none; }
+  main:not(.start-main), .top, .site-footer {
+    background-color: transparent;
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+  main:not(.start-main) { width: auto; margin: 0; border: 0; border-radius: 0; box-shadow: none; }
+  .panel, .chips a, .post-body pre, .theme-toggle, .nav-toggle, .comments {
+    background-color: transparent;
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+}
+
+/* ---------- ⑤ 无图版本（备选，未启用）----------
+   不想引入任何图片文件时，把上面 ② 的 body::before 整段替换成下面这段即可，
+   托盘与所有降级规则都不用动。这里保留注释形式，避免给线上多加无用规则。 */
+/*
+body::before {
+  background-image:
+    radial-gradient(60rem 40rem at 12% -8%, color-mix(in srgb, var(--accent) 26%, transparent), transparent 68%),
+    radial-gradient(52rem 38rem at 108% 18%, color-mix(in srgb, var(--accent) 14%, transparent), transparent 70%);
+  filter: none;
+}
+*/
