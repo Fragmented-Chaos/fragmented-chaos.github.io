@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cursor Kit · Fragmented_Chaos</title>
+<meta name="description" content="Replaces Minecraft's mouse pointer with custom HD cursors: six states, frame animation, per-state hotspots, and click effects that follow the pack.">
+<script>
+  (function () {
+    try {
+      var m = /[?&]theme=(light|dark)\b/.exec(location.search);
+      var t = m ? m[1] : localStorage.getItem('site-v2.theme');
+      if (t === 'light' || t === 'dark') document.documentElement.setAttribute('data-theme', t);
+    } catch (e) { /* 隐私模式忽略 */ }
+  })();
+</script>
+<link rel="stylesheet" href="../../../assets/base.css">
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap top-in">
+    <a class="mark" href="../../../index.html">Fragmented<b>_</b>Chaos</a>
+    <nav class="nav">
+      <a href="../" aria-current="page">Mods</a>
+      <a href="../../blog/">Blog</a>
+      <a href="../../music/">Music</a>
+      <a href="../../experience/">Experience</a>
+      <a href="../../about/">About</a>
+      <span class="lang">
+        <a href="../../../zh/mods/cursorkit/">简</a>
+        <a href="../../../zh-hant/mods/cursorkit/">繁</a>
+        <a href="../../../en/mods/cursorkit/" aria-current="true">EN</a>
+      </span>
+      <button type="button" class="theme-toggle" data-theme-toggle
+              aria-pressed="false"
+              data-label-to-dark="Switch to dark theme" data-label-to-light="Switch to light theme">
+        <span class="sr-only">Toggle theme</span>
+        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true">
+          <circle cx="12" cy="12" r="4.2"/>
+          <path d="M12 3v2.2M12 18.8V21M3 12h2.2M18.8 12H21M5.6 5.6l1.6 1.6M16.8 16.8l1.6 1.6M18.4 5.6l-1.6 1.6M7.2 16.8l-1.6 1.6"/>
+        </svg>
+        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true">
+          <path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a6.8 6.8 0 0 0 10.5 10.5z"/>
+        </svg>
+      </button>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="wrap page-head" style="padding-bottom:1.5rem">
+    <p class="kicker" style="margin:0 0 1.25rem;font-size:.74rem;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--soft)">MOD · English</p>
+    <div class="mod-head">
+        <img class="mod-icon" src="../../../assets/images/cursorkit/icon.png" width="72" height="72" alt="Cursor Kit 图标" loading="lazy" decoding="async">
+      <div>
+        <h1>Cursor Kit</h1>
+        <p class="mod-tagline">Replaces Minecraft's mouse pointer with custom HD cursors: six states, frame animation, per-state hotspots, and click effects that follow the pack.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap" style="padding-bottom:2rem">
+    <div class="panel" data-downloads>
+      <dl class="spec">
+        <dt>Version</dt><dd>26.3</dd>
+        <dt>Loaders</dt><dd>Fabric · NeoForge · Quilt</dd>
+        <dt>Requires</dt><dd>None (client-side)</dd>
+        <dt>License</dt><dd>LGPL-3.0</dd>
+        <dt data-dl-row="modrinth">Modrinth</dt><dd data-dl-cell="modrinth"><span data-dl-count="modrinth">—</span> downloads</dd>
+        <dt data-dl-row="curseforge">CurseForge</dt><dd data-dl-cell="curseforge"><span data-dl-count="curseforge">—</span> downloads</dd>
+        <dt data-latest-row>Latest version</dt><dd data-latest-version>—</dd>
+        <dt>Links</dt><dd>
+          <ul class="chips">
+            <li><a href="https://github.com/Fragmented-Chaos/Cursor-Kit/releases" target="_blank" rel="noopener">Download</a></li>
+            <li><a href="https://github.com/Fragmented-Chaos/Cursor-Kit" target="_blank" rel="noopener">Source</a></li>
+            <li><a href="https://github.com/Fragmented-Chaos/Cursor-Kit/issues" target="_blank" rel="noopener">Report an issue</a></li>
+          </ul>
+        </dd>
+      </dl>
+    </div>
+  </section>
+
+  <section class="wrap" style="padding-bottom:3.5rem">
+    <article class="post-body">
+<p>Every state's image comes from an external pack — resource packs, cursor packs or loose files in the <code>config</code> folder — so swapping cursors never means swapping mods or restarting the game.</p>
+<h2 id="start">Getting started</h2>
+<p><strong>A fresh install has no cursor sets at all</strong> — the list holds just <code>Default (system cursor)</code> and <code>Custom (per-state paths)</code>. Drop a cursor pack in and the rest appear:</p>
+<ul>
+<li><strong>Drag it in</strong>: drop a <code>.zip</code>, a folder containing <code>assets/</code>, or loose PNG/JSON files onto the screen (name collisions get <code>-2</code>)</li>
+<li><strong>Place it yourself</strong>: cursor packs go into <code>config/cursorkit/packs/</code> (folder or <code>.zip</code>), loose JSON + PNGs into <code>config/cursorkit/</code></li>
+</ul>
+<p><code>config/cursorkit/</code> (including <code>packs/</code>) is watched continuously: any change re-reads and refreshes the list, keeping your search text and selection.</p>
+<p>Controls:</p>
+<ul>
+<li><strong>Clicking a list entry selects and applies it immediately</strong></li>
+<li>Each row shows <code>name · origin · states · effect</code>, with a search box above; the first row is <code>Default (system cursor)</code>, the second is <a href="#custom"><code>Custom (per-state paths)</code></a></li>
+<li>The right side previews all six states live (red dot = hotspot, missing states tagged <code>(default)</code>) plus a looping click-effect preview</li>
+<li>Bottom switches: <code>Animation</code>, <code>Click effect</code>, <code>Scale</code>, <code>Edge margin</code>; top-right: <code>Folder</code> and <code>Hotspots…</code></li>
+<li><code>Done</code> saves, <code>Cancel</code> restores the state from when the screen was opened</li>
+</ul>
+<figure><img src="../../../assets/images/cursorkit/picker.webp" width="760" height="1005" decoding="async" loading="lazy" alt="The cursor picker: pack list on the left, six state previews on the right"><figcaption>The picker: a searchable pack list on the left (each row shows its origin and effect), the six state previews and per-state hotspots on the right.</figcaption></figure>
+<h3 id="custom">Custom cursors</h3>
+<p>If you would rather use existing images than author a pack, select <strong><code>Custom (per-state paths)</code></strong> (second row) and click <strong><code>Edit paths…</code></strong>:</p>
+<ul>
+<li>One row per state; enter an <strong>absolute path</strong> to any local PNG / <code>.cur</code> (relative paths resolve against the game directory).</li>
+<li>Each row is validated on the spot: <strong>gold = found</strong>, <strong>red with <code>?</code> = not found</strong>, <strong>grey = empty</strong> (empty falls back to <code>default</code>). The button also tells you how many paths are invalid.</li>
+<li>The paths live in <code>custom_states</code> inside <code>config/cursorkit.json</code>, e.g. <code>{"default": "D:/cursors/arrow.png", "clickable": "hand.cur"}</code>.</li>
+</ul>
+<figure><img src="../../../assets/images/cursorkit/states.webp" width="760" height="499" decoding="async" loading="lazy" alt="The per-state path editor"><figcaption>The per-state path editor: one path per state, gold when found and red with a question mark when not.</figcaption></figure>
+<h3 id="hotspots">Per-state hotspot editor</h3>
+<p><strong>Hotspots do not have to be hardcoded in JSON.</strong> Click <strong><code>Hotspots…</code></strong> in the top-right corner of the picker to open a dedicated editor: every state of that set with its current value on the left (changed ones in gold), a magnified image with a pixel grid on the right.</p>
+<ul>
+<li><strong>Click or drag</strong> on the image to put the hotspot on that pixel; the <strong>arrow keys</strong> nudge it one pixel at a time.</li>
+<li><code>Center</code> jumps to the middle of the image, <code>Reset</code> drops that one change and returns to the value shipped by the set.</li>
+<li>Edits apply <strong>live</strong> (the real cursor follows along). <code>Done</code> writes them to <code>hotspots</code> in <code>config/cursorkit.json</code>, <code>Cancel</code> reverts everything.</li>
+</ul>
+<p>Because this edits your config rather than the pack itself, <strong>sets that live inside resource packs can be adjusted the same way</strong> without touching somebody else's files. A state without its own image (say <code>text (default)</code>) borrows the <code>default</code> image, but its <strong>hotspot is independent</strong> — changing one never moves another.</p>
+<figure><img src="../../../assets/images/cursorkit/hotspots.webp" width="760" height="1005" decoding="async" loading="lazy" alt="The hotspot editor: state list on the left, magnified image with pixel grid on the right"><figcaption>The hotspot editor: click or drag to move it, arrow keys to fine-tune — every change applies instantly.</figcaption></figure>
+<h2 id="features">Features</h2>
+<ul class="feature-grid">
+  <li class="feature">
+    <h3>Six cursor states</h3>
+    <p>Default arrow / clickable hand / text I-beam / dragging / busy / disabled, switched automatically by UI context.</p>
+  </li>
+  <li class="feature">
+    <h3>HD cursors</h3>
+    <p>One image pixel equals one physical screen pixel, exactly like the system cursor. 16×16 is the normal size; 32×32, 64×64 and 128×128 get progressively larger and sharper, and stay native on 4K.</p>
+  </li>
+  <li class="feature">
+    <h3>Never interpolated</h3>
+    <p>Drawn at integer multiples of the image's own pixels (1:1, or integer-upscaled when under 16 GUI units), so nothing is ever blurry.</p>
+  </li>
+  <li class="feature">
+    <h3>Per-state hotspots</h3>
+    <p>The click point defaults to the top-left corner and can be set in the set's JSON, or picked by clicking, dragging and nudging right inside the UI.</p>
+  </li>
+  <li class="feature">
+    <h3>Three origins, clear priority</h3>
+    <p>Loose files in <code>config/cursorkit/</code> &gt; cursor packs in <code>config/cursorkit/packs/</code> &gt; resource packs. The UI labels where each set came from.</p>
+  </li>
+  <li class="feature">
+    <h3>Click effects that travel with the pack</h3>
+    <p>Ripple, particle burst, pulse dot — or a custom animated strip shipped by the pack itself. Change packs, change the feedback; switch it off if you like.</p>
+  </li>
+  <li class="feature">
+    <h3>Drag and drop install</h3>
+    <p>Archives, folders and loose images can be dropped straight onto the screen: filed automatically, never overwriting, list refreshed at once.</p>
+  </li>
+  <li class="feature">
+    <h3><code>.cur</code> support</h3>
+    <p>Drop a Windows cursor file into <code>config/cursorkit/</code> or a cursor pack and its image and built-in hotspot are read automatically (resource packs must ship PNG).</p>
+  </li>
+</ul>
+<h2 id="packs">Authoring cursor packs</h2>
+<p>A cursor set is one JSON file plus its textures. For a quick look: drop a 32×32 PNG into <code>config/cursorkit/</code> and it works, then add a JSON file with the same name for the other states.</p>
+<pre><code>Resource pack:  resourcepacks/&lt;pack&gt;/            or &lt;pack&gt;.zip
+Cursor pack:    config/cursorkit/packs/&lt;pack&gt;/   or &lt;pack&gt;.zip
+Loose set:      config/cursorkit/&lt;set&gt;.json</code></pre>
+<p>Resource packs and cursor packs share the same internal layout (<code>assets/&lt;namespace&gt;/cursor/&lt;set&gt;.json</code> + <code>textures/cursor/&lt;texture&gt;</code>), so one pack works as both; only the resource pack route needs <code>pack.mcmeta</code>. The file name (minus the extension) is the set's <strong>id</strong> and decides overriding.</p>
+<p><strong>The full field table, image rules, hotspots, animation and effect parameters live in <a href="#packs">Authoring cursor packs</a></strong>; the repository's <code>examples/</code> folder has packs to copy from.</p>
+<h2 id="effects">Click effects</h2>
+<p><code>click_effect</code> is an optional block in the cursor set JSON and <strong>travels with the pack</strong>: a different pack gives different click feedback. Each press spawns the effect <strong>at the click position</strong>; the cursor itself never moves, so aiming is unaffected.</p>
+<table><thead><tr><th><code>type</code></th><th>Effect</th></tr></thead><tbody>
+<tr><td><code>ripple</code></td><td>Expanding ring plus a few particles (default)</td></tr>
+<tr><td><code>burst</code></td><td>Particles only, bursting outwards</td></tr>
+<tr><td><code>pulse</code></td><td>A solid dot that flashes in place</td></tr>
+<tr><td><code>image</code></td><td><strong>Custom animation from the pack</strong>: a horizontal strip played at the click position</td></tr>
+<tr><td><code>none</code></td><td>No effect for this pack</td></tr>
+</tbody></table>
+<p>Colour, radius, duration, particle count and the <code>image</code> strip parameters are in <a href="#packs">Authoring cursor packs</a>. The <code>Click effect</code> switch at the bottom of the screen is the master switch, and it also plays for <code>Default (system cursor)</code>.</p>
+<h2 id="config">Configuration</h2>
+<p>The config lives in <code>config/cursorkit.json</code> (created on first launch):</p>
+<pre><code>{
+  "enabled": true,
+  "selected_set": "",
+  "scale": 1,
+  "animate": true,
+  "click_effect": true,
+  "edge_margin": 2
+}</code></pre>
+<table><thead><tr><th>Field</th><th>Default</th><th>Meaning</th></tr></thead><tbody>
+<tr><td><code>enabled</code></td><td><code>true</code></td><td>Master switch; when off the system cursor is fully restored</td></tr>
+<tr><td><code>selected_set</code></td><td><code>""</code></td><td>Id of the current set (file name without extension). <strong>Empty = system cursor</strong>; if it points at a deleted set the cursor is handed back to the system instead of jumping to another set</td></tr>
+<tr><td><code>scale</code></td><td><code>1</code></td><td>Extra integer scale, multiplied with the set's own <code>scale</code></td></tr>
+<tr><td><code>animate</code></td><td><code>true</code></td><td>When off the cursor is <strong>pinned to the static <code>default</code> image</strong>: no state switching and no animation</td></tr>
+<tr><td><code>click_effect</code></td><td><code>true</code></td><td>Master switch for click effects (a boolean)</td></tr>
+<tr><td><code>edge_margin</code></td><td><code>2</code></td><td>How many pixels from the window edge the mod hands the cursor back, so you can always find the mouse</td></tr>
+<tr><td><code>custom_states</code></td><td>none</td><td>Per-state custom image paths — the UI's <code>Custom (per-state paths)</code> entry</td></tr>
+<tr><td><code>custom_effect</code></td><td>ripple</td><td>The handmade set's own click effect; same syntax as a pack's <code>click_effect</code></td></tr>
+<tr><td><code>hotspots</code></td><td>none</td><td>Click points changed in the hotspot editor, shaped <code>{"set-id": {"state": [x, y]}}</code></td></tr>
+</tbody></table>
+<h2 id="states">State resolution</h2>
+<table><thead><tr><th>State</th><th>Shown when</th><th>Source</th></tr></thead><tbody>
+<tr><td><code>drag</code></td><td>Dragging with the left button held (items, sliders)</td><td>Vanilla <code>Screen#isDragging</code> / left button down</td></tr>
+<tr><td><code>text</code></td><td>A text field or sign editor has focus</td><td>Vanilla <code>IBEAM</code> request</td></tr>
+<tr><td><code>busy</code></td><td>A loading overlay is present</td><td>Non-empty GUI overlay</td></tr>
+<tr><td><code>disabled</code></td><td>Hovering an unavailable widget</td><td>Vanilla <code>NOT_ALLOWED</code> request</td></tr>
+<tr><td><code>clickable</code></td><td>Hovering a clickable widget or a resizable edge</td><td>Vanilla <code>POINTING_HAND</code> / <code>RESIZE_*</code> requests</td></tr>
+<tr><td><code>default</code></td><td>Everything else</td><td>—</td></tr>
+</tbody></table>
+<p>Priority: <code>drag &gt; text &gt; busy &gt; disabled &gt; clickable &gt; default</code>.</p>
+<p>Since Minecraft 26.3 requests a cursor type for every widget, this works <strong>in every mod's UI automatically</strong>; Cursor Kit only adds what vanilla cannot express (dragging and loading) plus the override hook below.</p>
+<p>Two edge behaviours: <strong>while in-game with the camera locked the cursor is not taken over at all</strong>, and pushing the pointer to the very edge of the window brings the system cursor back (<code>edge_margin</code> controls how wide that band is).</p>
+<h2 id="api">API for other mods</h2>
+<pre><code>CursorStateProviders.register((screen, mouseX, mouseY, context) -&gt; {
+    if (screen instanceof MySpecialScreen) {
+        return CursorState.DRAG;   // force this state for the frame
+    }
+    return null;                    // fall back to the built-in resolution
+});</code></pre>
+<p>Providers are asked in registration order and the first non-<code>null</code> answer wins; <code>context</code> exposes the vanilla request type, whether a drag is in progress and whether the game is busy. The model classes (<code>CursorState</code>, <code>CursorSet</code>, …) are free of Minecraft types, which keeps them easy to write against and easy to test.</p>
+<h2 id="faq">FAQ</h2>
+<p><strong>I installed the mod but the cursor did not change.</strong> Is the selected entry <code>Default (system cursor)</code>? Is <code>enabled</code> in <code>config/cursorkit.json</code> set to <code>false</code>? And check that there is anything to pick at all — a fresh install has no packs, so put one into <code>config/cursorkit/packs/</code> and it will show up.</p>
+<p><strong>The cursor is blurry / not sharp enough.</strong> The mod draws at integer scale without interpolation, so <strong>the artwork's resolution is the ceiling on sharpness</strong>. Use 32×32, 64×64 or 128×128 images instead of upscaling a 16×16 one.</p>
+<p><strong>Cursors from my resource pack do not appear.</strong> Resource packs must be <strong>enabled in the resource pack screen</strong> before they are loaded. If you would rather not do that every time, put the very same pack into <code>config/cursorkit/packs/</code> — identical layout, read directly by the mod, always on.</p>
+<p><strong>I lost the mouse.</strong> Push the pointer to the very edge of the window and the system cursor comes back; the <code>edge margin</code> switch (<code>edge_margin</code>) widens that band, and you can always select <code>Default (system cursor)</code> in the list.</p>
+<p><strong>No click effect shows up.</strong> The <code>Click effect</code> switch at the bottom of the screen is the master switch, and an individual pack can turn effects off with <code>"type": "none"</code> in its JSON.</p>
+<p><strong>Do I need it on the server?</strong> No. It is a client-side mod; installing it on a server does nothing, and joining a server without it does not error.</p>
+<p><strong>Does it work on NeoForge / Quilt?</strong> Yes. One jar covers all three loaders — Fabric and Quilt share it (Quilt through its Fabric compatibility layer). NeoForge has no Mod Menu, so the mod list comes from NeoForge itself.</p>
+<p><strong>How do I keep the custom cursor from turning back into the system cursor?</strong> Near the window edge the mod deliberately hands the cursor back (<code>edge_margin</code>, 2 pixels by default) so the mouse never gets stuck at the border. Set <code>edge margin</code> to <code>0</code> to keep the custom cursor everywhere.</p>
+<hr>
+<h2 id="packs">Authoring cursor packs</h2>
+<p>Just follow along — you can have your own cursor in about ten minutes. No coding involved.</p>
+<h2>What you need</h2>
+<ul>
+<li>A <strong>square PNG image</strong> (transparent background, 32×32 pixels is a good size)</li>
+<li>Any drawing program (Aseprite, Photoshop, GIMP, even Paint)</li>
+<li>A text editor for one small text file (you can copy the contents below)</li>
+</ul>
+<h2>Step 1: Turn one image into a cursor</h2>
+<ol>
+<li>Copy your PNG into the game's <code>config/cursorkit/</code> folder</li>
+<li>Rename it to <code>my_arrow.png</code> — <strong>lowercase letters, digits and underscores only</strong>, no spaces or non-English characters</li>
+<li>In game, open <strong>Options → Video Settings → <code>Cursor</code></strong></li>
+<li><code>my_arrow</code> shows up in the list; click it once</li>
+</ol>
+<p>Every cursor in the game is now that image (all six states use it).</p>
+<blockquote>Cannot find <code>config/cursorkit/</code>? Click the <strong><code>Folder</code></strong> button in the top-right corner of the cursor screen and it opens for you.</blockquote>
+<h2>Step 2: Give different states different images</h2>
+<p>A cursor is not just one picture: hover a button and it becomes a hand, click into a text box and it becomes an I-beam. Those are <strong>states</strong>, and there are six:</p>
+<table><thead><tr><th>State</th><th>When it shows</th></tr></thead><tbody>
+<tr><td><code>default</code></td><td>The rest of the time (<strong>required</strong>)</td></tr>
+<tr><td><code>clickable</code></td><td>Hovering something clickable, like a button</td></tr>
+<tr><td><code>text</code></td><td>Typing in a text field or a sign</td></tr>
+<tr><td><code>drag</code></td><td>Holding the left button while dragging</td></tr>
+<tr><td><code>disabled</code></td><td>Hovering a greyed-out, unavailable button</td></tr>
+<tr><td><code>busy</code></td><td>While the game is loading</td></tr>
+</tbody></table>
+<p>To use a different image per state:</p>
+<ol>
+<li>Draw the extra images and put them in <code>config/cursorkit/</code> too</li>
+<li>Create a text file in the same folder named <code>my_arrow.json</code> (<strong>same name as your PNG</strong>, with a <code>.json</code> extension)</li>
+<li>Copy this in and change the file names to yours:</li>
+</ol>
+<pre><code>{
+    "states": {
+        "default":   { "texture": "my_arrow.png" },
+        "clickable": { "texture": "my_hand.png" },
+        "text":      { "texture": "my_ibeam.png" },
+        "drag":      { "texture": "my_fist.png" },
+        "disabled":  { "texture": "my_gray.png" }
+    }
+}</code></pre>
+<ol>
+<li>Save and go back to the game — the list <strong>refreshes by itself, no restart needed</strong>. Click your set and the six previews appear on the right.</li>
+</ol>
+<p>A state you leave out (here <code>busy</code>) simply uses the <code>default</code> image, so <code>default</code> is the only one you must write.</p>
+<h2>Step 3: Put the click point in the right place</h2>
+<p>Only one pixel actually clicks, and that pixel is called the <strong>hotspot</strong>. It defaults to the <strong>top-left corner</strong>, which is right for an arrow but wrong for a hand or an I-beam.</p>
+<p>No need to count pixels: click <strong><code>Hotspots…</code></strong> in the top-right of the cursor screen, then <strong>click or drag</strong> on the magnified image to set it. The arrow keys nudge one pixel at a time; <code>Done</code> saves it. This only changes your config, never someone else's pack.</p>
+<h2>Step 4: Make the loading state spin (optional)</h2>
+<p>An animation is <strong>several frames laid out side by side in one image</strong>. For example eight 32×32 spinner frames become one <strong>256×32</strong> image (width = frames × height).</p>
+<p>Add two numbers to that state in the JSON:</p>
+<pre><code>"busy": { "texture": "my_spinner.png", "frames": 8, "frame_ms": 80 }</code></pre>
+<ul>
+<li><code>frames</code> = how many frames</li>
+<li><code>frame_ms</code> = how long each frame stays (80 is about 12 frames per second)</li>
+</ul>
+<p>Two rules: <strong>every frame is square</strong>, and <strong>all frames must sit in one row</strong>.</p>
+<h2>Step 5: Add a click effect (optional)</h2>
+<p>To make clicking feel good, add one line:</p>
+<pre><code>"click_effect": { "type": "ripple", "color": "#FFD479" }</code></pre>
+<table><thead><tr><th><code>type</code></th><th>What happens when you click</th></tr></thead><tbody>
+<tr><td><code>ripple</code></td><td>A ring spreads out (the usual choice)</td></tr>
+<tr><td><code>burst</code></td><td>A burst of particles</td></tr>
+<tr><td><code>pulse</code></td><td>A quick flash in place</td></tr>
+<tr><td><code>image</code></td><td>Plays an animation you drew (see below)</td></tr>
+<tr><td><code>none</code></td><td>No effect</td></tr>
+</tbody></table>
+<p>Add <code>"radius": 15</code>, <code>"duration_ms": 450</code>, <code>"particles": 6</code> to tune size, lifetime and particle count; anything you leave out uses the default.</p>
+<p><strong>Using your own animation</strong>: make it the same kind of horizontal strip and write:</p>
+<pre><code>"click_effect": { "type": "image", "texture": "my_ring.png", "frames": 6, "frame_ms": 60, "size": 24 }</code></pre>
+<p><code>size</code> is how big it is drawn (in screen pixels), and the fade-out has to be <strong>drawn into the artwork</strong>.</p>
+<h2>Step 6: Pack it up to share</h2>
+<p>To hand it to someone else, make it a <strong>cursor pack</strong>: a folder (or a zip) with a fixed layout:</p>
+<pre><code>mypack/                                  ← the pack folder, any name
+└── assets/
+    └── mypack/                          ← any name, just be consistent
+        ├── cursor/
+        │   └── my_arrow.json            ← your JSON
+        └── textures/
+            └── cursor/
+                ├── my_arrow.png         ← your images
+                └── my_hand.png</code></pre>
+<p>Inside the JSON, paths are <strong>relative to <code>textures/cursor/</code></strong>: in the example above write <code>"texture": "my_arrow.png"</code>. If you keep images in a subfolder like <code>cursor/arrow/</code>, write <code>"texture": "arrow/my_arrow.png"</code>.</p>
+<p>Then put the <code>mypack</code> folder into <code>config/cursorkit/packs/</code>, or simply <strong>drag it onto the game screen</strong> to install it.</p>
+<p>To make a zip: <strong>the first level inside the zip must be <code>assets/</code></strong>. Do not wrap the <code>mypack</code> folder again (one wrapping folder is tolerated, two are not).</p>
+<pre><code>mypack.zip
+└── assets/...        ✓ correct</code></pre>
+<blockquote>The same pack also works as a resource pack: drop it into <code>resourcepacks/</code> and enable it in the resource pack screen (that route needs a <code>pack.mcmeta</code>, which you can copy from <code>examples/</code>). Resource packs accept <strong>PNG only</strong> — <code>.cur</code> works in cursor packs.</blockquote>
+<h2>When something is wrong</h2>
+<table><thead><tr><th>What you see</th><th>Why</th></tr></thead><tbody>
+<tr><td>My cursor is not in the list</td><td>File name has uppercase or non-English characters, or it is not in <code>config/cursorkit/</code>, or <code>default</code> is missing from the JSON (that set is skipped, and the log says so)</td></tr>
+<tr><td>Only <code>default</code> shows my image, the others look wrong</td><td>States you did not write fall back to the <code>default</code> image — that is intended</td></tr>
+<tr><td>The cursor is huge or blurry</td><td>Resolution sets both sharpness and size. 16×16 is normal; draw 32×32 / 64×64 for more detail, do not upscale a small image</td></tr>
+<tr><td>The animation does not move</td><td>Frames must be in <strong>one row</strong> and the image width must equal <code>frames × frame height</code>; if <code>frames</code> disagrees, the image wins</td></tr>
+<tr><td>Clicks land in the wrong spot</td><td>Fix it with <code>Hotspots…</code> instead of computing coordinates</td></tr>
+<tr><td>Nothing happens in <code>resourcepacks/</code></td><td>Resource packs must be enabled in the resource pack screen; <code>config/cursorkit/packs/</code> is always on</td></tr>
+</tbody></table>
+<h2>All fields at a glance</h2>
+<table><thead><tr><th>Field</th><th>Required</th><th>Default</th><th>Meaning</th></tr></thead><tbody>
+<tr><td><code>states.default.texture</code></td><td><strong>yes</strong></td><td>—</td><td>Image path. Relative to <code>config/cursorkit/</code> for a loose set, or to <code>textures/cursor/</code> inside a pack</td></tr>
+<tr><td><code>states.&lt;other&gt;.texture</code></td><td>no</td><td>the <code>default</code> image</td><td>The six states: <code>clickable</code> <code>text</code> <code>drag</code> <code>disabled</code> <code>busy</code></td></tr>
+<tr><td><code>hotspot</code></td><td>no</td><td>top-left <code>[0, 0]</code></td><td>Click point in <strong>image pixels</strong>, written <code>[x, y]</code>; <code>.cur</code> files use their own</td></tr>
+<tr><td><code>frames</code></td><td>no</td><td><code>1</code></td><td>Animation frame count</td></tr>
+<tr><td><code>frame_ms</code></td><td>no</td><td><code>100</code></td><td>Milliseconds per frame</td></tr>
+<tr><td><code>name</code></td><td>no</td><td>the file name</td><td>Display name only</td></tr>
+<tr><td><code>scale</code></td><td>no</td><td><code>1</code></td><td>Extra integer upscale</td></tr>
+<tr><td><code>click_effect</code></td><td>no</td><td>the mod's ripple</td><td>See step 5</td></tr>
+</tbody></table>
+<h2>Copy a ready-made pack</h2>
+<p>The repository's <code>examples/</code> folder already contains working packs — copy one and swap the images:</p>
+<ul>
+<li><code>CursorKit-Test-Pack/</code> — a complete six-state example, plus 32×32 and 64×64 HD ones</li>
+<li><code>ClickFX-Cursor-Pack/</code> — three click effects and a pack with its own animated strip</li>
+<li><code>config-cursorkit/</code> — a ready-to-copy folder layout for <code>config/</code></li>
+</ul>
+    </article>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap foot">
+    <span>Fragmented_Chaos · StewedTuba73416 / Rending_Void</span>
+    <span>Mods</span>
+  </div>
+</footer>
+
+<script src="../../../assets/site.js" defer></script>
+<script src="../../../assets/downloads.js" defer></script>
+</body>
+</html>

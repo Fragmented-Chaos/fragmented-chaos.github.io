@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SafeSpawn · Fragmented_Chaos</title>
+<meta name="description" content="This mod restores MC-212 and MC-21650 (which were fixed in 24w45a), and also fixes MC-278261.">
+<script>
+  (function () {
+    try {
+      var m = /[?&]theme=(light|dark)\b/.exec(location.search);
+      var t = m ? m[1] : localStorage.getItem('site-v2.theme');
+      if (t === 'light' || t === 'dark') document.documentElement.setAttribute('data-theme', t);
+    } catch (e) { /* 隐私模式忽略 */ }
+  })();
+</script>
+<link rel="stylesheet" href="../../../assets/base.css">
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap top-in">
+    <a class="mark" href="../../../index.html">Fragmented<b>_</b>Chaos</a>
+    <nav class="nav">
+      <a href="../" aria-current="page">Mods</a>
+      <a href="../../blog/">Blog</a>
+      <a href="../../music/">Music</a>
+      <a href="../../experience/">Experience</a>
+      <a href="../../about/">About</a>
+      <span class="lang">
+        <a href="../../../zh/mods/safespawn/">简</a>
+        <a href="../../../zh-hant/mods/safespawn/">繁</a>
+        <a href="../../../en/mods/safespawn/" aria-current="true">EN</a>
+      </span>
+      <button type="button" class="theme-toggle" data-theme-toggle
+              aria-pressed="false"
+              data-label-to-dark="Switch to dark theme" data-label-to-light="Switch to light theme">
+        <span class="sr-only">Toggle theme</span>
+        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true">
+          <circle cx="12" cy="12" r="4.2"/>
+          <path d="M12 3v2.2M12 18.8V21M3 12h2.2M18.8 12H21M5.6 5.6l1.6 1.6M16.8 16.8l1.6 1.6M18.4 5.6l-1.6 1.6M7.2 16.8l-1.6 1.6"/>
+        </svg>
+        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true">
+          <path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a6.8 6.8 0 0 0 10.5 10.5z"/>
+        </svg>
+      </button>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="wrap page-head" style="padding-bottom:1.5rem">
+    <p class="kicker" style="margin:0 0 1.25rem;font-size:.74rem;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--soft)">MOD · English</p>
+    <div class="mod-head">
+        <img class="mod-icon" src="../../../assets/images/safespawn/icon.png" width="72" height="72" alt="SafeSpawn 图标" loading="lazy" decoding="async">
+      <div>
+        <h1>SafeSpawn</h1>
+        <p class="mod-tagline">This mod restores MC-212 and MC-21650 (which were fixed in 24w45a), and also fixes MC-278261.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap" style="padding-bottom:2rem">
+    <div class="panel" data-downloads data-modrinth="safespawn" data-curseforge="safe-spawn" data-curseforge-id="1608764">
+      <dl class="spec">
+        <dt>Version</dt><dd>1.21.4–1.21.11, 26.1–26.3</dd>
+        <dt>Loaders</dt><dd>Fabric · NeoForge · Quilt</dd>
+        <dt>Requires</dt><dd>None</dd>
+        <dt>License</dt><dd>MIT</dd>
+        <dt data-dl-row="modrinth">Modrinth</dt><dd data-dl-cell="modrinth"><span data-dl-count="modrinth">—</span> downloads</dd>
+        <dt data-dl-row="curseforge">CurseForge</dt><dd data-dl-cell="curseforge"><span data-dl-count="curseforge">—</span> downloads</dd>
+        <dt data-latest-row>Latest version</dt><dd data-latest-version>—</dd>
+        <dt>Links</dt><dd>
+          <ul class="chips">
+            <li><a href="https://modrinth.com/mod/safespawn" target="_blank" rel="noopener">Modrinth</a></li>
+            <li><a href="https://github.com/Fragmented-Chaos/SafeSpawn" target="_blank" rel="noopener">Source</a></li>
+            <li><a href="https://github.com/Fragmented-Chaos/SafeSpawn/issues" target="_blank" rel="noopener">Report an issue</a></li>
+          </ul>
+        </dd>
+      </dl>
+    </div>
+  </section>
+
+  <section class="wrap" style="padding-bottom:3.5rem">
+    <article class="post-body">
+<h2>What it fixes</h2>
+<table><thead><tr><th>Vanilla issue</th><th>Behaviour now</th></tr></thead><tbody>
+<tr><td><strong>MC-212</strong> / <strong>MC-21650</strong></td><td>Leaving and rejoining grants fall-damage immunity — falling from a height and relogging no longer kills you</td></tr>
+<tr><td><strong>MC-278261</strong></td><td>Respawning grants invulnerability again</td></tr>
+</tbody></table>
+<p>Both were changed in 24w45a; SafeSpawn restores the earlier behaviour.</p>
+<h2>Configuration</h2>
+<p>The config lives in <code>config/safespawn.properties</code>:</p>
+<pre><code># Invulnerability duration in game ticks (20 ticks = 1 second)
+invulnerableTicks=60
+# Grant invulnerability when respawning after death
+enableRespawnImmunity=true
+# Grant invulnerability when logging in / rejoining
+enableLoginImmunity=true</code></pre>
+<table><thead><tr><th>Field</th><th>Default</th><th>Meaning</th></tr></thead><tbody>
+<tr><td><code>invulnerableTicks</code></td><td><code>60</code></td><td>How long the immunity lasts, in game ticks (20 ticks = 1 second, so 60 = 3 seconds)</td></tr>
+<tr><td><code>enableRespawnImmunity</code></td><td><code>true</code></td><td>Grant immunity when respawning after death</td></tr>
+<tr><td><code>enableLoginImmunity</code></td><td><code>true</code></td><td>Grant immunity when logging in / rejoining</td></tr>
+</tbody></table>
+    </article>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap foot">
+    <span>Fragmented_Chaos · StewedTuba73416 / Rending_Void</span>
+    <span>Mods</span>
+  </div>
+</footer>
+
+<script src="../../../assets/site.js" defer></script>
+<script src="../../../assets/downloads.js" defer></script>
+</body>
+</html>

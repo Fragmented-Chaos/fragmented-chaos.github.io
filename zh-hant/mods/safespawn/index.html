@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SafeSpawn · Fragmented_Chaos</title>
+<meta name="description" content="還原 MC-212 與 MC-21650（在 24w45a 版本被修復），並修復 MC-278261。">
+<script>
+  (function () {
+    try {
+      var m = /[?&]theme=(light|dark)\b/.exec(location.search);
+      var t = m ? m[1] : localStorage.getItem('site-v2.theme');
+      if (t === 'light' || t === 'dark') document.documentElement.setAttribute('data-theme', t);
+    } catch (e) { /* 隐私模式忽略 */ }
+  })();
+</script>
+<link rel="stylesheet" href="../../../assets/base.css">
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap top-in">
+    <a class="mark" href="../../../index.html">Fragmented<b>_</b>Chaos</a>
+    <nav class="nav">
+      <a href="../" aria-current="page">模組</a>
+      <a href="../../blog/">部落格</a>
+      <a href="../../music/">音樂</a>
+      <a href="../../experience/">經歷</a>
+      <a href="../../about/">關於</a>
+      <span class="lang">
+        <a href="../../../zh/mods/safespawn/">简</a>
+        <a href="../../../zh-hant/mods/safespawn/" aria-current="true">繁</a>
+        <a href="../../../en/mods/safespawn/">EN</a>
+      </span>
+      <button type="button" class="theme-toggle" data-theme-toggle
+              aria-pressed="false"
+              data-label-to-dark="切換到暗色主題" data-label-to-light="切換到亮色主題">
+        <span class="sr-only">切換主題</span>
+        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true">
+          <circle cx="12" cy="12" r="4.2"/>
+          <path d="M12 3v2.2M12 18.8V21M3 12h2.2M18.8 12H21M5.6 5.6l1.6 1.6M16.8 16.8l1.6 1.6M18.4 5.6l-1.6 1.6M7.2 16.8l-1.6 1.6"/>
+        </svg>
+        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true">
+          <path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a6.8 6.8 0 0 0 10.5 10.5z"/>
+        </svg>
+      </button>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="wrap page-head" style="padding-bottom:1.5rem">
+    <p class="kicker" style="margin:0 0 1.25rem;font-size:.74rem;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--soft)">MOD · 繁體</p>
+    <div class="mod-head">
+        <img class="mod-icon" src="../../../assets/images/safespawn/icon.png" width="72" height="72" alt="SafeSpawn 图标" loading="lazy" decoding="async">
+      <div>
+        <h1>SafeSpawn</h1>
+        <p class="mod-tagline">還原 MC-212 與 MC-21650（在 24w45a 版本被修復），並修復 MC-278261。</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap" style="padding-bottom:2rem">
+    <div class="panel" data-downloads data-modrinth="safespawn" data-curseforge="safe-spawn" data-curseforge-id="1608764">
+      <dl class="spec">
+        <dt>版本</dt><dd>1.21.4–1.21.11, 26.1–26.3</dd>
+        <dt>載入器</dt><dd>Fabric · NeoForge · Quilt</dd>
+        <dt>前置</dt><dd>無</dd>
+        <dt>授權</dt><dd>MIT</dd>
+        <dt data-dl-row="modrinth">Modrinth</dt><dd data-dl-cell="modrinth"><span data-dl-count="modrinth">—</span> 次下載</dd>
+        <dt data-dl-row="curseforge">CurseForge</dt><dd data-dl-cell="curseforge"><span data-dl-count="curseforge">—</span> 次下載</dd>
+        <dt data-latest-row>最新版本</dt><dd data-latest-version>—</dd>
+        <dt>連結</dt><dd>
+          <ul class="chips">
+            <li><a href="https://modrinth.com/mod/safespawn" target="_blank" rel="noopener">Modrinth</a></li>
+            <li><a href="https://github.com/Fragmented-Chaos/SafeSpawn" target="_blank" rel="noopener">原始碼</a></li>
+            <li><a href="https://github.com/Fragmented-Chaos/SafeSpawn/issues" target="_blank" rel="noopener">回報問題</a></li>
+          </ul>
+        </dd>
+      </dl>
+    </div>
+  </section>
+
+  <section class="wrap" style="padding-bottom:3.5rem">
+    <article class="post-body">
+<h2>修復內容</h2>
+<table><thead><tr><th>原版問題</th><th>現在的行為</th></tr></thead><tbody>
+<tr><td><strong>MC-212</strong> / <strong>MC-21650</strong></td><td>重進存檔時豁免墜落傷害 —— 從高處掉下去時退出再進，不會摔死</td></tr>
+<tr><td><strong>MC-278261</strong></td><td>重生後正常獲得無敵時間</td></tr>
+</tbody></table>
+<p>這兩條原先在 24w45a 被改掉了，SafeSpawn 把舊行為還原回來。</p>
+<h2>配置</h2>
+<p>配置在 <code>config/safespawn.properties</code>：</p>
+<pre><code># 無敵持續時間（遊戲刻，20 刻 = 1 秒）
+invulnerableTicks=60
+# 死亡重生時是否給無敵
+enableRespawnImmunity=true
+# 登入（重進存檔）時是否給無敵
+enableLoginImmunity=true</code></pre>
+<table><thead><tr><th>欄位</th><th>預設</th><th>說明</th></tr></thead><tbody>
+<tr><td><code>invulnerableTicks</code></td><td><code>60</code></td><td>無敵持續時間，單位是遊戲刻（20 刻 = 1 秒，60 刻 = 3 秒）</td></tr>
+<tr><td><code>enableRespawnImmunity</code></td><td><code>true</code></td><td>死亡重生時是否啟用無敵</td></tr>
+<tr><td><code>enableLoginImmunity</code></td><td><code>true</code></td><td>登入 / 重進存檔時是否啟用無敵</td></tr>
+</tbody></table>
+    </article>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap foot">
+    <span>Fragmented_Chaos · StewedTuba73416 / Rending_Void</span>
+    <span>模組</span>
+  </div>
+</footer>
+
+<script src="../../../assets/site.js" defer></script>
+<script src="../../../assets/downloads.js" defer></script>
+</body>
+</html>

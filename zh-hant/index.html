@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fragmented_Chaos · 個人網站</title>
+<meta name="description" content="Fragmented_Chaos 的個人網站。">
+<script>
+  (function () {
+    try {
+      var m = /[?&]theme=(light|dark)\b/.exec(location.search);
+      var t = m ? m[1] : localStorage.getItem('site-v2.theme');
+      if (t === 'light' || t === 'dark') document.documentElement.setAttribute('data-theme', t);
+    } catch (e) { /* 隐私模式忽略 */ }
+  })();
+</script>
+<link rel="stylesheet" href="../assets/base.css">
+<style>
+  .hero { padding: 6rem 0 4.5rem; }
+  .kicker { margin: 0 0 1.5rem; font-size: 0.74rem; font-weight: 600; letter-spacing: 0.22em; text-transform: uppercase; color: var(--soft); }
+  .hero h1 { margin: 0; font-size: clamp(2.4rem, 6.6vw, 4.6rem); line-height: 1.06; letter-spacing: -0.035em; font-weight: 650; }
+  .hero h1 .name { display: inline-block; font-family: var(--hand); font-size: 1.14em; font-weight: 600; color: var(--accent); letter-spacing: 0.01em; }
+  .status { display: flex; flex-wrap: wrap; align-items: center; gap: 0.6rem 2rem; margin-top: 2.75rem; padding-top: 1.4rem; border-top: 1px solid var(--line); font-family: var(--mono); font-size: 0.76rem; color: var(--soft); }
+  .status b { color: var(--ink); font-weight: 500; }
+  .dot { display: inline-block; width: 6px; height: 6px; margin-right: 0.45rem; border-radius: 50%; background-color: var(--accent); }
+  .cols { display: grid; grid-template-columns: 1fr 1.15fr; gap: 2.5rem; align-items: start; }
+  @media (max-width: 760px) { .hero { padding: 4rem 0 3rem; } .cols { grid-template-columns: 1fr; gap: 1.75rem; } }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap top-in">
+    <a class="mark" href="../index.html">Fragmented<b>_</b>Chaos</a>
+    <nav class="nav">
+      <a href="mods/">模組</a>
+      <a href="blog/">部落格</a>
+      <a href="music/">音樂</a>
+      <a href="experience/">經歷</a>
+      <a href="about/">關於</a>
+      <span class="lang">
+        <a href="../zh/">简</a>
+        <a href="../zh-hant/" aria-current="true">繁</a>
+        <a href="../en/">EN</a>
+      </span>
+      <button type="button" class="theme-toggle" data-theme-toggle
+              aria-pressed="false"
+              data-label-to-dark="切換到暗色主題" data-label-to-light="切換到亮色主題">
+        <span class="sr-only">切換主題</span>
+        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true">
+          <circle cx="12" cy="12" r="4.2"/>
+          <path d="M12 3v2.2M12 18.8V21M3 12h2.2M18.8 12H21M5.6 5.6l1.6 1.6M16.8 16.8l1.6 1.6M18.4 5.6l-1.6 1.6M7.2 16.8l-1.6 1.6"/>
+        </svg>
+        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true">
+          <path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a6.8 6.8 0 0 0 10.5 10.5z"/>
+        </svg>
+      </button>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="wrap hero">
+    <p class="kicker rise">Personal site · 繁體</p>
+    <h1 class="rise rise-1">歡迎來到<br><span class="name">Fragmented_Chaos</span><br>個人網站</h1>
+    <div class="status rise rise-2">
+      <span><span class="dot" aria-hidden="true"></span>本機時間 <b data-clock>--:--:--</b></span>
+      <span data-clock-date>—</span>
+    </div>
+  </section>
+
+  <section class="wrap sec">
+    <div class="sec-head"><h2>站內</h2><span>Sections</span></div>
+    <ul class="index">
+        <li>
+          <a class="row" href="blog/">
+            <span class="no">01</span>
+            <h3>部落格</h3>
+            <span class="desc">文章</span>
+            <span class="go" aria-hidden="true">↗</span>
+          </a>
+        </li>
+      <li>
+        <a class="row" href="music/">
+          <span class="no">02</span>
+          <h3>音樂</h3>
+          <span class="desc">歌單與播放器</span>
+          <span class="go" aria-hidden="true">↗</span>
+        </a>
+      </li>
+      <li>
+        <a class="row" href="experience/">
+          <span class="no">03</span>
+          <h3>經歷</h3>
+          <span class="desc">時間軸</span>
+          <span class="go" aria-hidden="true">↗</span>
+        </a>
+      </li>
+      <li>
+        <a class="row" href="about/">
+          <span class="no">04</span>
+          <h3>關於</h3>
+          <span class="desc">自我介紹 · 聯絡方式</span>
+          <span class="go" aria-hidden="true">↗</span>
+        </a>
+      </li>
+    </ul>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap foot">
+    <span>Fragmented_Chaos · StewedTuba73416 / Rending_Void</span>
+    <span>首頁</span>
+  </div>
+</footer>
+
+<script src="../assets/site.js" defer></script>
+</body>
+</html>

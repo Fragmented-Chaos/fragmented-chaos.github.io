@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>模組 · Fragmented_Chaos</title>
+<meta name="description" content="Fragmented_Chaos 在維護的 Minecraft 模組。">
+<script>
+  (function () {
+    try {
+      var m = /[?&]theme=(light|dark)\b/.exec(location.search);
+      var t = m ? m[1] : localStorage.getItem('site-v2.theme');
+      if (t === 'light' || t === 'dark') document.documentElement.setAttribute('data-theme', t);
+    } catch (e) { /* 隐私模式忽略 */ }
+  })();
+</script>
+<link rel="stylesheet" href="../../assets/base.css">
+<style>
+  /* 模组总览：行比通用 .row 多一列许可标签 */
+  .row { grid-template-columns: 3.25rem minmax(9rem, 1fr) 2fr auto 1.75rem; }
+  @media (max-width: 760px) {
+    .row { grid-template-columns: 2.25rem 1fr auto; }
+    .row .desc { grid-column: 2 / 4; }
+  }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap top-in">
+    <a class="mark" href="../../index.html">Fragmented<b>_</b>Chaos</a>
+    <nav class="nav">
+      <a href="./" aria-current="page">模組</a>
+      <a href="../blog/">部落格</a>
+      <a href="../music/">音樂</a>
+      <a href="../experience/">經歷</a>
+      <a href="../about/">關於</a>
+      <span class="lang">
+        <a href="../../zh/mods/">简</a>
+        <a href="../../zh-hant/mods/" aria-current="true">繁</a>
+        <a href="../../en/mods/">EN</a>
+      </span>
+      <button type="button" class="theme-toggle" data-theme-toggle
+              aria-pressed="false"
+              data-label-to-dark="切換到暗色主題" data-label-to-light="切換到亮色主題">
+        <span class="sr-only">切換主題</span>
+        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true">
+          <circle cx="12" cy="12" r="4.2"/>
+          <path d="M12 3v2.2M12 18.8V21M3 12h2.2M18.8 12H21M5.6 5.6l1.6 1.6M16.8 16.8l1.6 1.6M18.4 5.6l-1.6 1.6M7.2 16.8l-1.6 1.6"/>
+        </svg>
+        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true">
+          <path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a6.8 6.8 0 0 0 10.5 10.5z"/>
+        </svg>
+      </button>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="wrap page-head">
+    <p class="kicker rise" style="margin:0 0 1.25rem;font-size:.74rem;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--soft)">MODS · 繁體</p>
+    <h1 class="rise rise-1">模組</h1>
+    <p class="note rise rise-2">三個在維護的模組，支援 Fabric / NeoForge / Quilt。</p>
+  </section>
+
+  <section class="wrap" style="padding-bottom:3.5rem">
+    <ul class="index rise rise-2">
+      <li>
+        <a class="row" href="cursorkit/">
+          <span class="no">01</span>
+          <h3>Cursor Kit</h3>
+          <span class="desc">26.3 · Fabric · NeoForge · Quilt · 純客戶端，無前置</span>
+          <span style="font-family:var(--mono);font-size:.72rem;color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:.15rem .55rem;white-space:nowrap">LGPL-3.0</span>
+          <span class="go" aria-hidden="true">↗</span>
+        </a>
+      </li>
+      <li>
+        <a class="row" href="charmofundying/">
+          <span class="no">02</span>
+          <h3>Charm of Undying：Reborn</h3>
+          <span class="desc">26.1–26.3 · Fabric · NeoForge · 不死圖騰的續作</span>
+          <span style="font-family:var(--mono);font-size:.72rem;color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:.15rem .55rem;white-space:nowrap">MIT</span>
+          <span class="go" aria-hidden="true">↗</span>
+        </a>
+      </li>
+      <li>
+        <a class="row" href="safespawn/">
+          <span class="no">03</span>
+          <h3>SafeSpawn</h3>
+          <span class="desc">1.21.4–1.21.11, 26.1–26.3 · Fabric · NeoForge · Quilt · 出生點保護</span>
+          <span style="font-family:var(--mono);font-size:.72rem;color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:.15rem .55rem;white-space:nowrap">MIT</span>
+          <span class="go" aria-hidden="true">↗</span>
+        </a>
+      </li>
+    </ul>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap foot">
+    <span>Fragmented_Chaos · StewedTuba73416 / Rending_Void</span>
+    <span>模組</span>
+  </div>
+</footer>
+
+<script src="../../assets/site.js" defer></script>
+</body>
+</html>

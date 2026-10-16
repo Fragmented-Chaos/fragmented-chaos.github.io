@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Blog · Fragmented_Chaos</title>
+<meta name="description" content="Blog of Fragmented_Chaos.">
+<script>
+  (function () {
+    try {
+      var m = /[?&]theme=(light|dark)\b/.exec(location.search);
+      var t = m ? m[1] : localStorage.getItem('site-v2.theme');
+      if (t === 'light' || t === 'dark') document.documentElement.setAttribute('data-theme', t);
+    } catch (e) { /* 隐私模式忽略 */ }
+  })();
+</script>
+<link rel="stylesheet" href="../../assets/base.css">
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap top-in">
+    <a class="mark" href="../../index.html">Fragmented<b>_</b>Chaos</a>
+    <nav class="nav">
+      <a href="../mods/">Mods</a>
+      <a href="./" aria-current="page">Blog</a>
+      <a href="../music/">Music</a>
+      <a href="../experience/">Experience</a>
+      <a href="../about/">About</a>
+      <span class="lang">
+        <a href="../../zh/blog/">简</a>
+        <a href="../../zh-hant/blog/">繁</a>
+        <a href="../../en/blog/" aria-current="true">EN</a>
+      </span>
+      <button type="button" class="theme-toggle" data-theme-toggle
+              aria-pressed="false"
+              data-label-to-dark="Switch to dark theme" data-label-to-light="Switch to light theme">
+        <span class="sr-only">Toggle theme</span>
+        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true">
+          <circle cx="12" cy="12" r="4.2"/>
+          <path d="M12 3v2.2M12 18.8V21M3 12h2.2M18.8 12H21M5.6 5.6l1.6 1.6M16.8 16.8l1.6 1.6M18.4 5.6l-1.6 1.6M7.2 16.8l-1.6 1.6"/>
+        </svg>
+        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true">
+          <path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a6.8 6.8 0 0 0 10.5 10.5z"/>
+        </svg>
+      </button>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="wrap page-head">
+    <p class="kicker rise" style="margin:0 0 1.25rem;font-size:.74rem;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--soft)">BLOG · English</p>
+    <h1 class="rise rise-1">Blog</h1>
+  </section>
+
+  <section class="wrap" style="padding-bottom:3.5rem" data-blog data-posts="../../blog/posts" data-repo="">
+    <p class="blog-status" data-blog-status>Loading posts…</p>
+    <ul class="posts" data-blog-list hidden></ul>
+
+    <article data-blog-post hidden>
+      <h2 class="post-heading" data-blog-title></h2>
+      <p class="post-meta" data-blog-meta></p>
+      <div class="post-body" data-blog-body></div>
+      <p style="margin-top:2rem"><a class="more" href="./" data-blog-back>← Back to the list</a></p>
+
+      <section class="comments" data-blog-comments hidden
+                 data-giscus-repo="Fragmented-Chaos/fragmented-chaos.github.io"
+                 data-giscus-repo-id="R_kgDOVL5epQ"
+                 data-giscus-category=""
+                 data-giscus-category-id="">
+        <h2 class="sec-head" style="margin:0 0 .75rem"><span style="font-size:1rem;font-weight:600;color:var(--ink);letter-spacing:0;text-transform:none">Comments</span></h2>
+        <button type="button" class="btn" data-comments-load>Load comments</button>
+        <p class="comments-note" data-comments-note hidden>Comments are not configured yet: set data-repo and the three giscus IDs (see README).</p>
+        <div data-comments-slot></div>
+      </section>
+    </article>
+
+    <div data-blog-i18n hidden>
+      <span data-i18n="loading">Loading posts…</span>
+      <span data-i18n="empty">No posts yet.</span>
+      <span data-i18n="load_failed">Could not load the post list ({err}).</span>
+      <span data-i18n="comments_unconfigured">Comments are not configured yet: set data-repo and the three giscus IDs (see README).</span>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap foot">
+    <span>Fragmented_Chaos · StewedTuba73416 / Rending_Void</span>
+    <span>Blog</span>
+  </div>
+</footer>
+
+<script src="../../assets/site.js" defer></script>
+<script src="../../assets/blog.js" defer></script>
+</body>
+</html>

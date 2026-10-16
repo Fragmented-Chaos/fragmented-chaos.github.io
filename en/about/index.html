@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>About · Fragmented_Chaos</title>
+<meta name="description" content="About Fragmented_Chaos and how to get in touch.">
+<script>
+  (function () {
+    try {
+      var m = /[?&]theme=(light|dark)\b/.exec(location.search);
+      var t = m ? m[1] : localStorage.getItem('site-v2.theme');
+      if (t === 'light' || t === 'dark') document.documentElement.setAttribute('data-theme', t);
+    } catch (e) { /* 隐私模式忽略 */ }
+  })();
+</script>
+<link rel="stylesheet" href="../../assets/base.css">
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap top-in">
+    <a class="mark" href="../../index.html">Fragmented<b>_</b>Chaos</a>
+    <nav class="nav">
+      <a href="../mods/">Mods</a>
+      <a href="../blog/">Blog</a>
+      <a href="../music/">Music</a>
+      <a href="../experience/">Experience</a>
+      <a href="./" aria-current="page">About</a>
+      <span class="lang">
+        <a href="../../zh/about/">简</a>
+        <a href="../../zh-hant/about/">繁</a>
+        <a href="../../en/about/" aria-current="true">EN</a>
+      </span>
+      <button type="button" class="theme-toggle" data-theme-toggle
+              aria-pressed="false"
+              data-label-to-dark="Switch to dark theme" data-label-to-light="Switch to light theme">
+        <span class="sr-only">Toggle theme</span>
+        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true">
+          <circle cx="12" cy="12" r="4.2"/>
+          <path d="M12 3v2.2M12 18.8V21M3 12h2.2M18.8 12H21M5.6 5.6l1.6 1.6M16.8 16.8l1.6 1.6M18.4 5.6l-1.6 1.6M7.2 16.8l-1.6 1.6"/>
+        </svg>
+        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true">
+          <path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a6.8 6.8 0 0 0 10.5 10.5z"/>
+        </svg>
+      </button>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="wrap about-hero">
+    <img class="about-avatar rise" src="../../assets/images/avatar.jpg" width="400" height="400" alt="Fragmented_Chaos">
+    <div>
+      <p class="kicker rise" style="margin:0 0 1rem;font-size:.74rem;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--soft)">About · English</p>
+      <h1 class="about-name rise rise-1">Fragmented<b>_</b>Chaos</h1>
+      <p class="about-alias rise rise-1">Also known as：<b>StewedTuba73416 · Rending_Void</b></p>
+      <p class="about-greeting rise rise-2">Hi, I'm <b>Fragmented_Chaos</b>, welcome to my personal site.</p>
+    </div>
+  </section>
+
+  <section class="wrap sec" style="border-top:0;padding-top:0;padding-bottom:3.5rem">
+    <div class="panel rise">
+      <h3>Related links</h3>
+      <ul class="chips">
+            <li><a href="https://center.mcmod.cn/626584/" target="_blank" rel="noopener">mcmod.cn <small>MC百科</small></a></li>
+            <li><a href="https://github.com/Fragmented-Chaos" target="_blank" rel="noopener">GitHub <small>source</small></a></li>
+            <li><a href="https://www.curseforge.com/members/fragmented_chaos/projects" target="_blank" rel="noopener">CurseForge <small>downloads</small></a></li>
+            <li><a href="https://modrinth.com/user/Fragmented_Chaos" target="_blank" rel="noopener">Modrinth <small>downloads</small></a></li>
+            <li><a href="https://space.bilibili.com/3546896511536057" target="_blank" rel="noopener">Bilibili <small>videos</small></a></li>
+      </ul>
+    </div>
+
+    <div class="panel rise" style="margin-top:1rem">
+      <h3>Site status</h3>
+      <dl class="spec">
+          <dt>Pages</dt><dd><span data-stats-pages>28</span></dd>
+          <dt>Running for</dt><dd><span data-stats-days data-since="2026-08-07">—</span> days</dd>
+          <dt>Languages</dt><dd>简体 · 繁體 · English</dd>
+      </dl>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap foot">
+    <span>Fragmented_Chaos · StewedTuba73416 · Rending_Void</span>
+    <span>About</span>
+  </div>
+</footer>
+
+<script src="../../assets/site.js" defer></script>
+</body>
+</html>

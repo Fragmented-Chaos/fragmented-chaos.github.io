@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://fragmented-chaos.github.io/sitemap.xml

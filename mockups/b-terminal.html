@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fragmented_Chaos — 样板 B：深色技术风</title>
+<style>
+  /* ---- 样板 B：深色技术风 ----
+     深色底 + 等宽字体点缀 + 终端式首屏 + 文件树文档区。
+     强调色是单一的青绿（无渐变、无蓝紫）。零依赖、无外部请求。 */
+  :root {
+    --bg: #0b0f14;
+    --panel: #111823;
+    --panel-2: #0e141d;
+    --line: #1e2937;
+    --line-soft: #16202c;
+    --text: #dce6f2;
+    --soft: #9fb0c4;
+    --muted: #6b7c91;
+    --accent: #35d07f;
+    --accent-dim: #1d6b45;
+    --font: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans SC",
+            "PingFang SC", "Microsoft YaHei", sans-serif;
+    --mono: ui-monospace, SFMono-Regular, "SF Mono", Consolas,
+            "Liberation Mono", monospace;
+    --max: 1100px;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font);
+    font-size: 15.5px;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: inherit; text-decoration: none; }
+  a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+  code, .mono { font-family: var(--mono); }
+  .wrap { max-width: var(--max); margin: 0 auto; padding: 0 1.5rem; }
+
+  /* ---- 顶栏 ---- */
+  .top { border-bottom: 1px solid var(--line); background: rgba(11, 15, 20, 0.92); position: sticky; top: 0; z-index: 5; backdrop-filter: blur(6px); }
+  .top-in { display: flex; align-items: center; justify-content: space-between; gap: 1rem; height: 3.75rem; }
+  .brand { font-family: var(--mono); font-size: 0.9rem; }
+  .brand b { color: var(--accent); font-weight: 500; }
+  .nav { display: flex; align-items: center; gap: 1.4rem; font-family: var(--mono); font-size: 0.8rem; color: var(--soft); }
+  .nav a:hover { color: var(--accent); }
+  .lang { display: flex; gap: 0.15rem; }
+  .lang a { padding: 0.15rem 0.4rem; border: 1px solid transparent; border-radius: 4px; color: var(--muted); }
+  .lang a[aria-current] { color: var(--accent); border-color: var(--accent-dim); }
+
+  /* ---- 首屏：终端窗口 ---- */
+  .hero { padding: 3.5rem 0 1rem; }
+  .term {
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    background: linear-gradient(#0e141d, #0c1119);
+    overflow: hidden;
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45);
+  }
+  .term-bar { display: flex; align-items: center; gap: 0.4rem; padding: 0.6rem 0.85rem; border-bottom: 1px solid var(--line); background: var(--panel-2); }
+  .dot { width: 10px; height: 10px; border-radius: 50%; background: #2b3a4d; }
+  .term-title { margin-left: 0.5rem; font-family: var(--mono); font-size: 0.72rem; color: var(--muted); }
+  .term-body { padding: 1.5rem 1.35rem 1.75rem; font-family: var(--mono); font-size: 0.86rem; }
+  .term-body .prompt { color: var(--accent); }
+  .term-body .cmd { color: var(--text); }
+  .term-body .out { color: var(--soft); }
+  .term-body .dim { color: var(--muted); }
+  .term-body h1 {
+    margin: 1.1rem 0 0.9rem;
+    font-family: var(--font);
+    font-size: clamp(2rem, 5.4vw, 3.4rem);
+    line-height: 1.08;
+    letter-spacing: -0.03em;
+    font-weight: 700;
+  }
+  .term-body h1 span { color: var(--accent); }
+  .term-body p { margin: 0 0 0.4rem; font-family: var(--font); font-size: 1rem; color: var(--soft); max-width: 42rem; }
+
+  /* ---- 状态行 ---- */
+  .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; margin: 1.75rem 0 0; padding: 0; list-style: none; border: 1px solid var(--line); border-radius: 10px; overflow: hidden; background: var(--line); }
+  .stats li { background: var(--panel); padding: 1rem 1.15rem; }
+  .stats b { display: block; font-family: var(--mono); font-size: 1.3rem; color: var(--text); }
+  .stats span { font-family: var(--mono); font-size: 0.72rem; color: var(--muted); }
+
+  /* ---- 区块 ---- */
+  .sec { padding: 3.5rem 0; }
+  .sec-head { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1.5rem; }
+  .sec-head h2 { margin: 0; font-family: var(--mono); font-size: 0.85rem; font-weight: 500; color: var(--soft); }
+  .sec-head::after { content: ""; flex: 1; height: 1px; background: var(--line); }
+
+  /* ---- 模组卡 ---- */
+  .mods { display: grid; grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr)); gap: 1rem; }
+  .mod {
+    display: block;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    background: var(--panel);
+    padding: 1.25rem 1.15rem 1.15rem;
+    transition: border-color 0.16s ease, transform 0.16s ease, background-color 0.16s ease;
+  }
+  .mod:hover { border-color: var(--accent-dim); transform: translateY(-2px); background: #131c27; }
+  .mod-top { display: flex; align-items: baseline; justify-content: space-between; gap: 0.75rem; }
+  .mod h3 { margin: 0; font-size: 1.08rem; font-weight: 600; letter-spacing: -0.01em; }
+  .tag { font-family: var(--mono); font-size: 0.66rem; padding: 0.12rem 0.4rem; border: 1px solid var(--line); border-radius: 999px; color: var(--muted); white-space: nowrap; }
+  .mod dl { display: grid; grid-template-columns: 4.2rem 1fr; gap: 0.15rem 0.6rem; margin: 0.9rem 0 0; font-family: var(--mono); font-size: 0.75rem; }
+  .mod dt { color: var(--muted); }
+  .mod dd { margin: 0; color: var(--soft); }
+  .mod .open { display: inline-block; margin-top: 1rem; font-family: var(--mono); font-size: 0.75rem; color: var(--accent); }
+
+  /* ---- 文档：文件树 ---- */
+  .cols { display: grid; grid-template-columns: 1.15fr 1fr; gap: 2.5rem; align-items: start; }
+  .tree { border: 1px solid var(--line); border-radius: 10px; background: var(--panel-2); padding: 1.1rem 1.2rem; font-family: var(--mono); font-size: 0.82rem; }
+  .tree .row { display: flex; align-items: baseline; gap: 0.6rem; padding: 0.22rem 0; color: var(--soft); }
+  .tree .row:hover { color: var(--accent); }
+  .tree .glyph { color: var(--muted); }
+  .tree .lead { color: var(--text); }
+  .tree .note { margin-left: auto; color: var(--muted); font-size: 0.72rem; }
+  .aside h3 { margin: 0 0 0.6rem; font-size: 1rem; }
+  .aside p { margin: 0 0 1rem; color: var(--soft); font-size: 0.92rem; }
+  .aside code { padding: 0.08rem 0.35rem; border: 1px solid var(--line); border-radius: 4px; font-size: 0.82rem; color: var(--text); background: var(--panel-2); }
+
+  /* ---- 链接 ---- */
+  .links { display: flex; flex-wrap: wrap; gap: 0.6rem; margin: 0; padding: 0; list-style: none; }
+  .links a {
+    display: inline-flex; align-items: baseline; gap: 0.45rem;
+    padding: 0.5rem 0.85rem;
+    border: 1px solid var(--line); border-radius: 8px;
+    background: var(--panel);
+    font-family: var(--mono); font-size: 0.8rem;
+    transition: border-color 0.16s ease, color 0.16s ease;
+  }
+  .links a:hover { border-color: var(--accent-dim); color: var(--accent); }
+  .links small { color: var(--muted); font-size: 0.7rem; }
+
+  footer { border-top: 1px solid var(--line); margin-top: 2rem; }
+  .foot { display: flex; flex-wrap: wrap; gap: 0.6rem 2rem; justify-content: space-between; padding: 1.75rem 0 3rem; font-family: var(--mono); font-size: 0.72rem; color: var(--muted); }
+
+  @keyframes fade { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+  .term, .stats, .sec { animation: fade 0.6s ease both; }
+  .stats { animation-delay: 0.08s; }
+  @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
+
+  @media (max-width: 820px) {
+    .cols { grid-template-columns: 1fr; gap: 1.75rem; }
+    .stats { grid-template-columns: 1fr; }
+    .nav { gap: 0.9rem; font-size: 0.74rem; }
+  }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap top-in">
+    <span class="brand"><b>~</b>/Fragmented_Chaos</span>
+    <nav class="nav">
+      <a href="#mods">mods</a>
+      <a href="#docs">docs</a>
+      <a href="#">music</a>
+      <a href="#">experience</a>
+      <a href="#">about</a>
+      <span class="lang">
+        <a href="#" aria-current="true">简</a>
+        <a href="#">繁</a>
+        <a href="#">EN</a>
+      </span>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="wrap hero">
+    <div class="term">
+      <div class="term-bar">
+        <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+        <span class="term-title">fragmented_chaos — bash</span>
+      </div>
+      <div class="term-body">
+        <div><span class="prompt">$</span> <span class="cmd">ls -1 mods/</span></div>
+        <div class="out">charm-of-undying-reborn/</div>
+        <div class="out">cursorkit/</div>
+        <div class="out">safespawn/</div>
+        <div class="dim" style="margin-top:.6rem"># 3 个在维护的模组 · Fabric / NeoForge / Quilt · 兼容到 26.3</div>
+        <h1>写模组，<span>也做点小工具</span>。</h1>
+        <p>Cursor Kit：自定义光标与逐状态热区，纯客户端。另有 Charm of Undying: Reborn 与 SafeSpawn。附完整中文文档与光标包。</p>
+      </div>
+    </div>
+    <ul class="stats">
+      <li><b>3</b><span>在维护的模组</span></li>
+      <li><b>26.3</b><span>最新兼容版本</span></li>
+      <li><b>3</b><span>语言：简 / 繁 / EN</span></li>
+    </ul>
+  </section>
+
+  <section class="wrap sec" id="mods">
+    <div class="sec-head"><h2>// 模组</h2></div>
+    <div class="mods">
+      <a class="mod" href="#">
+        <div class="mod-top"><h3>Cursor Kit</h3><span class="tag">LGPL-3.0</span></div>
+        <dl>
+          <dt>版本</dt><dd>26.3</dd>
+          <dt>加载器</dt><dd>Fabric · NeoForge · Quilt</dd>
+          <dt>前置</dt><dd>无（纯客户端）</dd>
+        </dl>
+        <span class="open">文档 / 光标包 →</span>
+      </a>
+      <a class="mod" href="#">
+        <div class="mod-top"><h3>Charm of Undying: Reborn</h3><span class="tag">MIT</span></div>
+        <dl>
+          <dt>版本</dt><dd>26.1–26.3</dd>
+          <dt>加载器</dt><dd>Fabric · NeoForge</dd>
+          <dt>平台</dt><dd>Modrinth · CurseForge</dd>
+        </dl>
+        <span class="open">查看模组 →</span>
+      </a>
+      <a class="mod" href="#">
+        <div class="mod-top"><h3>SafeSpawn</h3><span class="tag">MIT</span></div>
+        <dl>
+          <dt>版本</dt><dd>1.21.4–1.21.11, 26.1–26.3</dd>
+          <dt>加载器</dt><dd>Fabric · NeoForge · Quilt</dd>
+          <dt>平台</dt><dd>Modrinth · CurseForge</dd>
+        </dl>
+        <span class="open">查看模组 →</span>
+      </a>
+    </div>
+  </section>
+
+  <section class="wrap sec" id="docs">
+    <div class="sec-head"><h2>// 文档</h2></div>
+    <div class="cols">
+      <div class="tree">
+        <div class="row"><span class="glyph">├──</span><span class="lead">快速上手</span><span class="note">5 分钟</span></div>
+        <div class="row"><span class="glyph">├──</span><span>自定义光标</span></div>
+        <div class="row"><span class="glyph">├──</span><span>逐状态热区编辑器</span></div>
+        <div class="row"><span class="glyph">├──</span><span>点击特效</span></div>
+        <div class="row"><span class="glyph">├──</span><span>状态判定</span></div>
+        <div class="row"><span class="glyph">├──</span><span>配置项</span></div>
+        <div class="row"><span class="glyph">├──</span><span>给其它模组用的 API</span></div>
+        <div class="row"><span class="glyph">└──</span><span>常见问题</span></div>
+      </div>
+      <div class="aside">
+        <h3>光标包</h3>
+        <p>把包放进 <code>config/cursorkit/packs/</code>—— 文件夹或 <code>.zip</code> 都行，换一套光标不用换模组。</p>
+        <h3>也在别处</h3>
+        <ul class="links" style="margin-top:.75rem">
+          <li><a href="https://center.mcmod.cn/626584/" target="_blank" rel="noopener">mc百科</a></li>
+          <li><a href="https://github.com/Fragmented-Chaos" target="_blank" rel="noopener">GitHub</a></li>
+          <li><a href="https://www.curseforge.com/members/fragmented_chaos/projects" target="_blank" rel="noopener">CurseForge</a></li>
+          <li><a href="https://modrinth.com/user/Fragmented_Chaos" target="_blank" rel="noopener">Modrinth</a></li>
+          <li><a href="https://space.bilibili.com/3546896511536057" target="_blank" rel="noopener">B 站</a></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <span>Fragmented_Chaos · StewedTuba73416 / Rending_Void</span>
+    <span>样板 B：深色技术风</span>
+  </div>
+</footer>
+
+</body>
+</html>

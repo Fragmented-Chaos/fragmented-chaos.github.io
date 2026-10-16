@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cursor Kit · Fragmented_Chaos</title>
+<meta name="description" content="把 Minecraft 的鼠标指针换成自定义高清光标：六个状态、帧动画、逐状态热区，点击特效跟随光标包。">
+<script>
+  (function () {
+    try {
+      var m = /[?&]theme=(light|dark)\b/.exec(location.search);
+      var t = m ? m[1] : localStorage.getItem('site-v2.theme');
+      if (t === 'light' || t === 'dark') document.documentElement.setAttribute('data-theme', t);
+    } catch (e) { /* 隐私模式忽略 */ }
+  })();
+</script>
+<link rel="stylesheet" href="../../../assets/base.css">
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap top-in">
+    <a class="mark" href="../../../index.html">Fragmented<b>_</b>Chaos</a>
+    <nav class="nav">
+      <a href="../" aria-current="page">模组</a>
+      <a href="../../blog/">博客</a>
+      <a href="../../music/">音乐</a>
+      <a href="../../experience/">经历</a>
+      <a href="../../about/">关于</a>
+      <span class="lang">
+        <a href="../../../zh/mods/cursorkit/" aria-current="true">简</a>
+        <a href="../../../zh-hant/mods/cursorkit/">繁</a>
+        <a href="../../../en/mods/cursorkit/">EN</a>
+      </span>
+      <button type="button" class="theme-toggle" data-theme-toggle
+              aria-pressed="false"
+              data-label-to-dark="切换到暗色主题" data-label-to-light="切换到亮色主题">
+        <span class="sr-only">切换主题</span>
+        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true">
+          <circle cx="12" cy="12" r="4.2"/>
+          <path d="M12 3v2.2M12 18.8V21M3 12h2.2M18.8 12H21M5.6 5.6l1.6 1.6M16.8 16.8l1.6 1.6M18.4 5.6l-1.6 1.6M7.2 16.8l-1.6 1.6"/>
+        </svg>
+        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true">
+          <path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a6.8 6.8 0 0 0 10.5 10.5z"/>
+        </svg>
+      </button>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="wrap page-head" style="padding-bottom:1.5rem">
+    <p class="kicker" style="margin:0 0 1.25rem;font-size:.74rem;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--soft)">MOD · 简体</p>
+    <div class="mod-head">
+        <img class="mod-icon" src="../../../assets/images/cursorkit/icon.png" width="72" height="72" alt="Cursor Kit 图标" loading="lazy" decoding="async">
+      <div>
+        <h1>Cursor Kit</h1>
+        <p class="mod-tagline">把 Minecraft 的鼠标指针换成自定义高清光标：六个状态、帧动画、逐状态热区，点击特效跟随光标包。</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap" style="padding-bottom:2rem">
+    <div class="panel" data-downloads>
+      <dl class="spec">
+        <dt>版本</dt><dd>26.3</dd>
+        <dt>加载器</dt><dd>Fabric · NeoForge · Quilt</dd>
+        <dt>前置</dt><dd>无（纯客户端）</dd>
+        <dt>许可</dt><dd>LGPL-3.0</dd>
+        <dt data-dl-row="modrinth">Modrinth</dt><dd data-dl-cell="modrinth"><span data-dl-count="modrinth">—</span> 次下载</dd>
+        <dt data-dl-row="curseforge">CurseForge</dt><dd data-dl-cell="curseforge"><span data-dl-count="curseforge">—</span> 次下载</dd>
+        <dt data-latest-row>最新版本</dt><dd data-latest-version>—</dd>
+        <dt>链接</dt><dd>
+          <ul class="chips">
+            <li><a href="https://github.com/Fragmented-Chaos/Cursor-Kit/releases" target="_blank" rel="noopener">下载</a></li>
+            <li><a href="https://github.com/Fragmented-Chaos/Cursor-Kit" target="_blank" rel="noopener">源码</a></li>
+            <li><a href="https://github.com/Fragmented-Chaos/Cursor-Kit/issues" target="_blank" rel="noopener">反馈问题</a></li>
+          </ul>
+        </dd>
+      </dl>
+    </div>
+  </section>
+
+  <section class="wrap" style="padding-bottom:3.5rem">
+    <article class="post-body">
+<p>哪个状态用哪张图<strong>完全由外部包决定</strong> —— 资源包、光标包、或 <code>config</code> 里的散装图片都行；换一套光标不用换模组，也不用重启游戏。</p>
+<h2 id="start">快速上手</h2>
+<p><strong>首次进游戏时还没有任何光标集</strong>，列表里只有 <code>默认（系统光标）</code> 和 <code>自定义（逐状态填写）</code> 两行；放一个光标包进去，其它的就会出现：</p>
+<ul>
+<li><strong>拖进去</strong>：<code>.zip</code>、带 <code>assets/</code> 的文件夹、或散装 PNG/JSON 直接拖到界面上（重名自动加 <code>-2</code>）</li>
+<li><strong>自己放</strong>：光标包放 <code>config/cursorkit/packs/</code>（文件夹或 <code>.zip</code>），散装 JSON + PNG 放 <code>config/cursorkit/</code></li>
+</ul>
+<p><code>config/cursorkit/</code>（含 <code>packs/</code>）会被持续监听，一有变化就重读刷新，搜索词与选中项保留。</p>
+<p>界面操作：</p>
+<ul>
+<li><strong>点列表即选中并立刻生效</strong></li>
+<li>左侧列表每行显示 <code>名字 · 来源 · 状态数 · 特效</code>，顶部有搜索框；第一行 <code>默认（系统光标）</code>，第二行 <a href="#custom"><code>自定义（逐状态填写）</code></a></li>
+<li>右侧是六个状态的实时预览（红点是点击点位置，缺失的状态标 <code>(default)</code>）和循环播放的特效预览</li>
+<li>底部开关：<code>动画</code>、<code>点击特效</code>、<code>缩放</code>、<code>边界</code>；右上角 <code>文件夹</code> 与 <code>热点…</code></li>
+<li><code>完成</code> 保存，<code>取消</code> 恢复到打开界面时的状态</li>
+</ul>
+<figure><img src="../../../assets/images/cursorkit/picker.webp" width="760" height="1005" decoding="async" loading="lazy" alt="光标选择界面：左侧列表、右侧六个状态预览"><figcaption>选择界面：左边是可搜索的包列表（每行标出来源与特效），右边是六个状态的预览和逐状态点击点。</figcaption></figure>
+<h3 id="custom">自定义光标</h3>
+<p>不想做包、只想用现成的图片时，选列表第二行的 <strong><code>自定义（逐状态填写）</code></strong>，点 <strong><code>编辑路径…</code></strong>：</p>
+<ul>
+<li>六个状态各一行，填本机任意 PNG / <code>.cur</code> 的<strong>绝对路径</strong>（相对路径以游戏目录为基准）。</li>
+<li>每行会当场校验：<strong>金色 = 找到</strong>、<strong>红色带 <code>?</code> = 没找到</strong>、<strong>灰色 = 留空</strong>（留空则该状态回退到 <code>default</code>）；按钮上会提醒有几个路径无效。</li>
+<li>这些路径存在 <code>config/cursorkit.json</code> 的 <code>custom_states</code> 里，例如 <code>{"default": "D:/cursors/arrow.png", "clickable": "hand.cur"}</code>。</li>
+</ul>
+<figure><img src="../../../assets/images/cursorkit/states.webp" width="760" height="499" decoding="async" loading="lazy" alt="逐状态路径编辑界面"><figcaption>逐状态自定义：每个状态一个路径，找到的显示金色，没找到的红色带问号。</figcaption></figure>
+<h3 id="hotspots">逐状态热区编辑器</h3>
+<p><strong>点击点（热区）不一定要在 JSON 里写死</strong>：选择界面右上角点 <strong><code>热点…</code></strong> 进入专门的编辑器，左边列出该集合每个状态的当前值（改过的显示金色），右边是放大后的图片 + 像素网格。</p>
+<ul>
+<li>在图片上<strong>点击或拖拽</strong>即可把点击点放到那个像素，<strong>方向键</strong>逐像素微调。</li>
+<li><code>居中</code> 一键放到图片正中，<code>恢复原值</code> 丢掉这条改动、用回集合自带的值。</li>
+<li>编辑<strong>实时生效</strong>（真实光标会跟着动），<code>完成</code> 写入 <code>config/cursorkit.json</code> 的 <code>hotspots</code>，<code>取消</code> 全部还原。</li>
+</ul>
+<p>因为改的是配置而不是包本身，<strong>资源包里的集合也能这样调</strong>，不用去动别人的文件。没有自己图片的状态（例如 <code>text (default)</code>）会借用 <code>default</code> 的图片，但<strong>点击点是独立的</strong>，改一个不会牵动别的。</p>
+<figure><img src="../../../assets/images/cursorkit/hotspots.webp" width="760" height="1005" decoding="async" loading="lazy" alt="点击点编辑器：左侧状态列表，右侧放大图片与像素网格"><figcaption>点击点编辑器：点或拖就能改，方向键微调，改完立刻生效。</figcaption></figure>
+<h2 id="features">功能</h2>
+<ul class="feature-grid">
+  <li class="feature">
+    <h3>六个光标状态</h3>
+    <p>默认箭头 / 可点击（手型）/ 文本输入（I 型）/ 拖拽 / 忙碌 / 禁用，按界面上下文自动切换。</p>
+  </li>
+  <li class="feature">
+    <h3>高清光标</h3>
+    <p>一个图片像素 = 屏幕上的一个物理像素，和系统光标完全一致。16×16 是常规大小，32×32、64×64、128×128 依次更大更清晰，4K 上照样锐利。</p>
+  </li>
+  <li class="feature">
+    <h3>绝不插值</h3>
+    <p>按图片自身像素的整数倍绘制（1:1，或不足 16 GUI 单位时整数放大），和系统光标一样没有半点模糊。</p>
+  </li>
+  <li class="feature">
+    <h3>逐状态热区</h3>
+    <p>点击点默认左上角，可以在光标集 JSON 里写，也可以直接在界面里点选 / 拖拽 / 方向键微调。</p>
+  </li>
+  <li class="feature">
+    <h3>三种来源，优先级明确</h3>
+    <p><code>config/cursorkit/</code> 散装文件 &gt; <code>config/cursorkit/packs/</code> 光标包 &gt; 资源包。界面里会标出每个集合来自哪一层。</p>
+  </li>
+  <li class="feature">
+    <h3>随包切换的点击特效</h3>
+    <p>水波纹、粒子爆开、脉冲点，或包自带的自定义帧动画；换包就换一套点击反馈，也能单独关掉。</p>
+  </li>
+  <li class="feature">
+    <h3>拖入即装</h3>
+    <p>压缩包、文件夹、散装图片直接拖进界面，自动归类、自动避让重名、列表立刻刷新。</p>
+  </li>
+  <li class="feature">
+    <h3>支持 <code>.cur</code></h3>
+    <p>Windows 光标文件直接丢进 <code>config/cursorkit/</code> 或光标包即可，图片与自带热点自动读取（资源包里只能放 PNG）。</p>
+  </li>
+</ul>
+<h2 id="packs">做自己的光标包</h2>
+<p>一个光标集 = 一份 JSON + 若干贴图。想先试效果：把一张 32×32 的 PNG 丢进 <code>config/cursorkit/</code> 就能用，再加一份同名 JSON 补其它状态。</p>
+<pre><code>资源包：      resourcepacks/&lt;包名&gt;/            或 &lt;包名&gt;.zip
+光标包：      config/cursorkit/packs/&lt;包名&gt;/   或 &lt;包名&gt;.zip
+本地单集合：  config/cursorkit/&lt;集合&gt;.json</code></pre>
+<p>资源包与光标包内部结构相同（<code>assets/&lt;命名空间&gt;/cursor/&lt;集合&gt;.json</code> + <code>textures/cursor/&lt;贴图&gt;</code>），所以同一个包两种身份都能用，只有资源包路线需要 <code>pack.mcmeta</code>。文件名（去掉扩展名）就是集合 <strong>id</strong>，决定覆盖关系。</p>
+<p><strong>完整的字段表、图片规格、热区、动画与特效参数见<a href="#packs">《制作光标包》</a></strong>；仓库 <code>examples/</code> 里也有现成包可以直接改。</p>
+<h2 id="effects">点击特效</h2>
+<p><code>click_effect</code> 是光标集 JSON 里的可选段，<strong>跟着光标包走</strong>：换一个包就换一套点击反馈。每次按下鼠标时在<strong>点击位置</strong>生成特效，光标本身不动，不影响瞄准。</p>
+<table><thead><tr><th><code>type</code></th><th>效果</th></tr></thead><tbody>
+<tr><td><code>ripple</code></td><td>扩散的圆环 + 少量粒子（默认）</td></tr>
+<tr><td><code>burst</code></td><td>只有粒子，向外爆开</td></tr>
+<tr><td><code>pulse</code></td><td>原地闪一下的实心点</td></tr>
+<tr><td><code>image</code></td><td><strong>包自带的自定义动画</strong>：一条横向帧带，点击时在点击位置播放</td></tr>
+<tr><td><code>none</code></td><td>这个包不要特效</td></tr>
+</tbody></table>
+<p>颜色、半径、时长、粒子数、<code>image</code> 的帧带参数都在<a href="#packs">《制作光标包》</a>里。界面底部的 <code>点击特效</code> 是总开关；选 <code>默认（系统光标）</code> 时也会播模组自带的水波纹。</p>
+<h2 id="config">配置项</h2>
+<p>配置在 <code>config/cursorkit.json</code>（首次启动自动生成）：</p>
+<pre><code>{
+  "enabled": true,
+  "selected_set": "",
+  "scale": 1,
+  "animate": true,
+  "click_effect": true,
+  "edge_margin": 2
+}</code></pre>
+<table><thead><tr><th>字段</th><th>默认</th><th>说明</th></tr></thead><tbody>
+<tr><td><code>enabled</code></td><td><code>true</code></td><td>总开关。关闭后完全还原系统光标</td></tr>
+<tr><td><code>selected_set</code></td><td><code>""</code></td><td>当前光标集 <strong>id</strong>（文件名去掉扩展名）。<strong>留空 = 使用系统光标</strong>；指向已删除的集合时<strong>立即交还系统光标</strong>（不会跳去别的集合）</td></tr>
+<tr><td><code>scale</code></td><td><code>1</code></td><td>额外整数倍缩放，与集合自身的 <code>scale</code> 相乘</td></tr>
+<tr><td><code>animate</code></td><td><code>true</code></td><td>关闭后光标<strong>固定为 <code>default</code> 的静态图</strong>：不切换状态、也不播放动画</td></tr>
+<tr><td><code>click_effect</code></td><td><code>true</code></td><td>点击特效总开关（布尔值）</td></tr>
+<tr><td><code>edge_margin</code></td><td><code>2</code></td><td>距窗口边缘多少像素内不接管光标，避免找不到鼠标</td></tr>
+<tr><td><code>custom_states</code></td><td>无</td><td>逐状态自定义图片路径，即界面里的「自定义（逐状态填写）」</td></tr>
+<tr><td><code>custom_effect</code></td><td>水波纹</td><td>手工集合自己的点击特效，写法与包里的 <code>click_effect</code> 相同</td></tr>
+<tr><td><code>hotspots</code></td><td>无</td><td>在热区编辑器里改过的点击点，形如 <code>{"集合id": {"状态": [x, y]}}</code></td></tr>
+</tbody></table>
+<h2 id="states">状态判定</h2>
+<table><thead><tr><th>状态</th><th>何时显示</th><th>判定来源</th></tr></thead><tbody>
+<tr><td><code>drag</code></td><td>按住左键拖拽（物品、滑块）</td><td>原版 <code>Screen#isDragging</code> / 左键按下</td></tr>
+<tr><td><code>text</code></td><td>文本框、告示牌编辑获得焦点</td><td>原版请求 <code>IBEAM</code></td></tr>
+<tr><td><code>busy</code></td><td>加载遮罩存在</td><td>界面覆盖层非空</td></tr>
+<tr><td><code>disabled</code></td><td>悬停不可用控件</td><td>原版请求 <code>NOT_ALLOWED</code></td></tr>
+<tr><td><code>clickable</code></td><td>悬停可点击控件、可拖拽边缘</td><td>原版请求 <code>POINTING_HAND</code> / <code>RESIZE_*</code></td></tr>
+<tr><td><code>default</code></td><td>其它情况</td><td>—</td></tr>
+</tbody></table>
+<p>优先级：<code>drag &gt; text &gt; busy &gt; disabled &gt; clickable &gt; default</code>。</p>
+<p>Minecraft 26.3 起会为每个控件请求光标类型，所以<strong>任何模组的界面都自动适用</strong>；Cursor Kit 只补上原版表达不了的「拖拽」与「加载中」，并额外提供下面这个覆盖入口。</p>
+<p>两个边界行为：<strong>进入游戏（视角被锁定时）光标完全不接管</strong>；把指针推到窗口最边缘时系统光标会回来（<code>edge_margin</code> 控制这个范围）。</p>
+<h2 id="api">给其它模组用的 API</h2>
+<pre><code>CursorStateProviders.register((screen, mouseX, mouseY, context) -&gt; {
+    if (screen instanceof MySpecialScreen) {
+        return CursorState.DRAG;   // 本帧强制用这个状态
+    }
+    return null;                    // 交回内置判定
+});</code></pre>
+<p>按注册顺序询问，第一个返回非 <code>null</code> 的胜出；<code>context</code> 里能看到原版请求的类型、是否拖拽、是否忙碌。<code>CursorState</code>、<code>CursorSet</code> 等模型类都与 Minecraft 无关，方便书写与测试。</p>
+<h2 id="faq">常见问题</h2>
+<p><strong>装了模组但光标没变？</strong> 列表里选中项是不是 <code>默认（系统光标）</code>？<code>config/cursorkit.json</code> 的 <code>enabled</code> 是不是 <code>false</code>？另外先确认已经有光标集可选 —— 刚装好模组时一个包都还没有，往 <code>config/cursorkit/packs/</code> 放一个就会出现。</p>
+<p><strong>光标模糊 / 不够精细？</strong> 模组按整数倍绘制、不做插值，所以<strong>素材分辨率就是清晰度的上限</strong>。用 32×32、64×64、128×128 的图，不要用 16×16 放大。</p>
+<p><strong>资源包里的光标没出现？</strong> 资源包必须在<strong>资源包界面启用</strong>才会被加载；不想每次手动启用的话，把同一个包放进 <code>config/cursorkit/packs/</code>（结构完全一样），模组会直接读，永远是开启的。</p>
+<p><strong>找不到鼠标了？</strong> 把指针推到窗口最边缘就会交还系统光标，<code>边界</code> 开关（<code>edge_margin</code>）可以把这个范围调大；也可以随时在列表里选 <code>默认（系统光标）</code>。</p>
+<p><strong>点击特效不显示？</strong> 界面底部的 <code>点击特效</code> 开关是总开关；单个包也可以在 JSON 里写 <code>"type": "none"</code> 关掉。</p>
+<p><strong>服务器上要装吗？</strong> 不用。这是纯客户端模组，服务器装了也不做任何事，联机时服务端没装也不会报错。</p>
+<p><strong>能在 NeoForge / Quilt 上用吗？</strong> 能。同一个 jar 三端通用，Fabric 与 Quilt 共用（Quilt 走 Fabric 兼容层）；NeoForge 上没有 Mod Menu，模组列表由 NeoForge 自己提供。</p>
+<p><strong>怎么让自定义光标一直显示，不要突然变回系统光标？</strong> 指针靠近窗口边缘时模组会主动交还系统光标（<code>edge_margin</code>，默认 2 像素），这是为了避免鼠标贴边时点不到东西。把 <code>边界</code> 调到 <code>0</code> 就会一直用自定义光标。</p>
+<hr>
+<h2 id="packs">制作光标包</h2>
+<p>照着做就行，十分钟能做出一个自己的光标。不用写代码。</p>
+<h2>要准备的东西</h2>
+<ul>
+<li>一张<strong>正方形的 PNG 图片</strong>（背景留透明，建议 32×32 像素）</li>
+<li>一个画图软件（Aseprite / Photoshop / GIMP / 系统画图都行）</li>
+<li>记事本（用来写一个文本文件，内容后面照抄）</li>
+</ul>
+<h2>第一步：先让一张图变成光标</h2>
+<ol>
+<li>把 PNG 复制到游戏的 <code>config/cursorkit/</code> 文件夹里</li>
+<li>文件名改成 <code>my_arrow.png</code> —— <strong>用小写字母、数字、下划线</strong>，别用中文和空格</li>
+<li>进游戏：<strong>选项 → 视频设置 → <code>光标</code></strong></li>
+<li>列表里会出现 <code>my_arrow</code>，点一下选中</li>
+</ol>
+<p>现在整局游戏的光标就是这张图了（六个状态都用它）。</p>
+<blockquote>找不到 <code>config/cursorkit/</code>？在光标列表界面点右上角的 <strong><code>文件夹</code></strong>，它会帮你打开。</blockquote>
+<h2>第二步：让不同状态用不同的图</h2>
+<p>先解释一下：游戏里光标不是只有一种样子 —— 指到按钮上会变手型、在输入框里会变 I 型…… 这些叫<strong>状态</strong>，一共六个：</p>
+<table><thead><tr><th>状态</th><th>什么时候出现</th></tr></thead><tbody>
+<tr><td><code>default</code></td><td>平时（<strong>必须有</strong>）</td></tr>
+<tr><td><code>clickable</code></td><td>指到按钮等能点的东西上</td></tr>
+<tr><td><code>text</code></td><td>在输入框、告示牌里打字时</td></tr>
+<tr><td><code>drag</code></td><td>按住左键拖东西时</td></tr>
+<tr><td><code>disabled</code></td><td>指到灰掉、不能点的按钮上</td></tr>
+<tr><td><code>busy</code></td><td>加载中（转圈那种）</td></tr>
+</tbody></table>
+<p>想让它们各用一张图：</p>
+<ol>
+<li>再画几张图，都放进 <code>config/cursorkit/</code></li>
+<li>在同一个文件夹里新建一个文本文件，命名成 <code>my_arrow.json</code>（<strong>和 PNG 同名</strong>，扩展名换成 json）</li>
+<li>把下面的内容抄进去，把文件名改成你自己的：</li>
+</ol>
+<pre><code>{
+    "states": {
+        "default":   { "texture": "my_arrow.png" },
+        "clickable": { "texture": "my_hand.png" },
+        "text":      { "texture": "my_ibeam.png" },
+        "drag":      { "texture": "my_fist.png" },
+        "disabled":  { "texture": "my_gray.png" }
+    }
+}</code></pre>
+<ol>
+<li>存盘，回到游戏 —— 列表<strong>会自己刷新，不用重启</strong>，点一下右侧就能看到六个状态的预览</li>
+</ol>
+<p>没写的状态（上面例子里是 <code>busy</code>）会自动用 <code>default</code> 的图，所以 <code>default</code> 是唯一必须有的。</p>
+<h2>第三步：把点击点放到正确的位置</h2>
+<p>点击光标时，真正生效的只有一个像素，叫<strong>点击点</strong>（热区）。它默认在图片的<strong>左上角</strong>，所以箭头类光标通常正好；但手型、I 型就该放中间。</p>
+<p>不会算坐标没关系：在光标列表界面点右上角 <strong><code>热点…</code></strong>，在放大图上<strong>点一下或拖一下</strong>就设好了，方向键可以一格一格微调，点 <code>完成</code> 保存。改的是你的配置，不会动别人的包。</p>
+<h2>第四步：让"加载中"转起来（可选）</h2>
+<p>动画就是<strong>把好几帧横着拼成一张长图</strong>：比如 8 张 32×32 的转圈图，拼成一张 <strong>256×32</strong>（宽 = 帧数 × 高）。</p>
+<p>在 JSON 里给这个状态加两个数字：</p>
+<pre><code>"busy": { "texture": "my_spinner.png", "frames": 8, "frame_ms": 80 }</code></pre>
+<ul>
+<li><code>frames</code> = 几张帧</li>
+<li><code>frame_ms</code> = 每帧显示多少毫秒（80 大约是每秒 12 帧）</li>
+</ul>
+<p>两个要点：<strong>每帧必须是正方形</strong>，<strong>所有帧必须在同一行</strong>。</p>
+<h2>第五步：加点击特效（可选）</h2>
+<p>想让点下去有反馈，加一行就行：</p>
+<pre><code>"click_effect": { "type": "ripple", "color": "#FFD479" }</code></pre>
+<table><thead><tr><th><code>type</code></th><th>点下去是什么样</th></tr></thead><tbody>
+<tr><td><code>ripple</code></td><td>一圈光晕扩散开（最常用）</td></tr>
+<tr><td><code>burst</code></td><td>一堆粒子炸开</td></tr>
+<tr><td><code>pulse</code></td><td>原地闪一下</td></tr>
+<tr><td><code>image</code></td><td>用你自己画的动画（下面单独说）</td></tr>
+<tr><td><code>none</code></td><td>不要特效</td></tr>
+</tbody></table>
+<p>想调大小、时长、粒子数，加 <code>"radius": 15</code>、<code>"duration_ms": 450</code>、<code>"particles": 6</code> 这些字段，不写就用默认值。</p>
+<p><strong>用自己画的动画</strong>：做成和上面动画一样的横向长图，然后写：</p>
+<pre><code>"click_effect": { "type": "image", "texture": "my_ring.png", "frames": 6, "frame_ms": 60, "size": 24 }</code></pre>
+<p><code>size</code> 是它画出来多大（屏幕像素），淡出效果要<strong>画进图里</strong>。</p>
+<h2>第六步：打包成一个能分享的包</h2>
+<p>如果要发给别人，就得做成<strong>光标包</strong>：一个文件夹（或压缩包），里面按固定结构放：</p>
+<pre><code>mypack/                                  ← 包名，随便起
+└── assets/
+    └── mypack/                          ← 随便起的名字，跟上面保持一致就行
+        ├── cursor/
+        │   └── my_arrow.json            ← 你的 JSON
+        └── textures/
+            └── cursor/
+                ├── my_arrow.png         ← 你的图
+                └── my_hand.png</code></pre>
+<p>注意 JSON 里的路径要<strong>相对于 <code>textures/cursor/</code></strong>：上面这个例子里写 <code>"texture": "my_arrow.png"</code>。如果图放在子文件夹 <code>cursor/arrow/</code> 里，就写 <code>"texture": "arrow/my_arrow.png"</code>。</p>
+<p>做完把 <code>mypack</code> 文件夹丢进 <code>config/cursorkit/packs/</code>，或者<strong>直接拖进游戏界面</strong>，就装好了。</p>
+<p>想打成压缩包：<strong>压缩包里第一层就要是 <code>assets/</code></strong>，别把 <code>mypack</code> 再套一层（套一层也能识别，但别套两层）。</p>
+<pre><code>mypack.zip
+└── assets/...        ✓ 正确</code></pre>
+<blockquote>这个包同样能当资源包用：丢进 <code>resourcepacks/</code> 并在资源包界面启用即可（这时需要一个 <code>pack.mcmeta</code>，内容照抄 <code>examples/</code> 里的）。但资源包<strong>只能用 PNG</strong>，<code>.cur</code> 只能用上面那种光标包。</blockquote>
+<h2>遇到问题看这里</h2>
+<table><thead><tr><th>现象</th><th>原因</th></tr></thead><tbody>
+<tr><td>列表里找不到我的光标</td><td>文件名有大写/中文；或者没放在 <code>config/cursorkit/</code>；或者 JSON 里 <code>default</code> 写漏了（这种情况整个集合会被跳过，日志里有记录）</td></tr>
+<tr><td>只有 <code>default</code> 是我画的，其它状态不对</td><td>没写进 JSON 的状态会自动用 <code>default</code> 的图，这是正常的</td></tr>
+<tr><td>光标又大又糊</td><td>图片分辨率既决定清晰度也决定大小。16×16 是普通大小，想要更清楚就画 32×32 / 64×64，<strong>别把小图放大</strong></td></tr>
+<tr><td>动画不动</td><td>帧必须在<strong>同一行</strong>；图宽要等于「帧数 × 帧高」；<code>frames</code> 和图对不上时会以图为准</td></tr>
+<tr><td>点下去的位置不对</td><td>用界面里的 <code>热点…</code> 调，别手算坐标</td></tr>
+<tr><td>放资源包里没反应</td><td>资源包要在<strong>资源包界面</strong>里启用；放进 <code>config/cursorkit/packs/</code> 则是永远开启的</td></tr>
+</tbody></table>
+<h2>所有字段速查</h2>
+<table><thead><tr><th>字段</th><th>要写吗</th><th>不写的话</th><th>说明</th></tr></thead><tbody>
+<tr><td><code>states.default.texture</code></td><td><strong>要</strong></td><td>—</td><td>图片路径。本地单集合相对 <code>config/cursorkit/</code>；光标包/资源包相对 <code>textures/cursor/</code></td></tr>
+<tr><td><code>states.&lt;其它状态&gt;.texture</code></td><td>不用</td><td>用 <code>default</code> 的图</td><td>六个状态：<code>clickable</code> <code>text</code> <code>drag</code> <code>disabled</code> <code>busy</code></td></tr>
+<tr><td><code>hotspot</code></td><td>不用</td><td>左上角 <code>[0, 0]</code></td><td>点击点，单位是<strong>图片像素</strong>，写成 <code>[x, y]</code>；<code>.cur</code> 文件用自带的</td></tr>
+<tr><td><code>frames</code></td><td>不用</td><td><code>1</code></td><td>动画帧数</td></tr>
+<tr><td><code>frame_ms</code></td><td>不用</td><td><code>100</code></td><td>每帧毫秒数</td></tr>
+<tr><td><code>name</code></td><td>不用</td><td>用文件名</td><td>只影响界面显示的名字</td></tr>
+<tr><td><code>scale</code></td><td>不用</td><td><code>1</code></td><td>整体再放大几倍</td></tr>
+<tr><td><code>click_effect</code></td><td>不用</td><td>模组自带水波纹</td><td>见第五步</td></tr>
+</tbody></table>
+<h2>想直接抄现成的</h2>
+<p>模组仓库的 <code>examples/</code> 里已经有能用的包，复制过来改图就行：</p>
+<ul>
+<li><code>CursorKit-Test-Pack/</code> —— 六状态齐全的例子，还有 32×32、64×64 的高清例子</li>
+<li><code>ClickFX-Cursor-Pack/</code> —— 三种点击特效 + 自带帧带动画的例子</li>
+<li><code>config-cursorkit/</code> —— 直接复制到 <code>config/</code> 就能用的目录结构</li>
+</ul>
+    </article>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap foot">
+    <span>Fragmented_Chaos · StewedTuba73416 / Rending_Void</span>
+    <span>模组</span>
+  </div>
+</footer>
+
+<script src="../../../assets/site.js" defer></script>
+<script src="../../../assets/downloads.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>404 · Fragmented_Chaos</title>
+<meta name="robots" content="noindex">
+<script>
+  (function () {
+    try {
+      var m = /[?&]theme=(light|dark)\b/.exec(location.search);
+      var t = m ? m[1] : localStorage.getItem('site-v2.theme');
+      if (t === 'light' || t === 'dark') document.documentElement.setAttribute('data-theme', t);
+    } catch (e) { /* 隐私模式忽略 */ }
+  })();
+</script>
+<link rel="stylesheet" href="/assets/base.css">
+</head>
+<body>
+
+<header class="wrap start-top">
+  <span class="lang">
+    <a href="/zh/">简</a>
+    <a href="/zh-hant/">繁</a>
+    <a href="/en/">EN</a>
+  </span>
+  <button type="button" class="theme-toggle" data-theme-toggle
+          aria-pressed="false"
+          data-label-to-dark="切换到暗色主题" data-label-to-light="切换到亮色主题">
+    <span class="sr-only">切换主题</span>
+    <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true">
+      <circle cx="12" cy="12" r="4.2"/>
+      <path d="M12 3v2.2M12 18.8V21M3 12h2.2M18.8 12H21M5.6 5.6l1.6 1.6M16.8 16.8l1.6 1.6M18.4 5.6l-1.6 1.6M7.2 16.8l-1.6 1.6"/>
+    </svg>
+    <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true">
+      <path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a6.8 6.8 0 0 0 10.5 10.5z"/>
+    </svg>
+  </button>
+</header>
+
+<main class="start-main">
+  <h1 class="start-name rise rise-1">404</h1>
+  <div class="start-rule rise rise-1" aria-hidden="true"></div>
+  <div class="rise rise-2">
+    <a class="btn btn-primary" href="/">回到起始页 <span class="arrow" aria-hidden="true">→</span></a>
+  </div>
+</main>
+
+<script src="/assets/site.js" defer></script>
+</body>
+</html>

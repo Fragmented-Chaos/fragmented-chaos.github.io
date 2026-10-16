@@ -1,0 +1,583 @@
+/* ==========================================================================
+   site-v2 · 共享基础样式
+   --------------------------------------------------------------------------
+   · 自托管字体：Quicksand（latin 正文/UI）、Caveat（手写体，品牌名）
+     两款均 SIL OFL 1.1，许可全文见 assets/fonts/OFL.txt
+   · 明暗两套设计令牌：默认跟系统，可用 <html data-theme="light|dark"> 覆盖
+   · 零依赖：无外部请求、无渐变、无框架
+   字体路径相对本文件（assets/）解析，所以任何深度的页面引用都对。
+   ========================================================================== */
+
+@font-face {
+  font-family: "Quicksand";
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url("fonts/quicksand-latin.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Caveat";
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url("fonts/caveat-latin.woff2") format("woff2");
+}
+
+/* ---------- 令牌：暗色（默认） ---------- */
+:root {
+  --bg: #0c0d10;
+  --bg-soft: #12141a;
+  --ink: #f1ede5;
+  --soft: #b6b0a4;
+  --muted: #8b8578;
+  --line: #23262d;
+  --line-soft: #1a1c22;
+  --accent: #c85a2e;
+  --accent-ink: #ffd9c7;
+  --font: "Quicksand", -apple-system, BlinkMacSystemFont, "Segoe UI",
+          "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif;
+  --hand: "Caveat", "Comic Sans MS", cursive;
+  --mono: ui-monospace, SFMono-Regular, "SF Mono", Consolas,
+          "Liberation Mono", monospace;
+  --max: 1080px;
+  color-scheme: dark;
+}
+
+/* ---------- 令牌：亮色 ----------
+   两处生效：显式 data-theme="light"，或系统偏好为亮且未显式指定暗色 */
+:root[data-theme="light"] {
+  --bg: #faf8f4;
+  --bg-soft: #f1ede5;
+  --ink: #17150f;
+  --soft: #55524a;
+  --muted: #7d7869;
+  --line: #e2ddd2;
+  --line-soft: #ece7dc;
+  --accent: #b8442a;
+  --accent-ink: #7c2d1b;
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]) {
+    --bg: #faf8f4;
+    --bg-soft: #f1ede5;
+    --ink: #17150f;
+    --soft: #55524a;
+    --muted: #7d7869;
+    --line: #e2ddd2;
+    --line-soft: #ece7dc;
+    --accent: #b8442a;
+    --accent-ink: #7c2d1b;
+    color-scheme: light;
+  }
+}
+
+/* ---------- 基础 ---------- */
+* { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  /* 整页纵向 flex：内容短时页脚也贴底，不会紧贴在内容下面 */
+  display: flex;
+  flex-direction: column;
+  background-color: var(--bg);
+  color: var(--ink);
+  font-family: var(--font);
+  font-size: 16px;
+  line-height: 1.75;
+  -webkit-font-smoothing: antialiased;
+  /* 切主题时柔和过渡，但不拖慢交互 */
+  transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+/* 主内容吃掉剩余高度，把页脚压到底部 */
+main { flex: 1 0 auto; }
+
+a { color: inherit; text-decoration: none; }
+
+a:focus-visible,
+button:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+.wrap { max-width: var(--max); margin: 0 auto; padding: 0 1.5rem; }
+
+.hand { font-family: var(--hand); }
+.mono { font-family: var(--mono); }
+
+/* 屏幕阅读器可见、视觉不可见 */
+.sr-only {
+  position: absolute;
+  width: 1px; height: 1px;
+  margin: -1px; padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ---------- 页头 ---------- */
+.top { border-bottom: 1px solid var(--line-soft); }
+
+.top-in {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  height: 4.25rem;
+}
+
+.mark {
+  font-family: var(--hand);
+  font-size: 1.35rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+}
+
+.mark b { color: var(--accent); font-weight: 600; }
+
+.nav {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  font-size: 0.9rem;
+}
+
+.nav a { color: var(--soft); }
+.nav a:hover { color: var(--ink); }
+
+.lang {
+  display: flex;
+  gap: 0.45rem;
+  font-family: var(--mono);
+  font-size: 0.72rem;
+}
+
+.lang a { color: var(--muted); }
+.lang a[aria-current] { color: var(--ink); border-bottom: 1px solid var(--accent); }
+
+/* 主题切换：一个方块按钮，图标用 SVG 画（不用图标字体） */
+.theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.1rem;
+  height: 2.1rem;
+  padding: 0;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background-color: transparent;
+  color: var(--soft);
+  cursor: pointer;
+  transition: color 0.15s ease, border-color 0.15s ease, background-color 0.15s ease;
+}
+
+.theme-toggle:hover { color: var(--ink); border-color: var(--accent); }
+.theme-toggle svg { width: 1.05rem; height: 1.05rem; }
+/* 暗色下显示太阳（点了变亮），亮色下显示月亮 */
+.theme-toggle .icon-moon { display: none; }
+:root[data-theme="light"] .theme-toggle .icon-sun { display: none; }
+:root[data-theme="light"] .theme-toggle .icon-moon { display: block; }
+
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]) .theme-toggle .icon-sun { display: none; }
+  :root:not([data-theme="dark"]) .theme-toggle .icon-moon { display: block; }
+}
+
+/* ---------- 按钮 ---------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.75rem 1.5rem;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background-color: transparent;
+  color: var(--ink);
+  font: inherit;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: border-color 0.16s ease, background-color 0.16s ease, color 0.16s ease;
+}
+
+.btn:hover { border-color: var(--accent); color: var(--accent); }
+.btn-primary { border-color: var(--accent); color: var(--accent); }
+.btn-primary:hover { background-color: var(--accent); color: var(--bg); }
+.btn .arrow { transition: transform 0.16s ease; }
+.btn:hover .arrow { transform: translateX(3px); }
+
+/* ---------- 区块与列表（首页/内页共用） ---------- */
+.sec { padding: 4rem 0; border-top: 1px solid var(--line); }
+
+.sec-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 2.25rem;
+}
+
+.sec-head h2 { margin: 0; font-size: 1.02rem; font-weight: 600; letter-spacing: 0.01em; }
+
+.sec-head span {
+  font-size: 0.74rem;
+  font-weight: 600;
+  color: var(--soft);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.index { list-style: none; margin: 0; padding: 0; }
+.index li { border-top: 1px solid var(--line); }
+.index li:last-child { border-bottom: 1px solid var(--line); }
+
+.row {
+  display: grid;
+  grid-template-columns: 3.25rem minmax(9rem, 1fr) 1.5fr 1.75rem;
+  align-items: center;
+  gap: 1.25rem;
+  padding: 1.4rem 0.25rem;
+  transition: padding-left 0.18s ease, color 0.18s ease;
+}
+
+.row:hover { padding-left: 0.9rem; color: var(--accent); }
+.row .no { font-family: var(--mono); font-size: 0.74rem; color: var(--muted); }
+.row h3 { margin: 0; font-size: 1.3rem; font-weight: 600; letter-spacing: -0.02em; }
+.row .desc { font-size: 0.84rem; color: var(--soft); }
+.row .go { font-size: 1.05rem; color: var(--muted); }
+.row:hover .go { color: var(--accent); }
+
+/* ---------- 两栏块 ---------- */
+.two { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; }
+
+.block { border-top: 1px solid var(--accent); padding-top: 1rem; }
+.block h3 { margin: 0 0 0.6rem; font-size: 1.1rem; letter-spacing: -0.01em; }
+.block p { margin: 0 0 1rem; color: var(--soft); font-size: 0.94rem; }
+
+.more { font-family: var(--mono); font-size: 0.76rem; color: var(--accent); }
+.more::after { content: " →"; }
+
+.links { display: flex; flex-wrap: wrap; gap: 0.6rem 1.5rem; margin: 0; padding: 0; list-style: none; }
+
+.links a {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.4rem;
+  padding-bottom: 0.1rem;
+  border-bottom: 1px solid var(--line);
+  color: var(--soft);
+  font-size: 0.94rem;
+}
+
+.links a:hover { color: var(--ink); border-color: var(--accent); }
+.links small { font-family: var(--mono); font-size: 0.68rem; color: var(--muted); }
+
+/* ---------- 参考样板 B 的元素 ---------- */
+
+/* 面板：深色/亮色都有一个略浅的底 + 细边，B 里用来装规格与列表 */
+.panel {
+  padding: 1.15rem 1.2rem;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background-color: var(--bg-soft);
+}
+
+.panel h3 {
+  margin: 0 0 0.75rem;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--soft);
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 0.6rem;
+}
+
+/* 规格表：等宽 dt/dd，B 的模组卡用的就是这个 */
+.spec { display: grid; grid-template-columns: 5rem 1fr; gap: 0.3rem 0.75rem; margin: 0; font-family: var(--mono); font-size: 0.78rem; }
+.spec dt { color: var(--muted); }
+.spec dd { margin: 0; color: var(--soft); }
+.spec a { color: var(--accent); }
+.spec .when { color: var(--muted); }
+
+/* 链接胶囊：B 的"在别处"样式 */
+.chips { display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 0; padding: 0; list-style: none; }
+
+.chips a {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.4rem;
+  padding: 0.45rem 0.8rem;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background-color: var(--bg-soft);
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  color: var(--ink);
+  transition: border-color 0.16s ease, color 0.16s ease;
+}
+
+.chips a:hover { border-color: var(--accent); color: var(--accent); }
+
+/* 胶囊文字不换行、不收缩（否则会被压成一个字一行） */
+.chips a { white-space: nowrap; }
+.chips small { color: var(--muted); font-size: 0.68rem; }
+
+/* ---------- 关于页（参考旧站主页：头像 + 名字 + 亦用名 + 问候 + 平台按钮） ---------- */
+
+.about-hero {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  gap: 3rem;
+  padding: 5.5rem 0 4.5rem;
+}
+
+.about-avatar {
+  width: 11rem;
+  height: 11rem;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  object-fit: cover;
+  background-color: var(--bg-soft);
+}
+
+.about-name {
+  margin: 0 0 0.75rem;
+  font-family: var(--hand);
+  font-size: clamp(2.6rem, 6vw, 4rem);
+  font-weight: 600;
+  line-height: 1;
+}
+
+.about-alias {
+  margin: 0 0 1.25rem;
+  font-family: var(--mono);
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
+.about-alias b { color: var(--soft); font-weight: 500; }
+
+.about-greeting { margin: 0 0 1.75rem; max-width: 30rem; color: var(--soft); font-size: 1.02rem; }
+.about-greeting b { color: var(--ink); font-weight: 600; }
+
+@media (max-width: 760px) {
+  .about-hero { grid-template-columns: 1fr; gap: 1.75rem; padding: 3.5rem 0 3rem; text-align: center; justify-items: center; }
+  .about-greeting { max-width: none; }
+}
+
+/* ---------- 内页页头 ---------- */
+.page-head { padding: 4.5rem 0 2.5rem; }
+
+.page-head h1 {
+  margin: 0 0 0.9rem;
+  font-size: clamp(2rem, 5vw, 3.2rem);
+  letter-spacing: -0.03em;
+  line-height: 1.08;
+  font-weight: 650;
+}
+
+.page-head .note { margin: 0; max-width: 42rem; color: var(--soft); font-size: 0.92rem; }
+
+/* ---------- 音乐页：播放器槽 + 曲目列表 ---------- */
+.embed-slot { display: grid; gap: 0.75rem; }
+.embed-slot[hidden] { display: none; }
+.embed-slot-empty { margin: 0; color: var(--muted); font-family: var(--mono); font-size: 0.84rem; }
+
+/* 播放器加载失败时的兜底提示：只在 data-state="error" 时出现 */
+.embed-failed { display: none; margin: 0; color: var(--accent); font-size: 0.86rem; }
+.embed-slot[data-state="error"] .embed-failed { display: block; }
+.embed-frame { width: 100%; border: 0; border-radius: 10px; }
+.embed-external { font-family: var(--mono); font-size: 0.76rem; color: var(--accent); }
+
+.tracks { list-style: none; margin: 0; padding: 0; }
+.tracks li { border-top: 1px solid var(--line); }
+.tracks li:last-child { border-bottom: 1px solid var(--line); }
+
+.track {
+  display: grid;
+  grid-template-columns: 2.5rem minmax(8rem, 1.2fr) 1.6fr auto;
+  align-items: center;
+  gap: 1rem;
+  width: 100%;
+  padding: 1.05rem 0.5rem;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition: color 0.16s ease, padding-left 0.16s ease;
+}
+
+.track:hover { color: var(--accent); padding-left: 0.9rem; }
+.track.is-active { color: var(--accent); }
+.track .t-index { font-family: var(--mono); font-size: 0.74rem; color: var(--muted); }
+.track.is-active .t-index { color: var(--accent); }
+.track .t-title { font-size: 1.05rem; font-weight: 600; }
+.track .t-artist { color: var(--soft); font-size: 0.88rem; }
+
+.track .t-source {
+  padding: 0.15rem 0.55rem;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  color: var(--muted);
+}
+
+.track.is-active .t-source { border-color: var(--accent); color: var(--accent); }
+
+@media (max-width: 760px) {
+  .page-head { padding: 3rem 0 2rem; }
+  .track { grid-template-columns: 2rem 1fr auto; row-gap: 0.25rem; }
+  .track .t-artist { grid-column: 2 / 4; }
+}
+
+/* ---------- 时间线（经历页） ---------- */
+.timeline { list-style: none; margin: 0; padding: 0; }
+
+.timeline li {
+  display: grid;
+  grid-template-columns: 8rem 1fr;
+  gap: 1.5rem;
+  padding: 1.4rem 0;
+  border-top: 1px solid var(--line);
+}
+
+.timeline li:last-child { border-bottom: 1px solid var(--line); }
+.timeline .when { font-family: var(--mono); font-size: 0.78rem; color: var(--muted); }
+.timeline h3 { margin: 0 0 0.35rem; font-size: 1.1rem; font-weight: 600; letter-spacing: -0.01em; }
+.timeline p { margin: 0; color: var(--soft); font-size: 0.94rem; }
+
+.empty {
+  padding: 2.25rem 1.5rem;
+  border: 1px dashed var(--line);
+  border-radius: 12px;
+  color: var(--soft);
+  font-size: 0.94rem;
+  text-align: center;
+}
+
+@media (max-width: 760px) {
+  .timeline li { grid-template-columns: 1fr; gap: 0.35rem; }
+}
+
+/* ---------- 模组详情页 ---------- */
+.mod-head { display: grid; grid-template-columns: auto 1fr; align-items: center; gap: 1.5rem; }
+.mod-icon { width: 4.5rem; height: 4.5rem; border-radius: 12px; border: 1px solid var(--line); }
+.mod-head h1 { margin: 0 0 0.5rem; font-size: clamp(1.8rem, 4.4vw, 2.8rem); letter-spacing: -0.025em; line-height: 1.1; }
+.mod-tagline { margin: 0; max-width: 40rem; color: var(--soft); font-size: 1rem; }
+.mod-head + * { margin-top: 2rem; }
+
+/* 规格表里的链接胶囊要和 dt/dd 对齐 */
+.spec dd .chips { margin-top: 0.15rem; }
+.spec dt { padding-top: 0.2rem; }
+
+/* 正文（文档）里还会用到表格、图片说明、四级标题 */
+.post-body h4 { margin: 1.5rem 0 0.5rem; font-size: 0.98rem; }
+.post-body table { width: 100%; margin: 0 0 1.5rem; border-collapse: collapse; font-size: 0.88rem; }
+.post-body th, .post-body td { padding: 0.55rem 0.7rem; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+.post-body th { color: var(--ink); font-weight: 600; border-bottom-color: var(--soft); }
+.post-body td { color: var(--soft); }
+.post-body figure { margin: 1.75rem 0; }
+.post-body figure img { display: block; border: 1px solid var(--line); border-radius: 12px; background-color: var(--bg-soft); }
+.post-body figcaption { margin-top: 0.6rem; color: var(--muted); font-size: 0.82rem; line-height: 1.6; }
+
+@media (max-width: 760px) {
+  .mod-head { grid-template-columns: 1fr; gap: 1rem; }
+  .post-body table { display: block; overflow-x: auto; }
+}
+
+/* ---------- 起始页 / 404 ---------- */
+.start-top { display: flex; align-items: center; justify-content: flex-end; gap: 1.25rem; height: 4.25rem; }
+  .start-main { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1.75rem; padding: 2rem 1.5rem 4rem; text-align: center; }
+  .start-kicker { margin: 0; font-family: var(--mono); font-size: 0.74rem; letter-spacing: 0.28em; text-transform: uppercase; color: var(--muted); }
+  .start-name { margin: 0; font-family: var(--hand); font-size: clamp(3.4rem, 13vw, 7.5rem); line-height: 0.98; font-weight: 600; }
+  .start-name b { color: var(--accent); font-weight: 600; }
+  .start-rule { width: min(22rem, 70vw); height: 1px; background-color: var(--line); }
+  .start-foot { padding-bottom: 2.25rem; text-align: center; font-family: var(--mono); font-size: 0.72rem; color: var(--muted); }
+
+/* ---------- 博客 ---------- */
+.blog-status { margin: 0; color: var(--soft); font-family: var(--mono); font-size: 0.84rem; }
+
+.posts { list-style: none; margin: 0; padding: 0; }
+.posts li { border-top: 1px solid var(--line); }
+.posts li:last-child { border-bottom: 1px solid var(--line); }
+
+.post-link {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 0.25rem 1rem;
+  padding: 1.2rem 0.25rem;
+  transition: padding-left 0.18s ease, color 0.18s ease;
+}
+
+.post-link:hover { padding-left: 0.9rem; color: var(--accent); }
+.post-title { font-size: 1.15rem; font-weight: 600; letter-spacing: -0.01em; }
+.post-date { font-family: var(--mono); font-size: 0.74rem; color: var(--muted); white-space: nowrap; }
+.post-summary { grid-column: 1 / -1; color: var(--soft); font-size: 0.92rem; }
+
+.post-heading { margin: 0 0 0.5rem; font-size: clamp(1.5rem, 3.6vw, 2.2rem); letter-spacing: -0.02em; line-height: 1.15; }
+.post-meta { margin: 0 0 1.75rem; font-family: var(--mono); font-size: 0.76rem; color: var(--muted); }
+.post-body { max-width: 42rem; }
+.post-body > :first-child { margin-top: 0; }
+.post-body h2 { margin: 2.25rem 0 0.75rem; font-size: 1.3rem; letter-spacing: -0.01em; }
+.post-body h3 { margin: 1.75rem 0 0.5rem; font-size: 1.08rem; }
+.post-body p { margin: 0 0 1rem; color: var(--soft); }
+.post-body ul, .post-body ol { margin: 0 0 1rem; padding-left: 1.3rem; color: var(--soft); }
+.post-body li { margin: 0.25rem 0; }
+.post-body a { color: var(--accent); border-bottom: 1px solid var(--line); }
+.post-body a:hover { border-color: var(--accent); }
+.post-body code { padding: 0.1rem 0.35rem; border: 1px solid var(--line); border-radius: 5px; background-color: var(--bg-soft); font-family: var(--mono); font-size: 0.86em; }
+.post-body pre { margin: 0 0 1.25rem; padding: 1rem 1.1rem; border: 1px solid var(--line); border-radius: 12px; background-color: var(--bg-soft); overflow: auto; }
+.post-body pre code { padding: 0; border: 0; background: none; font-size: 0.82rem; line-height: 1.6; }
+.post-body blockquote { margin: 0 0 1.25rem; padding: 0.35rem 0 0.35rem 1rem; border-left: 2px solid var(--accent); color: var(--soft); }
+.post-body img { max-width: 100%; height: auto; border: 1px solid var(--line); border-radius: 12px; }
+.post-body hr { margin: 2rem 0; border: 0; border-top: 1px solid var(--line); }
+
+.comments { margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(--line); }
+.comments-note { margin: 0.75rem 0 0; color: var(--muted); font-size: 0.86rem; }
+
+/* ---------- 页脚 ---------- */
+.site-footer { border-top: 1px solid var(--line); padding: 2rem 0 3.5rem; }
+
+.foot {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem 2rem;
+  justify-content: space-between;
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  color: var(--muted);
+}
+
+/* ---------- 进入动效 ---------- */
+@keyframes rise {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: none; }
+}
+
+.rise { animation: rise 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) both; }
+.rise-1 { animation-delay: 0.06s; }
+.rise-2 { animation-delay: 0.12s; }
+
+@media (prefers-reduced-motion: reduce) {
+  * { animation: none !important; transition: none !important; }
+}
+
+/* ---------- 窄屏 ---------- */
+@media (max-width: 760px) {
+  .nav { gap: 0.8rem; font-size: 0.82rem; }
+  .row { grid-template-columns: 2.25rem 1fr auto; row-gap: 0.3rem; }
+  .row .desc { grid-column: 2 / 4; }
+  .two { grid-template-columns: 1fr; gap: 2rem; }
+  .sec { padding: 3rem 0; }
+}

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Charm of Undying: Reborn · Fragmented_Chaos</title>
+<meta name="description" content="Adds a slot for Totems of Undying">
+<script>
+  (function () {
+    try {
+      var m = /[?&]theme=(light|dark)\b/.exec(location.search);
+      var t = m ? m[1] : localStorage.getItem('site-v2.theme');
+      if (t === 'light' || t === 'dark') document.documentElement.setAttribute('data-theme', t);
+    } catch (e) { /* 隐私模式忽略 */ }
+  })();
+</script>
+<link rel="stylesheet" href="../../../assets/base.css">
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap top-in">
+    <a class="mark" href="../../../index.html">Fragmented<b>_</b>Chaos</a>
+    <nav class="nav">
+      <a href="../" aria-current="page">Mods</a>
+      <a href="../../blog/">Blog</a>
+      <a href="../../music/">Music</a>
+      <a href="../../experience/">Experience</a>
+      <a href="../../about/">About</a>
+      <span class="lang">
+        <a href="../../../zh/mods/charmofundying/">简</a>
+        <a href="../../../zh-hant/mods/charmofundying/">繁</a>
+        <a href="../../../en/mods/charmofundying/" aria-current="true">EN</a>
+      </span>
+      <button type="button" class="theme-toggle" data-theme-toggle
+              aria-pressed="false"
+              data-label-to-dark="Switch to dark theme" data-label-to-light="Switch to light theme">
+        <span class="sr-only">Toggle theme</span>
+        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true">
+          <circle cx="12" cy="12" r="4.2"/>
+          <path d="M12 3v2.2M12 18.8V21M3 12h2.2M18.8 12H21M5.6 5.6l1.6 1.6M16.8 16.8l1.6 1.6M18.4 5.6l-1.6 1.6M7.2 16.8l-1.6 1.6"/>
+        </svg>
+        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true">
+          <path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a6.8 6.8 0 0 0 10.5 10.5z"/>
+        </svg>
+      </button>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="wrap page-head" style="padding-bottom:1.5rem">
+    <p class="kicker" style="margin:0 0 1.25rem;font-size:.74rem;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--soft)">MOD · English</p>
+    <div class="mod-head">
+        <img class="mod-icon" src="../../../assets/images/charmofundying/icon.png" width="72" height="72" alt="Charm of Undying: Reborn 图标" loading="lazy" decoding="async">
+      <div>
+        <h1>Charm of Undying: Reborn</h1>
+        <p class="mod-tagline">Adds a slot for Totems of Undying</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap" style="padding-bottom:2rem">
+    <div class="panel" data-downloads data-modrinth="charm-of-undying-reborn" data-curseforge="charm-of-undying-reborn">
+      <dl class="spec">
+        <dt>Version</dt><dd>26.1–26.3</dd>
+        <dt>Loaders</dt><dd>Fabric · NeoForge</dd>
+        <dt>Requires</dt><dd>Fabric: Fabric API + Trinkets; NeoForge: Curios or Trinkets</dd>
+        <dt>License</dt><dd>MIT</dd>
+        <dt data-dl-row="modrinth">Modrinth</dt><dd data-dl-cell="modrinth"><span data-dl-count="modrinth">—</span> downloads</dd>
+        <dt data-dl-row="curseforge">CurseForge</dt><dd data-dl-cell="curseforge"><span data-dl-count="curseforge">—</span> downloads</dd>
+        <dt data-latest-row>Latest version</dt><dd data-latest-version>—</dd>
+        <dt>Links</dt><dd>
+          <ul class="chips">
+            <li><a href="https://github.com/Fragmented-Chaos/Charm-of-Undying-Reborn/releases" target="_blank" rel="noopener">Download</a></li>
+            <li><a href="https://github.com/Fragmented-Chaos/Charm-of-Undying-Reborn" target="_blank" rel="noopener">Source</a></li>
+            <li><a href="https://github.com/Fragmented-Chaos/Charm-of-Undying-Reborn/issues" target="_blank" rel="noopener">Report an issue</a></li>
+          </ul>
+        </dd>
+      </dl>
+    </div>
+  </section>
+
+  <section class="wrap" style="padding-bottom:3.5rem">
+    <article class="post-body">
+<h2>Usage</h2>
+<p>You need a trinket mod first: Trinkets (plus Fabric API) on Fabric, or Curios / Trinkets on NeoForge.</p>
+<ol>
+<li>Open the trinket screen (Trinkets' / Curios' default key)</li>
+<li>Put a <strong>Totem of Undying</strong> into the <strong>Charm</strong> slot</li>
+<li>On death the totem is consumed and you are revived</li>
+</ol>
+<h2>Compatibility</h2>
+<ul>
+<li>Totems are recognised through the <code>c:totems</code> tag, so <strong>any item carrying that tag</strong> works</li>
+</ul>
+<h2>For mod authors</h2>
+<p>To make your own item trigger, or to hook up another trinket system, see the integration docs in the repository:</p>
+<ul>
+<li><a href="https://github.com/Fragmented-Chaos/Charm-of-Undying-Reborn/blob/main/docs/INTEGRATION.md">Integration guide (English)</a></li>
+<li><a href="https://github.com/Fragmented-Chaos/Charm-of-Undying-Reborn/blob/main/docs/INTEGRATION.zh_CN.md">集成文档（中文）</a></li>
+</ul>
+    </article>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap foot">
+    <span>Fragmented_Chaos · StewedTuba73416 / Rending_Void</span>
+    <span>Mods</span>
+  </div>
+</footer>
+
+<script src="../../../assets/site.js" defer></script>
+<script src="../../../assets/downloads.js" defer></script>
+</body>
+</html>

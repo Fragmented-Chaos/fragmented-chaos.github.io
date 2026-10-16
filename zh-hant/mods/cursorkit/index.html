@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cursor Kit · Fragmented_Chaos</title>
+<meta name="description" content="把 Minecraft 的滑鼠指標換成自定義高畫質游標：六個狀態、幀動畫、逐狀態熱區，點選特效跟隨游標包。">
+<script>
+  (function () {
+    try {
+      var m = /[?&]theme=(light|dark)\b/.exec(location.search);
+      var t = m ? m[1] : localStorage.getItem('site-v2.theme');
+      if (t === 'light' || t === 'dark') document.documentElement.setAttribute('data-theme', t);
+    } catch (e) { /* 隐私模式忽略 */ }
+  })();
+</script>
+<link rel="stylesheet" href="../../../assets/base.css">
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap top-in">
+    <a class="mark" href="../../../index.html">Fragmented<b>_</b>Chaos</a>
+    <nav class="nav">
+      <a href="../" aria-current="page">模組</a>
+      <a href="../../blog/">部落格</a>
+      <a href="../../music/">音樂</a>
+      <a href="../../experience/">經歷</a>
+      <a href="../../about/">關於</a>
+      <span class="lang">
+        <a href="../../../zh/mods/cursorkit/">简</a>
+        <a href="../../../zh-hant/mods/cursorkit/" aria-current="true">繁</a>
+        <a href="../../../en/mods/cursorkit/">EN</a>
+      </span>
+      <button type="button" class="theme-toggle" data-theme-toggle
+              aria-pressed="false"
+              data-label-to-dark="切換到暗色主題" data-label-to-light="切換到亮色主題">
+        <span class="sr-only">切換主題</span>
+        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true">
+          <circle cx="12" cy="12" r="4.2"/>
+          <path d="M12 3v2.2M12 18.8V21M3 12h2.2M18.8 12H21M5.6 5.6l1.6 1.6M16.8 16.8l1.6 1.6M18.4 5.6l-1.6 1.6M7.2 16.8l-1.6 1.6"/>
+        </svg>
+        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true">
+          <path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a6.8 6.8 0 0 0 10.5 10.5z"/>
+        </svg>
+      </button>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="wrap page-head" style="padding-bottom:1.5rem">
+    <p class="kicker" style="margin:0 0 1.25rem;font-size:.74rem;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--soft)">MOD · 繁體</p>
+    <div class="mod-head">
+        <img class="mod-icon" src="../../../assets/images/cursorkit/icon.png" width="72" height="72" alt="Cursor Kit 图标" loading="lazy" decoding="async">
+      <div>
+        <h1>Cursor Kit</h1>
+        <p class="mod-tagline">把 Minecraft 的滑鼠指標換成自定義高畫質游標：六個狀態、幀動畫、逐狀態熱區，點選特效跟隨游標包。</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap" style="padding-bottom:2rem">
+    <div class="panel" data-downloads>
+      <dl class="spec">
+        <dt>版本</dt><dd>26.3</dd>
+        <dt>載入器</dt><dd>Fabric · NeoForge · Quilt</dd>
+        <dt>前置</dt><dd>無（純客戶端）</dd>
+        <dt>授權</dt><dd>LGPL-3.0</dd>
+        <dt data-dl-row="modrinth">Modrinth</dt><dd data-dl-cell="modrinth"><span data-dl-count="modrinth">—</span> 次下載</dd>
+        <dt data-dl-row="curseforge">CurseForge</dt><dd data-dl-cell="curseforge"><span data-dl-count="curseforge">—</span> 次下載</dd>
+        <dt data-latest-row>最新版本</dt><dd data-latest-version>—</dd>
+        <dt>連結</dt><dd>
+          <ul class="chips">
+            <li><a href="https://github.com/Fragmented-Chaos/Cursor-Kit/releases" target="_blank" rel="noopener">下載</a></li>
+            <li><a href="https://github.com/Fragmented-Chaos/Cursor-Kit" target="_blank" rel="noopener">原始碼</a></li>
+            <li><a href="https://github.com/Fragmented-Chaos/Cursor-Kit/issues" target="_blank" rel="noopener">回報問題</a></li>
+          </ul>
+        </dd>
+      </dl>
+    </div>
+  </section>
+
+  <section class="wrap" style="padding-bottom:3.5rem">
+    <article class="post-body">
+<p>哪個狀態用哪張圖<strong>完全由外部包決定</strong> —— 資源包、游標包、或 <code>config</code> 裡的散裝圖片都行；換一套游標不用換模組，也不用重啟遊戲。</p>
+<h2 id="start">快速上手</h2>
+<p><strong>首次進遊戲時還沒有任何游標集</strong>，列表裡只有 <code>預設（系統游標）</code> 和 <code>自定義（逐狀態填寫）</code> 兩行；放一個游標包進去，其它的就會出現：</p>
+<ul>
+<li><strong>拖進去</strong>：<code>.zip</code>、帶 <code>assets/</code> 的資料夾、或散裝 PNG/JSON 直接拖到介面上（重名自動加 <code>-2</code>）</li>
+<li><strong>自己放</strong>：游標包放 <code>config/cursorkit/packs/</code>（資料夾或 <code>.zip</code>），散裝 JSON + PNG 放 <code>config/cursorkit/</code></li>
+</ul>
+<p><code>config/cursorkit/</code>（含 <code>packs/</code>）會被持續監聽，一有變化就重讀重新整理，搜尋詞與選中項保留。</p>
+<p>介面操作：</p>
+<ul>
+<li><strong>點列表即選中並立刻生效</strong></li>
+<li>左側列表每行顯示 <code>名字 · 來源 · 狀態數 · 特效</code>，頂部有搜尋框；第一行 <code>預設（系統游標）</code>，第二行 <a href="#custom"><code>自定義（逐狀態填寫）</code></a></li>
+<li>右側是六個狀態的即時預覽（紅點是點選點位置，缺失的狀態標 <code>(default)</code>）和迴圈播放的特效預覽</li>
+<li>底部開關：<code>動畫</code>、<code>點選特效</code>、<code>縮放</code>、<code>邊界</code>；右上角 <code>資料夾</code> 與 <code>熱點…</code></li>
+<li><code>完成</code> 儲存，<code>取消</code> 恢復到開啟介面時的狀態</li>
+</ul>
+<figure><img src="../../../assets/images/cursorkit/picker.webp" width="760" height="1005" decoding="async" loading="lazy" alt="游標選擇介面：左側列表、右側六個狀態預覽"><figcaption>選擇介面：左邊是可搜尋的包列表（每行標出來源與特效），右邊是六個狀態的預覽和逐狀態點選點。</figcaption></figure>
+<h3 id="custom">自定義游標</h3>
+<p>不想做包、只想用現成的圖片時，選列表第二行的 <strong><code>自定義（逐狀態填寫）</code></strong>，點 <strong><code>編輯路徑…</code></strong>：</p>
+<ul>
+<li>六個狀態各一行，填本機任意 PNG / <code>.cur</code> 的<strong>絕對路徑</strong>（相對路徑以遊戲目錄為基準）。</li>
+<li>每行會當場校驗：<strong>金色 = 找到</strong>、<strong>紅色帶 <code>?</code> = 沒找到</strong>、<strong>灰色 = 留空</strong>（留空則該狀態回退到 <code>default</code>）；按鈕上會提醒有幾個路徑無效。</li>
+<li>這些路徑存在 <code>config/cursorkit.json</code> 的 <code>custom_states</code> 裡，例如 <code>{"default": "D:/cursors/arrow.png", "clickable": "hand.cur"}</code>。</li>
+</ul>
+<figure><img src="../../../assets/images/cursorkit/states.webp" width="760" height="499" decoding="async" loading="lazy" alt="逐狀態路徑編輯介面"><figcaption>逐狀態自定義：每個狀態一個路徑，找到的顯示金色，沒找到的紅色帶問號。</figcaption></figure>
+<h3 id="hotspots">逐狀態熱區編輯器</h3>
+<p><strong>點選點（熱區）不一定要在 JSON 裡寫死</strong>：選擇介面右上角點 <strong><code>熱點…</code></strong> 進入專門的編輯器，左邊列出該集合每個狀態的當前值（改過的顯示金色），右邊是放大後的圖片 + 畫素網格。</p>
+<ul>
+<li>在圖片上<strong>點選或拖拽</strong>即可把點選點放到那個畫素，<strong>方向鍵</strong>逐畫素微調。</li>
+<li><code>居中</code> 一鍵放到圖片正中，<code>恢復原值</code> 丟掉這條改動、用回集合自帶的值。</li>
+<li>編輯<strong>即時生效</strong>（真實游標會跟著動），<code>完成</code> 寫入 <code>config/cursorkit.json</code> 的 <code>hotspots</code>，<code>取消</code> 全部還原。</li>
+</ul>
+<p>因為改的是配置而不是包本身，<strong>資源包裡的集合也能這樣調</strong>，不用去動別人的檔案。沒有自己圖片的狀態（例如 <code>text (default)</code>）會借用 <code>default</code> 的圖片，但<strong>點選點是獨立的</strong>，改一個不會牽動別的。</p>
+<figure><img src="../../../assets/images/cursorkit/hotspots.webp" width="760" height="1005" decoding="async" loading="lazy" alt="點選點編輯器：左側狀態列表，右側放大圖片與畫素網格"><figcaption>點選點編輯器：點或拖就能改，方向鍵微調，改完立刻生效。</figcaption></figure>
+<h2 id="features">功能</h2>
+<ul class="feature-grid">
+  <li class="feature">
+    <h3>六個游標狀態</h3>
+    <p>預設箭頭 / 可點選（手型）/ 文字輸入（I 型）/ 拖拽 / 忙碌 / 停用，按介面上下文自動切換。</p>
+  </li>
+  <li class="feature">
+    <h3>高畫質游標</h3>
+    <p>一個圖片畫素 = 螢幕上的一個物理畫素，和系統游標完全一致。16×16 是常規大小，32×32、64×64、128×128 依次更大更清晰，4K 上照樣銳利。</p>
+  </li>
+  <li class="feature">
+    <h3>絕不插值</h3>
+    <p>按圖片自身畫素的整數倍繪製（1:1，或不足 16 GUI 單位時整數放大），和系統游標一樣沒有半點模糊。</p>
+  </li>
+  <li class="feature">
+    <h3>逐狀態熱區</h3>
+    <p>點選點預設左上角，可以在游標集 JSON 裡寫，也可以直接在介面裡點選 / 拖拽 / 方向鍵微調。</p>
+  </li>
+  <li class="feature">
+    <h3>三種來源，優先順序明確</h3>
+    <p><code>config/cursorkit/</code> 散裝檔案 &gt; <code>config/cursorkit/packs/</code> 游標包 &gt; 資源包。介面裡會標出每個集合來自哪一層。</p>
+  </li>
+  <li class="feature">
+    <h3>隨包切換的點選特效</h3>
+    <p>水波紋、粒子爆開、脈衝點，或包自帶的自定義幀動畫；換包就換一套點選回饋，也能單獨關掉。</p>
+  </li>
+  <li class="feature">
+    <h3>拖入即裝</h3>
+    <p>壓縮包、資料夾、散裝圖片直接拖進介面，自動歸類、自動避讓重名、列表立刻重新整理。</p>
+  </li>
+  <li class="feature">
+    <h3>支援 <code>.cur</code></h3>
+    <p>Windows 游標檔案直接丟進 <code>config/cursorkit/</code> 或游標包即可，圖片與自帶熱點自動讀取（資源包裡只能放 PNG）。</p>
+  </li>
+</ul>
+<h2 id="packs">做自己的游標包</h2>
+<p>一個游標集 = 一份 JSON + 若干貼圖。想先試效果：把一張 32×32 的 PNG 丟進 <code>config/cursorkit/</code> 就能用，再加一份同名 JSON 補其它狀態。</p>
+<pre><code>資源包：      resourcepacks/&lt;包名&gt;/            或 &lt;包名&gt;.zip
+游標包：      config/cursorkit/packs/&lt;包名&gt;/   或 &lt;包名&gt;.zip
+本地單集合：  config/cursorkit/&lt;集合&gt;.json</code></pre>
+<p>資源包與游標包內部結構相同（<code>assets/&lt;名稱空間&gt;/cursor/&lt;集合&gt;.json</code> + <code>textures/cursor/&lt;貼圖&gt;</code>），所以同一個包兩種身份都能用，只有資源包路線需要 <code>pack.mcmeta</code>。檔名（去掉副檔名）就是集合 <strong>id</strong>，決定覆蓋關係。</p>
+<p><strong>完整的欄位表、圖片規格、熱區、動畫與特效引數見<a href="#packs">《製作游標包》</a></strong>；倉庫 <code>examples/</code> 裡也有現成包可以直接改。</p>
+<h2 id="effects">點選特效</h2>
+<p><code>click_effect</code> 是游標集 JSON 裡的可選段，<strong>跟著游標包走</strong>：換一個包就換一套點選回饋。每次按下滑鼠時在<strong>點選位置</strong>生成特效，游標本身不動，不影響瞄準。</p>
+<table><thead><tr><th><code>type</code></th><th>效果</th></tr></thead><tbody>
+<tr><td><code>ripple</code></td><td>擴散的圓環 + 少量粒子（預設）</td></tr>
+<tr><td><code>burst</code></td><td>只有粒子，向外爆開</td></tr>
+<tr><td><code>pulse</code></td><td>原地閃一下的實心點</td></tr>
+<tr><td><code>image</code></td><td><strong>包自帶的自定義動畫</strong>：一條橫向幀帶，點選時在點選位置播放</td></tr>
+<tr><td><code>none</code></td><td>這個包不要特效</td></tr>
+</tbody></table>
+<p>顏色、半徑、時長、粒子數、<code>image</code> 的幀帶引數都在<a href="#packs">《製作游標包》</a>裡。介面底部的 <code>點選特效</code> 是總開關；選 <code>預設（系統游標）</code> 時也會播模組自帶的水波紋。</p>
+<h2 id="config">配置項</h2>
+<p>配置在 <code>config/cursorkit.json</code>（首次啟動自動生成）：</p>
+<pre><code>{
+  "enabled": true,
+  "selected_set": "",
+  "scale": 1,
+  "animate": true,
+  "click_effect": true,
+  "edge_margin": 2
+}</code></pre>
+<table><thead><tr><th>欄位</th><th>預設</th><th>說明</th></tr></thead><tbody>
+<tr><td><code>enabled</code></td><td><code>true</code></td><td>總開關。關閉後完全還原系統游標</td></tr>
+<tr><td><code>selected_set</code></td><td><code>""</code></td><td>當前游標集 <strong>id</strong>（檔名去掉副檔名）。<strong>留空 = 使用系統游標</strong>；指向已刪除的集合時<strong>立即交還系統游標</strong>（不會跳去別的集合）</td></tr>
+<tr><td><code>scale</code></td><td><code>1</code></td><td>額外整數倍縮放，與集合自身的 <code>scale</code> 相乘</td></tr>
+<tr><td><code>animate</code></td><td><code>true</code></td><td>關閉後游標<strong>固定為 <code>default</code> 的靜態圖</strong>：不切換狀態、也不播放動畫</td></tr>
+<tr><td><code>click_effect</code></td><td><code>true</code></td><td>點選特效總開關（布林值）</td></tr>
+<tr><td><code>edge_margin</code></td><td><code>2</code></td><td>距視窗邊緣多少畫素內不接管游標，避免找不到滑鼠</td></tr>
+<tr><td><code>custom_states</code></td><td>無</td><td>逐狀態自定義圖片路徑，即介面裡的「自定義（逐狀態填寫）」</td></tr>
+<tr><td><code>custom_effect</code></td><td>水波紋</td><td>手工集合自己的點選特效，寫法與包裡的 <code>click_effect</code> 相同</td></tr>
+<tr><td><code>hotspots</code></td><td>無</td><td>在熱區編輯器裡改過的點選點，形如 <code>{"集合id": {"狀態": [x, y]}}</code></td></tr>
+</tbody></table>
+<h2 id="states">狀態判定</h2>
+<table><thead><tr><th>狀態</th><th>何時顯示</th><th>判定來源</th></tr></thead><tbody>
+<tr><td><code>drag</code></td><td>按住左鍵拖拽（物品、滑塊）</td><td>原版 <code>Screen#isDragging</code> / 左鍵按下</td></tr>
+<tr><td><code>text</code></td><td>文字框、告示牌編輯獲得焦點</td><td>原版請求 <code>IBEAM</code></td></tr>
+<tr><td><code>busy</code></td><td>載入遮罩存在</td><td>介面覆蓋層非空</td></tr>
+<tr><td><code>disabled</code></td><td>懸停不可用控制元件</td><td>原版請求 <code>NOT_ALLOWED</code></td></tr>
+<tr><td><code>clickable</code></td><td>懸停可點選控制元件、可拖拽邊緣</td><td>原版請求 <code>POINTING_HAND</code> / <code>RESIZE_*</code></td></tr>
+<tr><td><code>default</code></td><td>其它情況</td><td>—</td></tr>
+</tbody></table>
+<p>優先順序：<code>drag &gt; text &gt; busy &gt; disabled &gt; clickable &gt; default</code>。</p>
+<p>Minecraft 26.3 起會為每個控制元件請求游標型別，所以<strong>任何模組的介面都自動適用</strong>；Cursor Kit 只補上原版表達不了的「拖拽」與「載入中」，並額外提供下面這個覆蓋入口。</p>
+<p>兩個邊界行為：<strong>進入遊戲（視角被鎖定時）游標完全不接管</strong>；把指標推到視窗最邊緣時系統游標會回來（<code>edge_margin</code> 控制這個範圍）。</p>
+<h2 id="api">給其它模組用的 API</h2>
+<pre><code>CursorStateProviders.register((screen, mouseX, mouseY, context) -&gt; {
+    if (screen instanceof MySpecialScreen) {
+        return CursorState.DRAG;   // 本幀強制用這個狀態
+    }
+    return null;                    // 交回內建判定
+});</code></pre>
+<p>按註冊順序詢問，第一個返回非 <code>null</code> 的勝出；<code>context</code> 裡能看到原版請求的型別、是否拖拽、是否忙碌。<code>CursorState</code>、<code>CursorSet</code> 等模型類都與 Minecraft 無關，方便書寫與測試。</p>
+<h2 id="faq">常見問題</h2>
+<p><strong>裝了模組但游標沒變？</strong> 列表裡選中項是不是 <code>預設（系統游標）</code>？<code>config/cursorkit.json</code> 的 <code>enabled</code> 是不是 <code>false</code>？另外先確認已經有游標集可選 —— 剛裝好模組時一個包都還沒有，往 <code>config/cursorkit/packs/</code> 放一個就會出現。</p>
+<p><strong>游標模糊 / 不夠精細？</strong> 模組按整數倍繪製、不做插值，所以<strong>素材解析度就是清晰度的上限</strong>。用 32×32、64×64、128×128 的圖，不要用 16×16 放大。</p>
+<p><strong>資源包裡的游標沒出現？</strong> 資源包必須在<strong>資源包介面啟用</strong>才會被載入；不想每次手動啟用的話，把同一個包放進 <code>config/cursorkit/packs/</code>（結構完全一樣），模組會直接讀，永遠是開啟的。</p>
+<p><strong>找不到滑鼠了？</strong> 把指標推到視窗最邊緣就會交還系統游標，<code>邊界</code> 開關（<code>edge_margin</code>）可以把這個範圍調大；也可以隨時在列表裡選 <code>預設（系統游標）</code>。</p>
+<p><strong>點選特效不顯示？</strong> 介面底部的 <code>點選特效</code> 開關是總開關；單個包也可以在 JSON 裡寫 <code>"type": "none"</code> 關掉。</p>
+<p><strong>伺服器上要裝嗎？</strong> 不用。這是純客戶端模組，伺服器裝了也不做任何事，聯機時服務端沒裝也不會報錯。</p>
+<p><strong>能在 NeoForge / Quilt 上用嗎？</strong> 能。同一個 jar 三端通用，Fabric 與 Quilt 共用（Quilt 走 Fabric 相容層）；NeoForge 上沒有 Mod Menu，模組列表由 NeoForge 自己提供。</p>
+<p><strong>怎麼讓自定義游標一直顯示，不要突然變回系統游標？</strong> 指標靠近視窗邊緣時模組會主動交還系統游標（<code>edge_margin</code>，預設 2 畫素），這是為了避免滑鼠貼邊時點不到東西。把 <code>邊界</code> 調到 <code>0</code> 就會一直用自定義游標。</p>
+<hr>
+<h2 id="packs">製作游標包</h2>
+<p>照著做就行，十分鐘能做出一個自己的游標。不用寫程式碼。</p>
+<h2>要準備的東西</h2>
+<ul>
+<li>一張<strong>正方形的 PNG 圖片</strong>（背景留透明，建議 32×32 畫素）</li>
+<li>一個畫圖軟體（Aseprite / Photoshop / GIMP / 系統畫圖都行）</li>
+<li>記事本（用來寫一個文字檔案，內容後面照抄）</li>
+</ul>
+<h2>第一步：先讓一張圖變成游標</h2>
+<ol>
+<li>把 PNG 複製到遊戲的 <code>config/cursorkit/</code> 資料夾裡</li>
+<li>檔名改成 <code>my_arrow.png</code> —— <strong>用小寫字母、數字、下劃線</strong>，別用中文和空格</li>
+<li>進遊戲：<strong>選項 → 影片設定 → <code>游標</code></strong></li>
+<li>列表裡會出現 <code>my_arrow</code>，點一下選中</li>
+</ol>
+<p>現在整局遊戲的游標就是這張圖了（六個狀態都用它）。</p>
+<blockquote>找不到 <code>config/cursorkit/</code>？在游標列表介面點右上角的 <strong><code>資料夾</code></strong>，它會幫你開啟。</blockquote>
+<h2>第二步：讓不同狀態用不同的圖</h2>
+<p>先解釋一下：遊戲裡游標不是隻有一種樣子 —— 指到按鈕上會變手型、在輸入框裡會變 I 型…… 這些叫<strong>狀態</strong>，一共六個：</p>
+<table><thead><tr><th>狀態</th><th>什麼時候出現</th></tr></thead><tbody>
+<tr><td><code>default</code></td><td>平時（<strong>必須有</strong>）</td></tr>
+<tr><td><code>clickable</code></td><td>指到按鈕等能點的東西上</td></tr>
+<tr><td><code>text</code></td><td>在輸入框、告示牌裡打字時</td></tr>
+<tr><td><code>drag</code></td><td>按住左鍵拖東西時</td></tr>
+<tr><td><code>disabled</code></td><td>指到灰掉、不能點的按鈕上</td></tr>
+<tr><td><code>busy</code></td><td>載入中（轉圈那種）</td></tr>
+</tbody></table>
+<p>想讓它們各用一張圖：</p>
+<ol>
+<li>再畫幾張圖，都放進 <code>config/cursorkit/</code></li>
+<li>在同一個資料夾裡新建一個文字檔案，命名成 <code>my_arrow.json</code>（<strong>和 PNG 同名</strong>，副檔名換成 json）</li>
+<li>把下面的內容抄進去，把檔名改成你自己的：</li>
+</ol>
+<pre><code>{
+    "states": {
+        "default":   { "texture": "my_arrow.png" },
+        "clickable": { "texture": "my_hand.png" },
+        "text":      { "texture": "my_ibeam.png" },
+        "drag":      { "texture": "my_fist.png" },
+        "disabled":  { "texture": "my_gray.png" }
+    }
+}</code></pre>
+<ol>
+<li>存檔，回到遊戲 —— 列表<strong>會自己重新整理，不用重啟</strong>，點一下右側就能看到六個狀態的預覽</li>
+</ol>
+<p>沒寫的狀態（上面例子裡是 <code>busy</code>）會自動用 <code>default</code> 的圖，所以 <code>default</code> 是唯一必須有的。</p>
+<h2>第三步：把點選點放到正確的位置</h2>
+<p>點選游標時，真正生效的只有一個畫素，叫<strong>點選點</strong>（熱區）。它預設在圖片的<strong>左上角</strong>，所以箭頭類游標通常正好；但手型、I 型就該放中間。</p>
+<p>不會算座標沒關係：在游標列表介面點右上角 <strong><code>熱點…</code></strong>，在放大圖上<strong>點一下或拖一下</strong>就設好了，方向鍵可以一格一格微調，點 <code>完成</code> 儲存。改的是你的配置，不會動別人的包。</p>
+<h2>第四步：讓"載入中"轉起來（可選）</h2>
+<p>動畫就是<strong>把好幾幀橫著拼成一張長圖</strong>：比如 8 張 32×32 的轉圈圖，拼成一張 <strong>256×32</strong>（寬 = 幀數 × 高）。</p>
+<p>在 JSON 裡給這個狀態加兩個數字：</p>
+<pre><code>"busy": { "texture": "my_spinner.png", "frames": 8, "frame_ms": 80 }</code></pre>
+<ul>
+<li><code>frames</code> = 幾張幀</li>
+<li><code>frame_ms</code> = 每幀顯示多少毫秒（80 大約是每秒 12 幀）</li>
+</ul>
+<p>兩個要點：<strong>每幀必須是正方形</strong>，<strong>所有幀必須在同一行</strong>。</p>
+<h2>第五步：加點選特效（可選）</h2>
+<p>想讓點下去有回饋，加一行就行：</p>
+<pre><code>"click_effect": { "type": "ripple", "color": "#FFD479" }</code></pre>
+<table><thead><tr><th><code>type</code></th><th>點下去是什麼樣</th></tr></thead><tbody>
+<tr><td><code>ripple</code></td><td>一圈光暈擴散開（最常用）</td></tr>
+<tr><td><code>burst</code></td><td>一堆粒子炸開</td></tr>
+<tr><td><code>pulse</code></td><td>原地閃一下</td></tr>
+<tr><td><code>image</code></td><td>用你自己畫的動畫（下面單獨說）</td></tr>
+<tr><td><code>none</code></td><td>不要特效</td></tr>
+</tbody></table>
+<p>想調大小、時長、粒子數，加 <code>"radius": 15</code>、<code>"duration_ms": 450</code>、<code>"particles": 6</code> 這些欄位，不寫就用預設值。</p>
+<p><strong>用自己畫的動畫</strong>：做成和上面動畫一樣的橫向長圖，然後寫：</p>
+<pre><code>"click_effect": { "type": "image", "texture": "my_ring.png", "frames": 6, "frame_ms": 60, "size": 24 }</code></pre>
+<p><code>size</code> 是它畫出來多大（螢幕畫素），淡出效果要<strong>畫進圖裡</strong>。</p>
+<h2>第六步：打包成一個能分享的包</h2>
+<p>如果要發給別人，就得做成<strong>游標包</strong>：一個資料夾（或壓縮包），裡面按固定結構放：</p>
+<pre><code>mypack/                                  ← 包名，隨便起
+└── assets/
+    └── mypack/                          ← 隨便起的名字，跟上面保持一致就行
+        ├── cursor/
+        │   └── my_arrow.json            ← 你的 JSON
+        └── textures/
+            └── cursor/
+                ├── my_arrow.png         ← 你的圖
+                └── my_hand.png</code></pre>
+<p>注意 JSON 裡的路徑要<strong>相對於 <code>textures/cursor/</code></strong>：上面這個例子裡寫 <code>"texture": "my_arrow.png"</code>。如果圖放在子資料夾 <code>cursor/arrow/</code> 裡，就寫 <code>"texture": "arrow/my_arrow.png"</code>。</p>
+<p>做完把 <code>mypack</code> 資料夾丟進 <code>config/cursorkit/packs/</code>，或者<strong>直接拖進遊戲介面</strong>，就裝好了。</p>
+<p>想打成壓縮包：<strong>壓縮包裡第一層就要是 <code>assets/</code></strong>，別把 <code>mypack</code> 再套一層（套一層也能識別，但別套兩層）。</p>
+<pre><code>mypack.zip
+└── assets/...        ✓ 正確</code></pre>
+<blockquote>這個包同樣能當資源包用：丟進 <code>resourcepacks/</code> 並在資源包介面啟用即可（這時需要一個 <code>pack.mcmeta</code>，內容照抄 <code>examples/</code> 裡的）。但資源包<strong>只能用 PNG</strong>，<code>.cur</code> 只能用上面那種游標包。</blockquote>
+<h2>遇到問題看這裡</h2>
+<table><thead><tr><th>現象</th><th>原因</th></tr></thead><tbody>
+<tr><td>列表裡找不到我的游標</td><td>檔名有大寫/中文；或者沒放在 <code>config/cursorkit/</code>；或者 JSON 裡 <code>default</code> 寫漏了（這種情況整個集合會被跳過，日誌裡有記錄）</td></tr>
+<tr><td>只有 <code>default</code> 是我畫的，其它狀態不對</td><td>沒寫進 JSON 的狀態會自動用 <code>default</code> 的圖，這是正常的</td></tr>
+<tr><td>游標又大又糊</td><td>圖片解析度既決定清晰度也決定大小。16×16 是普通大小，想要更清楚就畫 32×32 / 64×64，<strong>別把小圖放大</strong></td></tr>
+<tr><td>動畫不動</td><td>幀必須在<strong>同一行</strong>；圖寬要等於「幀數 × 幀高」；<code>frames</code> 和圖對不上時會以圖為準</td></tr>
+<tr><td>點下去的位置不對</td><td>用介面裡的 <code>熱點…</code> 調，別手算座標</td></tr>
+<tr><td>放資源包裡沒反應</td><td>資源包要在<strong>資源包介面</strong>裡啟用；放進 <code>config/cursorkit/packs/</code> 則是永遠開啟的</td></tr>
+</tbody></table>
+<h2>所有欄位速查</h2>
+<table><thead><tr><th>欄位</th><th>要寫嗎</th><th>不寫的話</th><th>說明</th></tr></thead><tbody>
+<tr><td><code>states.default.texture</code></td><td><strong>要</strong></td><td>—</td><td>圖片路徑。本地單集合相對 <code>config/cursorkit/</code>；游標包/資源包相對 <code>textures/cursor/</code></td></tr>
+<tr><td><code>states.&lt;其它狀態&gt;.texture</code></td><td>不用</td><td>用 <code>default</code> 的圖</td><td>六個狀態：<code>clickable</code> <code>text</code> <code>drag</code> <code>disabled</code> <code>busy</code></td></tr>
+<tr><td><code>hotspot</code></td><td>不用</td><td>左上角 <code>[0, 0]</code></td><td>點選點，單位是<strong>圖片畫素</strong>，寫成 <code>[x, y]</code>；<code>.cur</code> 檔案用自帶的</td></tr>
+<tr><td><code>frames</code></td><td>不用</td><td><code>1</code></td><td>動畫幀數</td></tr>
+<tr><td><code>frame_ms</code></td><td>不用</td><td><code>100</code></td><td>每幀毫秒數</td></tr>
+<tr><td><code>name</code></td><td>不用</td><td>用檔名</td><td>隻影響介面顯示的名字</td></tr>
+<tr><td><code>scale</code></td><td>不用</td><td><code>1</code></td><td>整體再放大幾倍</td></tr>
+<tr><td><code>click_effect</code></td><td>不用</td><td>模組自帶水波紋</td><td>見第五步</td></tr>
+</tbody></table>
+<h2>想直接抄現成的</h2>
+<p>模組倉庫的 <code>examples/</code> 裡已經有能用的包，複製過來改圖就行：</p>
+<ul>
+<li><code>CursorKit-Test-Pack/</code> —— 六狀態齊全的例子，還有 32×32、64×64 的高畫質例子</li>
+<li><code>ClickFX-Cursor-Pack/</code> —— 三種點選特效 + 自帶幀帶動畫的例子</li>
+<li><code>config-cursorkit/</code> —— 直接複製到 <code>config/</code> 就能用的目錄結構</li>
+</ul>
+    </article>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap foot">
+    <span>Fragmented_Chaos · StewedTuba73416 / Rending_Void</span>
+    <span>模組</span>
+  </div>
+</footer>
+
+<script src="../../../assets/site.js" defer></script>
+<script src="../../../assets/downloads.js" defer></script>
+</body>
+</html>
