@@ -229,6 +229,10 @@ summary: 列表里显示的一句话摘要
 线上就是 GitHub API 模式：新增文章 = 在 `blog/posts/` 放一个 `.md` 并 push，列表自动出现。
 本地预览（`file://` 或没连网）时会走 `index.json` 清单，所以两种模式都保留。
 
+**正文的取法**：优先从**本站路径**取（`/blog/posts/<file>.md`，文章就在站点仓库里，Pages 直接提供），
+`raw.githubusercontent.com` 只作备用 —— 2026-10-16 线上排查发现这个主机在部分网络下 HTTPS 不通
+（TCP 能连、请求直接失败），所以不能作为唯一来源。列目录仍然走 `api.github.com`（可达）。
+
 列表按 `date` 倒序；`?p=<slug>` 打开单篇（URL 可直接分享）。
 
 ## 评论（giscus，基于 GitHub Discussions）

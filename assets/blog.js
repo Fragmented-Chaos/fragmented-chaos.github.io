@@ -140,7 +140,16 @@
         .then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
         .then(function (list) {
           done(list.filter(function (f) { return /\.md$/i.test(f.name); })
-            .map(function (f) { return { path: f.path, download: f.download_url, name: f.name }; }));
+            .map(function (f) {
+              return {
+                path: f.path,
+                // 正文优先从**本站**取（文章就在站点仓库里，Pages 直接能提供）；
+                // raw.githubusercontent.com 在部分网络下不通，所以只当备用地址。
+                download: postsBase + '/' + f.name,
+                fallback: f.download_url,
+                name: f.name,
+              };
+            }));
         })
         .catch(function (err) { done(null, err); });
       return;
@@ -155,10 +164,13 @@
       .catch(function (err) { done(null, err); });
   }
 
-  function fetchText(url) {
+  function fetchText(url, fallback) {
     return fetch(url, { cache: 'no-store' }).then(function (r) {
       if (!r.ok) throw new Error('HTTP ' + r.status);
       return r.text();
+    }).catch(function (err) {
+      if (fallback) return fetchText(fallback);   // 备用地址（例如 raw.githubusercontent.com）
+      throw err;
     });
   }
 
@@ -277,7 +289,7 @@
     }
     var wanted = files.slice(0, 60);
     Promise.all(wanted.map(function (f) {
-      return fetchText(f.download).then(function (text) {
+      return fetchText(f.download, f.fallback).then(function (text) {
         var parsed = parsePost(text);
         return {
           slug: slugOf(f.name), path: f.path, download: f.download,
