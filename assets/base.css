@@ -546,6 +546,58 @@ button:focus-visible {
 .comments { margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(--line); }
 .comments-note { margin: 0.75rem 0 0; color: var(--muted); font-size: 0.86rem; }
 
+/* ---------- 窄屏（手机 / 小屏，≤560px）----------
+   目标：手指点得到、字看得清、任何内容都不许把页面撑宽。
+   注：headless 浏览器窗口最小 ~492px，所以断点取 560 以便在本地真实验证到。 */
+@media (max-width: 560px) {
+  /* 窄屏把根字号提到 18px：所有 rem 小字（0.68–0.78rem 的标签/编号/页脚等）
+     一次性抬到 ≥12px，不用逐个去拼选择器优先级（正文是 16px 固定值，不受影响）。 */
+  html { font-size: 18px; -webkit-text-size-adjust: 100%; }
+  .wrap { padding: 0 1.1rem; }
+
+  /* 顶栏与导航：允许换行，点击区抬到 44px */
+  .top-in { flex-wrap: wrap; height: auto; padding: 0.7rem 0; row-gap: 0.35rem; }
+  .nav { flex-wrap: wrap; row-gap: 0.25rem; column-gap: 1.1rem; }
+  .nav > a { display: inline-flex; align-items: center; min-height: 2.75rem; padding: 0 0.1rem; }
+  .nav .lang { column-gap: 0.9rem; }
+  .nav .lang a { display: inline-flex; align-items: center; min-height: 2.75rem; padding: 0 0.15rem; }
+  .theme-toggle { width: 2.75rem; height: 2.75rem; }
+
+  /* 小字统一抬到 ≥12px（原来 0.68–0.78rem 在手机上偏小） */
+  .kicker, .sec-head span, .post-date, .t-index, .t-source, .chips small,
+  .spec dt, .spec dd, .spec .when, .foot, .blog-status, .start-kicker,
+  .start-foot, .track .t-source, .links a, .comments-note { font-size: 0.78rem; }
+
+  /* 首屏与标题 */
+  h1, .start-name { font-size: clamp(1.9rem, 8.5vw, 2.6rem); }
+  .start-name { font-size: clamp(2.9rem, 15vw, 4.4rem); }
+  .about-name { font-size: clamp(2.2rem, 11vw, 3.2rem); }
+  .page-head { padding: 3rem 0 1.75rem; }
+
+  /* 正文：长代码行、宽表格、图片都不许撑破页面 */
+  .post-body { max-width: none; }
+  .post-body pre { max-width: 100%; overflow-x: auto; padding: 0.85rem 0.9rem; }
+  .post-body pre code { display: block; white-space: pre; }
+  .post-body code { word-break: break-word; overflow-wrap: anywhere; }
+  .post-body table { display: block; width: 100%; max-width: 100%; overflow-x: auto; }
+  .post-body th, .post-body td { white-space: normal; }
+  .post-body img, .post-body figure img { max-width: 100%; height: auto; }
+  .post-body figcaption { font-size: 0.8rem; }
+
+  /* 规格表 / 胶囊 / 时间线 / 列表行：窄屏改单列或收紧 */
+  .spec { grid-template-columns: 4.6rem 1fr; gap: 0.35rem 0.7rem; }
+  .chips { gap: 0.4rem; }
+  .chips a { padding: 0.5rem 0.7rem; }
+  .mod-head { grid-template-columns: 1fr; gap: 1rem; }
+  .mod-icon { width: 3.5rem; height: 3.5rem; }
+  .timeline li { grid-template-columns: 1fr; gap: 0.3rem; }
+  .index .row { grid-template-columns: 2.25rem 1fr 1.75rem; }
+  .index .row .desc { grid-column: 2 / 4; }
+  .tracks .track { grid-template-columns: 1.8rem 1fr auto; row-gap: 0.2rem; }
+  .track .t-artist { grid-column: 2 / 4; }
+  .blog-status, .comments-note { line-height: 1.6; }
+}
+
 /* ---------- 页脚 ---------- */
 .site-footer { border-top: 1px solid var(--line); padding: 2rem 0 3.5rem; }
 
