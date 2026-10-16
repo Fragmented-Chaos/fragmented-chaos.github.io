@@ -513,6 +513,8 @@ button:focus-visible {
   .start-name { margin: 0; font-family: var(--hand); font-size: clamp(3.4rem, 13vw, 7.5rem); line-height: 0.98; font-weight: 600; }
   .start-name b { color: var(--accent); font-weight: 600; }
   .start-rule { width: min(22rem, 70vw); height: 1px; background-color: var(--line); }
+/* 起始页的两个入口（进入 / 访问旧版）并排；窄屏自动换行，不挤在一行 */
+.start-actions { display: flex; flex-wrap: wrap; gap: 0.75rem; justify-content: center; align-items: center; }
   .start-foot { padding-bottom: 2.25rem; text-align: center; font-family: var(--mono); font-size: 0.72rem; color: var(--muted); }
 
 /* ---------- 博客 ---------- */
