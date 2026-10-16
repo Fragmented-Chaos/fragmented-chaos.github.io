@@ -132,36 +132,57 @@
   }
 
   // ---------- 目录 ----------
-  function loadIndex(done) {
-    if (repo) {
-      fetch('https://api.github.com/repos/' + repo + '/contents/blog/posts', {
-        headers: { Accept: 'application/vnd.github+json' },
-      })
-        .then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
-        .then(function (list) {
-          done(list.filter(function (f) { return /\.md$/i.test(f.name); })
-            .map(function (f) {
-              return {
-                path: f.path,
-                // 正文优先从**本站**取（文章就在站点仓库里，Pages 直接能提供）；
-                // raw.githubusercontent.com 在部分网络下不通，所以只当备用地址。
-                download: postsBase + '/' + f.name,
-                fallback: f.download_url,
-                name: f.name,
-              };
-            }));
-        })
-        .catch(function (err) { done(null, err); });
-      return;
-    }
-    fetch(postsBase + '/index.json', { cache: 'no-store' })
-      .then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
-      .then(function (list) {
-        done(list.map(function (p) {
-          return { path: postsBase + '/' + p.file, download: postsBase + '/' + p.file, name: p.file };
+  //
+  // 顺序很重要：**先取同站的 index.json**（同源、几乎瞬间、不受任何外部服务影响），
+  // 只有它不可用、且页面配了 data-repo 时，才回落到 GitHub API。
+  // 之前是反过来（API 优先），结果 api.github.com 在部分网络下会一直挂着不返回，
+  // 页面就永远停在「正在载入文章…」—— 所以这里必须清单优先 + 全程超时。
+  function withTimeout(promise, ms, label) {
+    return Promise.race([
+      promise,
+      new Promise(function (_, reject) {
+        setTimeout(function () { reject(new Error(label + ' 超时')); }, ms);
+      }),
+    ]);
+  }
+
+  function loadFromManifest(done) {
+    withTimeout(fetch(postsBase + '/index.json', { cache: 'no-store' }).then(function (r) {
+      if (!r.ok) throw new Error('HTTP ' + r.status);
+      return r.json();
+    }), 8000, '文章清单').then(function (list) {
+      if (!list || !list.length) throw new Error('empty');
+      done(list.map(function (p) {
+        return { path: postsBase + '/' + p.file, download: postsBase + '/' + p.file, name: p.file };
+      }));
+    }).catch(function (err) {
+      if (!repo) { done(null, err); return; }
+      loadFromApi(done);
+    });
+  }
+
+  function loadFromApi(done) {
+    withTimeout(fetch('https://api.github.com/repos/' + repo + '/contents/blog/posts', {
+      headers: { Accept: 'application/vnd.github+json' },
+    }).then(function (r) {
+      if (!r.ok) throw new Error('HTTP ' + r.status);
+      return r.json();
+    }), 8000, 'GitHub API').then(function (list) {
+      done(list.filter(function (f) { return /\.md$/i.test(f.name); })
+        .map(function (f) {
+          return {
+            path: f.path,
+            // 正文优先从本站取（文章就在站点仓库里）；raw 只当备用地址
+            download: postsBase + '/' + f.name,
+            fallback: f.download_url,
+            name: f.name,
+          };
         }));
-      })
-      .catch(function (err) { done(null, err); });
+    }).catch(function (err) { done(null, err); });
+  }
+
+  function loadIndex(done) {
+    loadFromManifest(done);
   }
 
   function fetchText(url, fallback) {
@@ -270,7 +291,20 @@
   els.status.textContent = t('loading');
   els.status.hidden = false;
 
+  // 总超时兜底：无论如何 15 秒内都要给出结果，不允许一直显示"正在载入"
+  var settled = false;
+  var guard = setTimeout(function () {
+    if (!settled) {
+      settled = true;
+      els.status.textContent = t('load_failed').replace('{err}', 'timeout');
+      els.status.hidden = false;
+    }
+  }, 15000);
+
   loadIndex(function (files, err) {
+    if (settled) return;
+    settled = true;
+    clearTimeout(guard);
     if (!files) {
       els.status.textContent = t('load_failed').replace('{err}', err ? String(err.message || err) : '?');
       return;

@@ -11,7 +11,7 @@
 #   6. 三语一致：三种语言的页面集合一致
 #
 # 用法：python3 tests/check.py
-import os, re, sys, html
+import os, re, sys, html, json
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 LANGS = ['zh', 'zh-hant', 'en']
@@ -178,6 +178,29 @@ def check_site_files():
         problems.append('robots.txt 没指向 sitemap.xml')
 
 
+def check_blog_index():
+    """博客清单 blog/posts/index.json 必须与目录里的 .md 一一对应（防止写完文章忘了登记）。"""
+    posts = os.path.join(ROOT, 'blog', 'posts')
+    if not os.path.isdir(posts):
+        return
+    real = sorted(f for f in os.listdir(posts) if f.endswith('.md'))
+    idx_path = os.path.join(posts, 'index.json')
+    if not os.path.isfile(idx_path):
+        problems.append('缺 blog/posts/index.json（跑 tools/make_blog_index.py）')
+        return
+    try:
+        listed = sorted(x['file'] for x in json.loads(read(idx_path)))
+    except Exception as e:
+        problems.append(f'blog/posts/index.json 解析失败：{e}')
+        return
+    for f in real:
+        if f not in listed:
+            problems.append(f'文章没登记进 index.json：{f}（跑 tools/make_blog_index.py）')
+    for f in listed:
+        if f not in real:
+            problems.append(f'index.json 记了不存在的文章：{f}')
+
+
 def check_stats_numbers():
     """关于页「站点运行情况」里写的页面数必须等于真实页面数 —— 防止数字悄悄过期。"""
     real = len(pages())
@@ -221,6 +244,7 @@ def main():
             check_invariants(name, path)
     check_lang_parity()
     check_stats_numbers()
+    check_blog_index()
     check_site_files()
 
     print(f'检查页面：{len(pages())} 个')
