@@ -128,10 +128,13 @@ button:focus-visible {
 .top-in {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  /* 品牌靠左；导航用 margin-left:auto 推到右侧（原来 space-between + 只有两项，
+     把主题按钮移出 .nav 后变成三项，导航会被挤到中间） */
+  justify-content: flex-start;
   gap: 1rem;
   height: 4.25rem;
 }
+.top-in .nav { margin-left: auto; }
 
 .mark {
   font-family: var(--hand);
@@ -213,7 +216,7 @@ button:focus-visible {
 .btn:hover .arrow { transform: translateX(3px); }
 
 /* ---------- 区块与列表（首页/内页共用） ---------- */
-.sec { padding: 4rem 0; border-top: 1px solid var(--line); }
+.sec { padding-top: 4rem; padding-bottom: 4rem; border-top: 1px solid var(--line); }
 
 .sec-head {
   display: flex;
@@ -336,7 +339,8 @@ button:focus-visible {
   grid-template-columns: auto 1fr;
   align-items: center;
   gap: 3rem;
-  padding: 5.5rem 0 4.5rem;
+  padding-top: 5.5rem;
+  padding-bottom: 4.5rem;
 }
 
 .about-avatar {
@@ -369,12 +373,12 @@ button:focus-visible {
 .about-greeting b { color: var(--ink); font-weight: 600; }
 
 @media (max-width: 760px) {
-  .about-hero { grid-template-columns: 1fr; gap: 1.75rem; padding: 3.5rem 0 3rem; text-align: center; justify-items: center; }
+  .about-hero { grid-template-columns: 1fr; gap: 1.75rem; padding-top: 3.5rem; padding-bottom: 3rem; text-align: center; justify-items: center; }
   .about-greeting { max-width: none; }
 }
 
 /* ---------- 内页页头 ---------- */
-.page-head { padding: 4.5rem 0 2.5rem; }
+.page-head { padding-top: 4.5rem; padding-bottom: 2.5rem; }
 
 .page-head h1 {
   margin: 0 0 0.9rem;
@@ -436,7 +440,7 @@ button:focus-visible {
 .track.is-active .t-source { border-color: var(--accent); color: var(--accent); }
 
 @media (max-width: 760px) {
-  .page-head { padding: 3rem 0 2rem; }
+  .page-head { padding-top: 3rem; padding-bottom: 2rem; }
   .track { grid-template-columns: 2rem 1fr auto; row-gap: 0.25rem; }
   .track .t-artist { grid-column: 2 / 4; }
 }
@@ -550,10 +554,18 @@ button:focus-visible {
    原来正文只有 max-width: 42rem 而没有 auto 边距，宽屏上会贴着左边、
    右侧空一大片。这里把页头 / 规格面板 / 正文 / 评论区收进同一条居中的内容列，
    左右留白相等，正文与面板左边缘也仍然对齐。 */
-/* 用 --max 覆盖：页头、正文、页脚**全部**收进同一条 46rem 居中列，
-   这样品牌名与正文左边缘对齐（原来页头/页脚是 60rem，比正文宽 344px，左右都不齐）。 */
-body.doc { --max: 46rem; }
+/* 阅读类页面：正文收进一条 46rem 居中列。 */
+body.doc main .wrap { max-width: 46rem; }
 body.doc .post-body { max-width: none; }
+
+/* 页头与页脚**铺满整个宽度**：品牌贴左、导航贴右，两侧不再留出居中列的空白。
+   （正文仍然是居中的窄列 —— 全域页头 + 居中正文是常见排版。） */
+.top-in, .site-footer .foot { max-width: none; }
+
+/* ---------- 导航折叠按钮（只在窄屏出现）---------- */
+.nav-toggle { display: none; }
+.nav-toggle .bars { display: grid; gap: 4px; width: 1.05rem; }
+.nav-toggle .bars i { display: block; height: 2px; background: currentColor; border-radius: 2px; transition: transform 0.18s ease, opacity 0.18s ease; }
 
 /* ---------- 窄屏（手机 / 小屏，≤560px）----------
    目标：手指点得到、字看得清、任何内容都不许把页面撑宽。
@@ -564,15 +576,41 @@ body.doc .post-body { max-width: none; }
   html { font-size: 18px; -webkit-text-size-adjust: 100%; }
   .wrap { padding: 0 1.1rem; }
 
-  /* 顶栏与导航：允许换行，点击区抬到 44px；
+  /* 顶栏：品牌在左，主题按钮与汉堡按钮在右；导航收进可折叠面板。
      左右内边距必须与正文的 .wrap 一致（否则页头内容会比正文靠边 20px） */
   .top-in, .site-footer .foot { padding-left: 1.1rem; padding-right: 1.1rem; }
-  .top-in { flex-wrap: wrap; height: auto; padding-top: 0.7rem; padding-bottom: 0.7rem; row-gap: 0.35rem; }
-  .nav { flex-wrap: wrap; row-gap: 0.25rem; column-gap: 1.1rem; }
-  .nav > a { display: inline-flex; align-items: center; min-height: 2.75rem; padding: 0 0.1rem; }
-  .nav .lang { column-gap: 0.9rem; }
-  .nav .lang a { display: inline-flex; align-items: center; min-height: 2.75rem; padding: 0 0.15rem; }
-  .theme-toggle { width: 2.75rem; height: 2.75rem; }
+  .top-in { flex-wrap: wrap; height: auto; padding-top: 0.6rem; padding-bottom: 0.6rem; row-gap: 0; column-gap: 0.4rem; }
+  .theme-toggle { width: 2.75rem; height: 2.75rem; margin-left: auto; }
+  .nav-toggle {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 2.75rem; height: 2.75rem; margin-left: 0.1rem;
+    border: 1px solid var(--line); border-radius: 10px;
+    background-color: var(--bg-soft); color: var(--ink); cursor: pointer;
+  }
+  .top-in[data-nav-open="true"] .nav-toggle .bars i:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+  .top-in[data-nav-open="true"] .nav-toggle .bars i:nth-child(2) { opacity: 0; }
+  .top-in[data-nav-open="true"] .nav-toggle .bars i:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
+
+  /* 折叠：默认收起 */
+  .top-in .nav { display: none; }
+
+  /* 展开：占满一行，纵向排列，每项 44px 好点 */
+  .top-in[data-nav-open="true"] .nav {
+    display: flex; flex-direction: column; align-items: stretch;
+    /* order 放在最后：否则展开时主题按钮会被面板顶到下一行，位置跳一下 */
+    order: 9;
+    flex-basis: 100%; gap: 0; margin-top: 0.55rem; padding-top: 0.35rem;
+    border-top: 1px solid var(--line-soft);
+  }
+  .top-in[data-nav-open="true"] .nav > a {
+    display: flex; align-items: center; min-height: 2.75rem; padding: 0 0.15rem;
+  }
+  .top-in[data-nav-open="true"] .nav .lang {
+    display: flex; column-gap: 1.35rem; align-items: center;
+    min-height: 2.75rem; padding: 0 0.15rem;
+    border-top: 1px solid var(--line-soft);
+  }
+  .top-in[data-nav-open="true"] .nav .lang a { display: inline-flex; align-items: center; min-height: 2.75rem; }
 
   /* 小字统一抬到 ≥12px（原来 0.68–0.78rem 在手机上偏小） */
   .kicker, .sec-head span, .post-date, .t-index, .t-source, .chips small,
@@ -583,7 +621,7 @@ body.doc .post-body { max-width: none; }
   h1, .start-name { font-size: clamp(1.9rem, 8.5vw, 2.6rem); }
   .start-name { font-size: clamp(2.9rem, 15vw, 4.4rem); }
   .about-name { font-size: clamp(2.2rem, 11vw, 3.2rem); }
-  .page-head { padding: 3rem 0 1.75rem; }
+  .page-head { padding-top: 3rem; padding-bottom: 1.75rem; }
 
   /* 正文：长代码行、宽表格、图片都不许撑破页面 */
   .post-body { max-width: none; }
@@ -642,5 +680,5 @@ body.doc .post-body { max-width: none; }
   .row { grid-template-columns: 2.25rem 1fr auto; row-gap: 0.3rem; }
   .row .desc { grid-column: 2 / 4; }
   .two { grid-template-columns: 1fr; gap: 2rem; }
-  .sec { padding: 3rem 0; }
+  .sec { padding-top: 3rem; padding-bottom: 3rem; }
 }

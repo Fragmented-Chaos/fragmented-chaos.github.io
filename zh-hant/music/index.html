@@ -22,14 +22,21 @@
     } catch (e) { /* 隐私模式忽略 */ }
   })();
 </script>
-<link rel="stylesheet" href="../../assets/base.css">
+<link rel="stylesheet" href="../../assets/base.css?v=d85e5dc8">
+<noscript><style>
+/* JS 不可用时兜底：直接把导航链接平铺显示，别让菜单变成打不开的死结 */
+@media (max-width: 560px) {
+  .top-in .nav { display: flex !important; flex-direction: column; align-items: stretch; flex-basis: 100%; }
+  .nav-toggle { display: none !important; }
+}
+</style></noscript>
 </head>
 <body>
 
 <header class="top">
   <div class="wrap top-in">
     <a class="mark" href="../../index.html">Fragmented<b>_</b>Chaos</a>
-    <nav class="nav">
+    <nav class="nav" id="site-nav">
       <a href="../mods/">模組</a>
       <a href="../blog/">部落格</a>
       <a href="./" aria-current="page">音樂</a>
@@ -40,6 +47,8 @@
         <a href="../../zh-hant/music/" aria-current="true">繁</a>
         <a href="../../en/music/">EN</a>
       </span>
+    </nav>
+
       <button type="button" class="theme-toggle" data-theme-toggle
               aria-pressed="false"
               data-label-to-dark="切換到暗色主題" data-label-to-light="切換到亮色主題">
@@ -52,7 +61,10 @@
           <path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a6.8 6.8 0 0 0 10.5 10.5z"/>
         </svg>
       </button>
-    </nav>
+      <button type="button" class="nav-toggle" data-nav-toggle
+              aria-expanded="false" aria-controls="site-nav" aria-label="選單">
+        <span class="bars" aria-hidden="true"><i></i><i></i><i></i></span>
+      </button>
   </div>
 </header>
 
@@ -99,7 +111,7 @@
   </div>
 </footer>
 
-<script src="../../assets/site.js" defer></script>
-<script src="../../assets/music.js" defer></script>
+<script src="../../assets/site.js?v=97843208" defer></script>
+<script src="../../assets/music.js?v=3ed2baa6" defer></script>
 </body>
 </html>

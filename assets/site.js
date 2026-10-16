@@ -104,14 +104,47 @@
     });
   }
 
+
+  // 窄屏导航折叠：汉堡按钮切换；Esc 或点击面板外收起；窗口变宽自动复位
+  function setupNavToggle() {
+    var btn = document.querySelector('[data-nav-toggle]');
+    var bar = btn ? btn.closest('.top-in') : null;
+    if (!btn || !bar) return;
+
+    function setOpen(open) {
+      bar.setAttribute('data-nav-open', open ? 'true' : 'false');
+      btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    }
+    function isOpen() { return bar.getAttribute('data-nav-open') === 'true'; }
+
+    setOpen(false);
+    btn.addEventListener('click', function () { setOpen(!isOpen()); });
+
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && isOpen()) { setOpen(false); btn.focus(); }
+    });
+    document.addEventListener('click', function (e) {
+      if (isOpen() && !bar.contains(e.target)) setOpen(false);
+    });
+    window.addEventListener('resize', function () {
+      if (window.innerWidth > 560 && isOpen()) setOpen(false);
+    });
+  }
+
+  // 每个初始化独立兜底：任何一处出错都不影响其它功能（尤其是折叠菜单）
+  function safe(label, fn) {
+    try { fn(); } catch (err) { if (window.console) console.error('[site] ' + label + ' 初始化失败', err); }
+  }
+
   function ready(fn) {
     if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', fn);
     else fn();
   }
 
   ready(function () {
-    setupTheme();
-    setupClock();
-    setupStats();
+    safe('Theme', setupTheme);
+    safe('Clock', setupClock);
+    safe('统计', setupStats);
+    safe('导航折叠', setupNavToggle);
   });
 })();

@@ -14,7 +14,14 @@
     } catch (e) { /* 隐私模式忽略 */ }
   })();
 </script>
-<link rel="stylesheet" href="/assets/base.css">
+<link rel="stylesheet" href="/assets/base.css?v=d85e5dc8">
+<noscript><style>
+/* JS 不可用时兜底：直接把导航链接平铺显示，别让菜单变成打不开的死结 */
+@media (max-width: 560px) {
+  .top-in .nav { display: flex !important; flex-direction: column; align-items: stretch; flex-basis: 100%; }
+  .nav-toggle { display: none !important; }
+}
+</style></noscript>
 </head>
 <body>
 
@@ -24,18 +31,6 @@
     <a href="/zh-hant/">繁</a>
     <a href="/en/">EN</a>
   </span>
-  <button type="button" class="theme-toggle" data-theme-toggle
-          aria-pressed="false"
-          data-label-to-dark="切换到暗色主题" data-label-to-light="切换到亮色主题">
-    <span class="sr-only">切换主题</span>
-    <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true">
-      <circle cx="12" cy="12" r="4.2"/>
-      <path d="M12 3v2.2M12 18.8V21M3 12h2.2M18.8 12H21M5.6 5.6l1.6 1.6M16.8 16.8l1.6 1.6M18.4 5.6l-1.6 1.6M7.2 16.8l-1.6 1.6"/>
-    </svg>
-    <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true">
-      <path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a6.8 6.8 0 0 0 10.5 10.5z"/>
-    </svg>
-  </button>
 </header>
 
 <main class="start-main">
@@ -46,6 +41,6 @@
   </div>
 </main>
 
-<script src="/assets/site.js" defer></script>
+<script src="/assets/site.js?v=97843208" defer></script>
 </body>
 </html>
