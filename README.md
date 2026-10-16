@@ -173,6 +173,17 @@ site-v2/
   不写死；**页面数写死在 HTML 里，但静态测试会拿实际页面数比对**，对不上就报错（防止悄悄过期）。
 - 页脚在短页面上也贴着窗口底部（`body` 纵向 flex + `main { flex: 1 0 auto }`）。
 
+## 已部署的线上地址（2026-10-16）
+
+| 地址 | 内容 |
+|---|---|
+| https://fragmented-chaos.github.io/ | **新站**（本目录，零构建静态站，Pages 从 `main` 根目录发布） |
+| https://fragmented-chaos.github.io/old/ | **旧版**（独立仓库 `Fragmented-Chaos/old`，`baseurl: /old`） |
+| https://fragmented-chaos.github.io/sitemap.xml · /robots.txt · /404.html | 站点地图 / 抓取规则 / 404 |
+
+推送通道：这台机器上 `github.com:443` 不通，改用 **`ssh.github.com:443`**
+（`ssh://git@ssh.github.com:443/<owner>/<repo>.git`）可以正常 push。
+
 ## 部署（零构建静态站）
 
 站点没有任何构建步骤，**把 `site-v2` 整个目录当静态站点发布即可**：
@@ -212,8 +223,11 @@ summary: 列表里显示的一句话摘要
 
 | 模式 | 配置 | 写文章要做什么 |
 |---|---|---|
-| GitHub API（推荐，零维护） | `data-repo="用户名/仓库名"` | 只把 `.md` 推进仓库，**什么都不用改** |
+| GitHub API（**已启用**） | `data-repo="Fragmented-Chaos/fragmented-chaos.github.io"` | 只把 `.md` 推进仓库，**什么都不用改** |
 | 本地清单 | `data-repo` 留空 | 放 `.md` + 往 `index.json` 加一行文件名（浏览器列不了目录，本地预览用） |
+
+线上就是 GitHub API 模式：新增文章 = 在 `blog/posts/` 放一个 `.md` 并 push，列表自动出现。
+本地预览（`file://` 或没连网）时会走 `index.json` 清单，所以两种模式都保留。
 
 列表按 `date` 倒序；`?p=<slug>` 打开单篇（URL 可直接分享）。
 
