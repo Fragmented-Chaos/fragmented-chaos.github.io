@@ -1,0 +1,19 @@
+# 每次 push / PR 自动跑静态检查：链接、资源、三语一致性、页面结构不变式、
+# sitemap 与博客清单是否过期、社交卡片是否齐全。
+# （浏览器行为测试需要本机装 Edge/Chrome，CI 里不跑；本地用 tests/run.sh 全跑。）
+name: check
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  static:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+      - name: 静态检查
+        run: python3 tests/check.py

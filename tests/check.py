@@ -178,6 +178,27 @@ def check_site_files():
         problems.append('robots.txt 没指向 sitemap.xml')
 
 
+def check_feed_and_og():
+    """feed.xml 必须列出所有文章；每个生产页面都要有社交卡片标签。"""
+    feed = os.path.join(ROOT, 'feed.xml')
+    if not os.path.isfile(feed):
+        problems.append('缺 feed.xml（跑 tools/make_feed.py）')
+    else:
+        f = read(feed)
+        posts = os.path.join(ROOT, 'blog', 'posts')
+        for name in sorted(os.listdir(posts)):
+            if name.endswith('.md') and name[:-3] not in f:
+                problems.append(f'feed.xml 漏了文章：{name}（跑 tools/make_feed.py）')
+        if '<urlset' in f:
+            problems.append('feed.xml 内容不对（像是 sitemap）')
+    for name, path in pages():
+        src = read(path)
+        if 'property="og:title"' not in src:
+            problems.append(f'{os.path.relpath(path, ROOT)}: 缺社交卡片标签（og:title）')
+        if 'property="og:image"' not in src:
+            problems.append(f'{os.path.relpath(path, ROOT)}: 缺 og:image')
+
+
 def check_blog_index():
     """博客清单 blog/posts/index.json 必须与目录里的 .md 一一对应（防止写完文章忘了登记）。"""
     posts = os.path.join(ROOT, 'blog', 'posts')
@@ -245,6 +266,7 @@ def main():
     check_lang_parity()
     check_stats_numbers()
     check_blog_index()
+    check_feed_and_og()
     check_site_files()
 
     print(f'检查页面：{len(pages())} 个')

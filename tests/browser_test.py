@@ -26,7 +26,7 @@ CASES = [
     ('关于·简 dark', 'zh/about/', 'dark', 4000),
     ('关于·EN light', 'en/about/', 'light', 4000),
     ('博客·列表', 'zh/blog/', 'dark', 8000),
-    ('博客·文章', 'zh/blog/?p=2026-10-16-hello', 'light', 8000),
+    ('博客·文章', 'zh/blog/?p=2026-10-16-refactor', 'light', 8000),
     # 播放器要等 1~2 秒才画出来，探针本身等 3 秒 → 预算给到 9 秒
     ('音乐·简 dark', 'zh/music/', 'dark', 9000),
     ('音乐·EN light', 'en/music/', 'light', 9000),
@@ -219,7 +219,7 @@ def main():
                 else:
                     if '列表' in label and (m.group(1) == 'hidden' or m.group(1) == '0posts'):
                         failures.append(f'{label}: 博客列表没渲染 → {out}')
-                    if '文章' in label and (m.group(2) != 'shown' or m.group(3) == '(empty)' or int(m.group(4)) == 0):
+                    if '文章' in label and (m.group(2) != 'shown' or m.group(3) == '(empty)' or int(m.group(4)) == 0):  # noqa
                         failures.append(f'{label}: 文章没渲染出内容 → {out}')
                     if '文章' in label and m.group(5) != 'shown':
                         failures.append(f'{label}: 文章页评论区没出现 → {out}')

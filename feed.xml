@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="zh-CN">
+  <title>Fragmented_Chaos</title>
+  <subtitle>个人网站 · 博客</subtitle>
+  <link href="https://fragmented-chaos.github.io/feed.xml" rel="self"/>
+  <link href="https://fragmented-chaos.github.io/zh/blog/"/>
+  <id>https://fragmented-chaos.github.io/</id>
+  <updated>2026-10-16T00:00:00Z</updated>
+  <author><name>Fragmented_Chaos</name></author>
+  <entry>
+    <title>今天把网站重构了</title>
+    <link href="https://fragmented-chaos.github.io/zh/blog/?p=2026-10-16-refactor"/>
+    <id>https://fragmented-chaos.github.io/zh/blog/?p=2026-10-16-refactor</id>
+    <updated>2026-10-16T00:00:00Z</updated>
+  </entry>
+</feed>
