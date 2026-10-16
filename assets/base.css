@@ -546,6 +546,13 @@ button:focus-visible {
 .comments { margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(--line); }
 .comments-note { margin: 0.75rem 0 0; color: var(--muted); font-size: 0.86rem; }
 
+/* ---------- 阅读类页面：整条内容列居中 ----------
+   原来正文只有 max-width: 42rem 而没有 auto 边距，宽屏上会贴着左边、
+   右侧空一大片。这里把页头 / 规格面板 / 正文 / 评论区收进同一条居中的内容列，
+   左右留白相等，正文与面板左边缘也仍然对齐。 */
+body.doc main .wrap { max-width: 46rem; }
+body.doc .post-body { max-width: none; }
+
 /* ---------- 窄屏（手机 / 小屏，≤560px）----------
    目标：手指点得到、字看得清、任何内容都不许把页面撑宽。
    注：headless 浏览器窗口最小 ~492px，所以断点取 560 以便在本地真实验证到。 */
