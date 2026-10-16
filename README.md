@@ -235,15 +235,20 @@ summary: 列表里显示的一句话摘要
 
 列表按 `date` 倒序；`?p=<slug>` 打开单篇（URL 可直接分享）。
 
-## 评论（giscus，基于 GitHub Discussions）
+## 评论（utterances，基于 GitHub Issues）
 
-- **默认不加载任何第三方脚本**：文章底部有个「加载评论」，点了才注入 giscus
-- 每篇文章一个讨论帖：`data-mapping="specific"` + `data-term=<slug>`
-- 站点深浅色切换会 `postMessage` 同步给评论框；语言按 `<html lang>` 传
-- 开起来需要三步（一次性）：① 仓库设为 public 并开启 Discussions ② 装 giscus App
-  ③ 到 giscus.app 拿到 `repo-id` / `category` / `category-id`，连同 `data-repo` 填进
-  `zh|zh-hant|en/blog/index.html` 的 `[data-blog]` 上（三个语言页都要填）
-- 没配置时页面显示「评论还没配置」提示，不会报错
+- **默认不加载任何第三方脚本**：文章底部有个「加载评论」，点了才注入 utterances
+- **每篇文章一个 Issue**：`issue-term="title"`（正文页标题由脚本按文章标题设置，所以每篇各自成帖）
+- 站点切深浅色会 `postMessage` 同步评论框主题（utterances 只认 `github-light` / `github-dark`）
+- 启用只差一步：在这个仓库装一次 **utterances App** → https://github.com/apps/utterances
+  （装到 `Fragmented-Chaos/fragmented-chaos.github.io`，装完评论就能用；仓库名已经写在页面的
+  `data-comments-repo` 上，三语都要一起填）
+
+**为什么不用 giscus**：giscus 基于 Discussions，需要仓库开启 Discussions 并拿到
+`repo-id` / `category` / `category-id` 三个值（每次调整都得跑一趟 giscus.app）。utterances 基于
+Issues（仓库默认就有），只需要仓库名。2026-10-16 线上排查时该仓库 `has_discussions: false`，
+而 `github.com` 在本机不通、抓不到分类 ID，于是改用 utterances。想换回 giscus 的话：
+开 Discussions + 建分类 + 装 giscus App，拿到那三个值后换回 `assets/blog.js` 里的评论段落即可。
 
 ## 本地预览
 

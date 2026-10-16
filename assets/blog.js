@@ -8,9 +8,9 @@
 //   · 正文在浏览器里渲染：支持标题、段落、粗体/斜体、行内代码、代码块、列表、引用、分割线、
 //     链接、图片；**原始 HTML 原样输出**（作者是自己人，正是为了能写表格/视频之类）
 //
-// 评论用 giscus（GitHub Discussions），并且：
+// 评论用 utterances（GitHub Issues），并且：
 //   · 默认不加载任何第三方脚本，点了「加载评论」才注入
-//   · 每篇文章一个讨论：data-mapping="specific" + data-term=<slug>
+//   · 每篇文章一个 Issue（issue-term=title）
 //   · 站点的深浅色切换会同步给评论框（postMessage）
 (function () {
   'use strict';
@@ -204,37 +204,36 @@
     if (document.title.indexOf(item.meta.title || item.slug) < 0) {
       document.title = (item.meta.title || item.slug) + ' · ' + document.title;
     }
-    mountComments(item.slug);
+    mountComments(item.slug, item.meta.title || item.slug);
   }
 
-  // ---------- 评论（giscus，点击才加载） ----------
-  var giscusTheme = function () {
+  // ---------- 评论（utterances，点了才加载） ----------
+  //
+  // 为什么不是 giscus：giscus 需要仓库开启 Discussions 并拿到 repo-id / category / category-id
+  // 四个值（改一次要跑一趟 giscus.app）。utterances 基于 Issues（默认就开着），
+  // **只需要仓库名**，所以这里用它，代价是每条帖子是一个 Issue。
+  //
+  // 主题：utterances 只认 github-light / github-dark，站点切深浅色时用 postMessage 同步。
+  var commentsTheme = function () {
     var explicit = document.documentElement.getAttribute('data-theme');
-    if (explicit === 'light' || explicit === 'dark') return explicit;
-    return (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) ? 'light' : 'dark';
+    if (explicit === 'light' || explicit === 'dark') return 'github-' + explicit;
+    return (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches)
+      ? 'github-light' : 'github-dark';
   };
 
-  function mountComments(slug) {
+  function mountComments(slug, title) {
     var host = els.comments;
-    if (!host || !slug) return;
+    if (!host) return;
     host.hidden = false;
 
-    // 注意：评论仓库与「文章从哪列目录」是两件事，用各自的属性
-    var commentsRepo = host.getAttribute('data-giscus-repo') || '';
-    var repoId = host.getAttribute('data-giscus-repo-id');
-    var category = host.getAttribute('data-giscus-category');
-    var categoryId = host.getAttribute('data-giscus-category-id');
-    var configured = commentsRepo && repoId && category && categoryId;
-
+    var repo = (host.getAttribute('data-comments-repo') || '').trim();
     var slot = host.querySelector('[data-comments-slot]');
     var button = host.querySelector('[data-comments-load]');
     var note = host.querySelector('[data-comments-note]');
-    if (!configured) {
+
+    if (!repo) {
       if (button) button.hidden = true;
-      if (note) {
-        note.hidden = false;
-        note.textContent = t('comments_unconfigured');
-      }
+      if (note) { note.hidden = false; note.textContent = t('comments_unconfigured'); }
       return;
     }
 
@@ -244,34 +243,23 @@
         button.hidden = true;
         if (note) note.hidden = true;
         var s = document.createElement('script');
-        s.src = 'https://giscus.app/client.js';
+        s.src = 'https://utteranc.es/client.js';
         s.async = true;
         s.crossOrigin = 'anonymous';
-        var attrs = {
-          'data-repo': commentsRepo,
-          'data-repo-id': repoId,
-          'data-category': category,
-          'data-category-id': categoryId,
-          'data-mapping': 'specific',
-          'data-term': slug,
-          'data-reactions-enabled': '1',
-          'data-emit-metadata': '0',
-          'data-input-position': 'top',
-          'data-theme': giscusTheme(),
-          'data-lang': document.documentElement.getAttribute('lang') || 'zh-CN',
-          'data-loading': 'lazy',
-        };
-        Object.keys(attrs).forEach(function (k) { s.setAttribute(k, attrs[k]); });
+        // 每篇文章一个 Issue：用标题当 issue-term（同一篇文章标题唯一；正文页标题由本脚本设置）
+        s.setAttribute('repo', repo);
+        s.setAttribute('issue-term', 'title');
+        s.setAttribute('label', 'comment');
+        s.setAttribute('theme', commentsTheme());
         slot.appendChild(s);
       };
     }
 
-    // 主题切换时同步评论框
     if (window.MutationObserver) {
       new MutationObserver(function () {
-        var frame = slot.querySelector('iframe.giscus-frame');
+        var frame = slot.querySelector('iframe.utterances-frame');
         if (frame && frame.contentWindow) {
-          frame.contentWindow.postMessage({ giscus: { setConfig: { theme: giscusTheme() } } }, 'https://giscus.app');
+          frame.contentWindow.postMessage({ type: 'set-theme', theme: commentsTheme() }, 'https://utteranc.es');
         }
       }).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
     }
