@@ -35,14 +35,14 @@
 
 <header class="wrap start-top">
   <span class="lang">
-    <a href="zh/" aria-current="true">简</a>
-    <a href="zh-hant/">繁</a>
-    <a href="en/">EN</a>
+    <a data-lang="zh" href="zh/" aria-current="true">简</a>
+    <a data-lang="zh-hant" href="zh-hant/">繁</a>
+    <a data-lang="en" href="en/">EN</a>
   </span>
       <button type="button" class="theme-toggle" data-theme-toggle
               aria-pressed="false"
               data-label-to-dark="切换到暗色主题" data-label-to-light="切换到亮色主题">
-        <span class="sr-only">切换主题</span>
+        <span class="sr-only" data-i18n="theme">切换主题</span>
         <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true">
           <circle cx="12" cy="12" r="4.2"/>
           <path d="M12 3v2.2M12 18.8V21M3 12h2.2M18.8 12H21M5.6 5.6l1.6 1.6M16.8 16.8l1.6 1.6M18.4 5.6l-1.6 1.6M7.2 16.8l-1.6 1.6"/>
@@ -54,15 +54,15 @@
 </header>
 
 <main class="start-main">
-  <p class="start-kicker rise">Personal site</p>
+  <p class="start-kicker rise" data-i18n="kicker">Personal site</p>
   <h1 class="start-name rise rise-1">Fragmented<b>_</b>Chaos</h1>
   <div class="start-rule rise rise-1" aria-hidden="true"></div>
   <div class="start-actions rise rise-2">
-    <a class="btn btn-primary" href="zh/">进入 <span class="arrow" aria-hidden="true">→</span></a>
-    <a class="btn" href="old/">访问旧版</a>
+    <a class="btn btn-primary" data-i18n="enter" href="zh/">进入 <span class="arrow" aria-hidden="true">→</span></a>
+    <a class="btn" data-i18n="old" href="old/">访问旧版</a>
   </div>
 </main>
 
-<script src="assets/site.js?v=97843208" defer></script>
+<script src="assets/site.js?v=198ada40" defer></script>
 </body>
 </html>

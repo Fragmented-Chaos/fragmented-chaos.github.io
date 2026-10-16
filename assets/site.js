@@ -136,12 +136,76 @@
     try { fn(); } catch (err) { if (window.console) console.error('[site] ' + label + ' 初始化失败', err); }
   }
 
+  // 起始页多语言：简/繁/EN 在页内切换文案（不跳转），「进入」跟随所选语言。
+  // 链接的 href 仍指向对应语言首页 —— 没有 JS 时它们照样是可用入口（渐进增强）。
+  function setupStartLang() {
+    var links = document.querySelectorAll('.start-top .lang a[data-lang]');
+    if (!links.length) return;
+
+    var D = {
+      'zh':      { kicker: '个人网站',    enter: '进入', old: '访问旧版', theme: '切换主题',
+                   toDark: '切换到暗色主题', toLight: '切换到亮色主题', home: 'zh/', htmlLang: 'zh-CN' },
+      'zh-hant': { kicker: '個人網站',    enter: '進入', old: '訪問舊版', theme: '切換主題',
+                   toDark: '切換到暗色主題', toLight: '切換到亮色主題', home: 'zh-hant/', htmlLang: 'zh-Hant' },
+      'en':      { kicker: 'Personal site', enter: 'Enter', old: 'Old version', theme: 'Toggle theme',
+                   toDark: 'Switch to dark theme', toLight: 'Switch to light theme', home: 'en/', htmlLang: 'en' }
+    };
+
+    // 初始语言：?lang= → 上次选择 → 浏览器语言 → 中文
+    var fromUrl = /[?&]lang=(zh-hant|zh|en)\b/.exec(location.search);
+    var stored = null;
+    try { stored = localStorage.getItem('site-v2.lang'); } catch (e) { /* 隐私模式忽略 */ }
+    var nav = (navigator.language || 'en').toLowerCase();
+    var guess = /^zh-(hant|tw|hk|mo)/.test(nav) ? 'zh-hant' : (/^zh/.test(nav) ? 'zh' : 'en');
+    var lang = (fromUrl && fromUrl[1]) || stored || guess;
+    if (!D[lang]) lang = 'zh';
+
+    function apply(l) {
+      var d = D[l];
+      document.documentElement.setAttribute('lang', d.htmlLang);
+
+      Array.prototype.forEach.call(document.querySelectorAll('[data-i18n]'), function (el) {
+        var v = d[el.getAttribute('data-i18n')];
+        if (v === undefined) return;
+        // 「进入 →」这种：只换前导文本节点，保留箭头 span
+        if (el.firstChild && el.firstChild.nodeType === 3) el.firstChild.nodeValue = v + ' ';
+        else el.textContent = v;
+      });
+
+      var enter = document.querySelector('.start-actions .btn-primary');
+      if (enter) enter.setAttribute('href', d.home);
+
+      var tt = document.querySelector('[data-theme-toggle]');
+      if (tt) {
+        tt.setAttribute('data-label-to-dark', d.toDark);
+        tt.setAttribute('data-label-to-light', d.toLight);
+      }
+
+      Array.prototype.forEach.call(links, function (a) {
+        if (a.getAttribute('data-lang') === l) a.setAttribute('aria-current', 'true');
+        else a.removeAttribute('aria-current');
+      });
+
+      try { localStorage.setItem('site-v2.lang', l); } catch (e) { /* 忽略 */ }
+    }
+
+    Array.prototype.forEach.call(links, function (a) {
+      a.addEventListener('click', function (e) {
+        e.preventDefault();                       // 页内切换，不跳转
+        apply(a.getAttribute('data-lang'));
+      });
+    });
+
+    apply(lang);
+  }
+
   function ready(fn) {
     if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', fn);
     else fn();
   }
 
   ready(function () {
+    safe('起始页语言', setupStartLang);
     safe('Theme', setupTheme);
     safe('Clock', setupClock);
     safe('统计', setupStats);
