@@ -550,7 +550,9 @@ button:focus-visible {
    原来正文只有 max-width: 42rem 而没有 auto 边距，宽屏上会贴着左边、
    右侧空一大片。这里把页头 / 规格面板 / 正文 / 评论区收进同一条居中的内容列，
    左右留白相等，正文与面板左边缘也仍然对齐。 */
-body.doc main .wrap { max-width: 46rem; }
+/* 用 --max 覆盖：页头、正文、页脚**全部**收进同一条 46rem 居中列，
+   这样品牌名与正文左边缘对齐（原来页头/页脚是 60rem，比正文宽 344px，左右都不齐）。 */
+body.doc { --max: 46rem; }
 body.doc .post-body { max-width: none; }
 
 /* ---------- 窄屏（手机 / 小屏，≤560px）----------
@@ -562,8 +564,10 @@ body.doc .post-body { max-width: none; }
   html { font-size: 18px; -webkit-text-size-adjust: 100%; }
   .wrap { padding: 0 1.1rem; }
 
-  /* 顶栏与导航：允许换行，点击区抬到 44px */
-  .top-in { flex-wrap: wrap; height: auto; padding: 0.7rem 0; row-gap: 0.35rem; }
+  /* 顶栏与导航：允许换行，点击区抬到 44px；
+     左右内边距必须与正文的 .wrap 一致（否则页头内容会比正文靠边 20px） */
+  .top-in, .site-footer .foot { padding-left: 1.1rem; padding-right: 1.1rem; }
+  .top-in { flex-wrap: wrap; height: auto; padding-top: 0.7rem; padding-bottom: 0.7rem; row-gap: 0.35rem; }
   .nav { flex-wrap: wrap; row-gap: 0.25rem; column-gap: 1.1rem; }
   .nav > a { display: inline-flex; align-items: center; min-height: 2.75rem; padding: 0 0.1rem; }
   .nav .lang { column-gap: 0.9rem; }
