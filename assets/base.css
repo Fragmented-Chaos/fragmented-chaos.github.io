@@ -512,7 +512,10 @@ button:focus-visible {
   .start-rule { width: min(22rem, 70vw); height: 1px; background-color: var(--line); }
 /* 起始页的两个入口（进入 / 访问旧版）并排；窄屏自动换行，不挤在一行 */
 .start-actions { display: flex; flex-wrap: wrap; gap: 0.75rem; justify-content: center; align-items: center; }
-  .start-foot { padding-bottom: 2.25rem; text-align: center; font-family: var(--mono); font-size: 0.72rem; color: var(--muted); }
+  /* 页脚第二行：最后更新日期（由 tools/stamp_updated.py 在发布时写入当天日期） */
+.foot-updated { margin-top: 0.45rem; display: block; font-family: var(--mono); font-size: 0.72rem; color: var(--muted); }
+
+.start-foot { padding-bottom: 2.25rem; text-align: center; font-family: var(--mono); font-size: 0.72rem; color: var(--muted); }
 
 /* ---------- 博客 ---------- */
 .blog-status { margin: 0; color: var(--soft); font-family: var(--mono); font-size: 0.84rem; }
@@ -862,3 +865,69 @@ body::before {
   filter: none;
 }
 */
+
+/* ---------- 图片灯箱（assets/lightbox.js）---------- */
+.lb-zoomable { cursor: zoom-in; }            /* hmm 会被全站 cursor 覆盖，见下面 photo 光标规则 */
+.lb {
+  position: fixed; inset: 0; z-index: 60;
+  display: grid; place-items: center;
+  padding: 3vmin;
+  /* 深色蒙版：灯箱不是站点的一部分，图才是主体 —— 用固定的暗色把背景压下去，
+     两个主题下都让画面跳出来（浅色主题用浅蒙版会糊成一片灰雾）。 */
+  background-color: color-mix(in srgb, #0a0b0f 86%, transparent);
+}
+.lb[hidden] { display: none; }
+.lb-figure { margin: 0; display: flex; flex-direction: column; align-items: center; gap: 0.85rem; max-width: 94vw; }
+.lb-img {
+  max-width: min(94vw, 1500px); max-height: 82vh;
+  width: auto; height: auto;
+  border: 1px solid var(--line-soft); border-radius: 12px;
+  background-color: var(--bg-soft);
+  box-shadow: 0 40px 110px -30px rgba(0, 0, 0, 0.85);
+}
+.lb-cap { margin: 0; max-width: 70ch; text-align: center; color: #d6d1c6; font-size: 0.86rem; line-height: 1.6; }
+.lb-cap[hidden] { display: none; }
+.lb-count { font-family: var(--mono); font-size: 0.72rem; color: #9d988c; }
+.lb-close {
+  position: absolute; top: max(1rem, 2.5vmin); right: max(1rem, 2.5vmin);
+  width: 2.6rem; height: 2.6rem; border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.28); background-color: rgba(255, 255, 255, 0.08);
+  color: #f5f2ea; font-size: 1.3rem; line-height: 1;
+}
+/* 灯箱打开时锁住页面滚动，避免背景跟着滑 */
+.lb-open, .lb-open body { overflow: hidden; }
+@media (prefers-reduced-motion: no-preference) {
+  .lb-img { animation: lb-in 0.18s ease-out both; }
+  @keyframes lb-in { from { opacity: 0; transform: scale(0.985); } to { opacity: 1; transform: none; } }
+}
+
+/* ---------- 回到顶部按钮（site.js 注入）---------- */
+.to-top {
+  position: fixed; right: max(1rem, 2.2vmin); bottom: max(1rem, 2.2vmin); z-index: 40;
+  width: 2.75rem; height: 2.75rem; border-radius: 50%;
+  display: grid; place-items: center;
+  border: 1px solid var(--line);
+  background-color: color-mix(in srgb, var(--bg) 78%, transparent);
+  -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px);
+  color: var(--ink);
+  box-shadow: 0 10px 30px -18px rgba(0, 0, 0, 0.55);
+}
+.to-top[hidden] { display: none; }
+.to-top:hover { background-color: color-mix(in srgb, var(--bg) 92%, transparent); }
+
+/* ---------- 键盘无障碍：跳到正文 + 暗底焦点环 ---------- */
+/* 排在 Tab 顺序第一位；平时移出视口，聚焦时滑进来（不做 display:none，否则焦点会丢失） */
+.skip-link {
+  position: fixed; top: 0.5rem; left: 0.5rem; z-index: 80;
+  transform: translateY(-160%);
+  padding: 0.6rem 1rem; border-radius: 999px;
+  background-color: var(--ink); color: var(--bg);
+  font-family: var(--mono); font-size: 0.82rem;
+  text-decoration: none;
+  box-shadow: 0 10px 30px -14px rgba(0, 0, 0, 0.6);
+}
+.skip-link:focus { transform: translateY(0); }
+
+/* 灯箱是暗底，站点默认的赭红焦点环在上面看不清，换亮色 */
+.lb :focus-visible { outline-color: #f5f2ea; }
+.lb-close:focus-visible { outline: 2px solid #f5f2ea; outline-offset: 3px; }

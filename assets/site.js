@@ -199,6 +199,45 @@
     apply(lang);
   }
 
+  // 回到顶部：滚过一屏后右下角浮出一个小按钮。
+  // - 不用改任何 HTML（纯 JS 注入），27 个页面自动都有；
+  // - 到顶时按钮 hidden，避免键盘 Tab 到一个看不见的按钮；
+  // - 尊重 prefers-reduced-motion：不想看动画就瞬间跳。
+  function setupToTop() {
+    var label = {
+      'zh-CN': '回到顶部', 'zh-Hans': '回到顶部', 'zh-Hant': '回到頂部', 'en': 'Back to top'
+    }[(document.documentElement.getAttribute('lang') || 'zh-CN')] || '回到顶部';
+
+    var btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'to-top';
+    btn.setAttribute('aria-label', label);
+    btn.title = label;
+    btn.innerHTML = '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" ' +
+                    'stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
+                    '<path d="M12 19V5M5 12l7-7 7 7"/></svg>';
+    btn.hidden = true;
+    document.body.appendChild(btn);
+
+    function update() {
+      var show = (window.scrollY || document.documentElement.scrollTop) > window.innerHeight * 0.9;
+      if (show === !btn.hidden) return;
+      btn.hidden = !show;
+    }
+
+    btn.addEventListener('click', function () {
+      var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      window.scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' });
+      // 回到顶后把焦点交给页面开头，键盘用户不用再 Tab 一遍
+      var first = document.querySelector('.skip-link, main h1, main');
+      if (first) { first.setAttribute('tabindex', '-1'); first.focus({ preventScroll: true }); }
+    });
+
+    window.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update);
+    update();
+  }
+
   function ready(fn) {
     if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', fn);
     else fn();
@@ -210,5 +249,6 @@
     safe('Clock', setupClock);
     safe('统计', setupStats);
     safe('导航折叠', setupNavToggle);
+    safe('回到顶部', setupToTop);
   });
 })();
