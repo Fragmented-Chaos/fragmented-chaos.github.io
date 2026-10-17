@@ -931,3 +931,10 @@ body::before {
 /* 灯箱是暗底，站点默认的赭红焦点环在上面看不清，换亮色 */
 .lb :focus-visible { outline-color: #f5f2ea; }
 .lb-close:focus-visible { outline: 2px solid #f5f2ea; outline-offset: 3px; }
+
+/* 模组列表：行内只有「编号 / 名称 / ↗」三列（首页的「站内」列表仍用原来的 .row 布局，
+   所以这条只作用于加了 .mods-list 的那一个列表） */
+.index.mods-list .row { grid-template-columns: 3.25rem minmax(9rem, 1fr) 1.75rem; }
+@media (max-width: 760px) {
+  .index.mods-list .row { grid-template-columns: 2.25rem 1fr 1.75rem; }
+}
