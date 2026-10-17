@@ -183,7 +183,6 @@ button:focus-visible {
   border-radius: 8px;
   background-color: transparent;
   color: var(--soft);
-  cursor: pointer;
   transition: color 0.15s ease, border-color 0.15s ease, background-color 0.15s ease;
 }
 
@@ -211,7 +210,6 @@ button:focus-visible {
   color: var(--ink);
   font: inherit;
   font-size: 0.95rem;
-  cursor: pointer;
   transition: border-color 0.16s ease, background-color 0.16s ease, color 0.16s ease;
 }
 
@@ -423,7 +421,6 @@ button:focus-visible {
   color: inherit;
   font: inherit;
   text-align: left;
-  cursor: pointer;
   transition: color 0.16s ease, padding-left 0.16s ease;
 }
 
@@ -601,7 +598,7 @@ body.doc .post-body { max-width: none; }
     display: inline-flex; align-items: center; justify-content: center;
     width: 2.75rem; height: 2.75rem; margin-left: 0.1rem;
     border: 1px solid var(--line); border-radius: 10px;
-    background-color: var(--bg-soft); color: var(--ink); cursor: pointer;
+    background-color: var(--bg-soft); color: var(--ink);
   }
   .top-in[data-nav-open="true"] .nav-toggle .bars i:nth-child(1) { transform: translateY(6px) rotate(45deg); }
   .top-in[data-nav-open="true"] .nav-toggle .bars i:nth-child(2) { opacity: 0; }
@@ -716,7 +713,33 @@ body.doc .post-body { max-width: none; }
    ============================================================ */
 
 /* ---------- ① 底色归位：html 持有不透明底色，body 透明 ---------- */
-html { background-color: var(--bg); }
+html {
+  background-color: var(--bg);
+  /* 全站光标：统一风格（紫水晶），但按状态区分 —— 四个状态四个文件：
+       default 默认       = 官方紫水晶镜像（32px，热点=左上尖 4 4）
+       hover   悬停可点   = 同一颗提亮 + 放大到 40px（热点 5 5）
+       text    文本选择   = 紫水晶配色的 I 形（32px，热点=正中 16 16）
+       active  按下       = 同一颗压暗（32px，热点 4 4） */
+  cursor: url("images/cursor.png") 4 4, auto;
+}
+
+/* 文本类元素：用 I 形光标，选中意图明确 */
+p, li, dd, dt, blockquote, td, th, figcaption, .post-body, .post-body p,
+h1, h2, h3, h4, h5, h6, .hero p, .about p, .spec dd {
+  cursor: url("images/cursor-text.png") 16 16, text;
+}
+
+/* 可交互元素：悬停用更亮更大的那颗 */
+a, a:link, a:visited, button, [role="button"], summary, label[for],
+input, select, textarea, .btn, .chips a, .posts a, .theme-toggle, .nav-toggle {
+  cursor: url("images/cursor-hover.png") 5 5, pointer;
+}
+
+/* 按下：压暗那颗（覆盖悬停态） */
+a:active, button:active, [role="button"]:active, summary:active,
+.btn:active, .theme-toggle:active, .nav-toggle:active, .chips a:active, .posts a:active {
+  cursor: url("images/cursor-active.png") 4 4, pointer;
+}
 body { background-color: transparent; }
 
 /* ---------- ② 背景两层：::before 放图（最底），::after 放主题色蒙版 ---------- */
