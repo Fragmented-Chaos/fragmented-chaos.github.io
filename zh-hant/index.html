@@ -24,12 +24,20 @@
 </script>
 <link rel="icon" type="image/png" sizes="64x64" href="../favicon.png">
 <link rel="apple-touch-icon" href="../apple-touch-icon.png">
-<link rel="stylesheet" href="../assets/base.css?v=9e06fa22">
+<link rel="preload" href="../assets/fonts/quicksand-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../assets/fonts/caveat-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="../assets/base.css?v=cbc7b286">
 <style>
   .hero { padding-top: 6rem; padding-bottom: 4.5rem; }
   .kicker { margin: 0 0 1.5rem; font-size: 0.74rem; font-weight: 600; letter-spacing: 0.22em; text-transform: uppercase; color: var(--soft); }
   .hero h1 { margin: 0; font-size: clamp(2.4rem, 6.6vw, 4.6rem); line-height: 1.06; letter-spacing: -0.035em; font-weight: 650; }
   .hero h1 .name { display: inline-block; font-family: var(--hand); font-size: 1.14em; font-weight: 600; color: var(--accent); letter-spacing: 0.01em; }
+  /* hand-name-mobile：手写字体没加载时会退到更宽的备用字体（实测宽 95%），
+     窄屏把名字压小一档，配合下面 base.css 里的预加载，避免贴边/溢出 */
+  @media (max-width: 560px) {
+    .hero h1 { font-size: clamp(1.95rem, 8.6vw, 2.6rem); }
+    .hero h1 .name { font-size: 1.05em; }
+  }
   .status { display: flex; flex-wrap: wrap; align-items: center; gap: 0.6rem 2rem; margin-top: 2.75rem; padding-top: 1.4rem; border-top: 1px solid var(--line); font-family: var(--mono); font-size: 0.76rem; color: var(--soft); }
   .status b { color: var(--ink); font-weight: 500; }
   .dot { display: inline-block; width: 6px; height: 6px; margin-right: 0.45rem; border-radius: 50%; background-color: var(--accent); }
@@ -138,7 +146,7 @@
     <span>首頁</span>
   </div>
 <div class="wrap foot foot-updated">
-    <span>最後更新 <time datetime="2026-10-17" data-updated>2026-10-17</time></span>
+    <span>最後更新 <time datetime="2026-10-18" data-updated>2026-10-18</time></span>
   </div>
 </footer>
 

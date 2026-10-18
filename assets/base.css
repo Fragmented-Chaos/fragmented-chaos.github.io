@@ -507,7 +507,9 @@ button:focus-visible {
 .start-top { display: flex; align-items: center; justify-content: flex-end; gap: 1.25rem; height: 4.25rem; }
   .start-main { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1.75rem; padding: 2rem 1.5rem 4rem; text-align: center; }
   .start-kicker { margin: 0; font-family: var(--mono); font-size: 0.74rem; letter-spacing: 0.28em; text-transform: uppercase; color: var(--muted); }
-  .start-name { margin: 0; font-family: var(--hand); font-size: clamp(3.4rem, 13vw, 7.5rem); line-height: 0.98; font-weight: 600; }
+  /* 站点名（手写体）：13vw 之前会让文字占到屏宽 98%（477px 时 485/492），
+   到 360px 手机上就贴边甚至溢出，所以取 11.5vw 并把上限降到 6rem。 */
+.start-name { margin: 0; font-family: var(--hand); font-size: clamp(3.4rem, 13vw, 7.5rem); line-height: 0.98; font-weight: 600; max-width: 100%; overflow-wrap: anywhere; }
   .start-name b { color: var(--accent); font-weight: 600; }
   .start-rule { width: min(22rem, 70vw); height: 1px; background-color: var(--line); }
 /* 起始页的两个入口（进入 / 访问旧版）并排；窄屏自动换行，不挤在一行 */
@@ -635,7 +637,9 @@ body.doc .post-body { max-width: none; }
 
   /* 首屏与标题 */
   h1, .start-name { font-size: clamp(1.9rem, 8.5vw, 2.6rem); }
-  .start-name { font-size: clamp(2.9rem, 15vw, 4.4rem); }
+  /* 15vw 会让名字占到屏宽 98%，360px 手机上就贴边/溢出；11.5vw 留出边距 */
+  /* 再留一点余量：Caveat 缺失时备用字体更宽（实测最坏 1.37 倍），9.5vw 下仍在 88% 以内 */
+  .start-name { font-size: clamp(2.2rem, 9.5vw, 4.4rem); }
   .about-name { font-size: clamp(2.2rem, 11vw, 3.2rem); }
   .page-head { padding-top: 3rem; padding-bottom: 1.75rem; }
 
@@ -937,4 +941,19 @@ body::before {
 .index.mods-list .row { grid-template-columns: 3.25rem minmax(9rem, 1fr) 1.75rem; }
 @media (max-width: 760px) {
   .index.mods-list .row { grid-template-columns: 2.25rem 1fr 1.75rem; }
+}
+
+/* ---------- 窄屏：长串不许撑出屏幕 ----------
+   实测（477px）：Cursor Kit 页有 7 个代码块，内容宽 451~903px、容器只有 344px，
+   在手机上要么被裁掉、要么只能横向拖，很难读。窄屏下让代码块软换行，
+   长路径 / 长型号 / 行内代码也允许在任意处断行（桌面端不受影响）。 */
+@media (max-width: 560px) {
+  .post-body pre { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  .post-body pre code { white-space: pre-wrap; overflow-wrap: anywhere; }
+  .post-body :not(pre) > code { overflow-wrap: anywhere; }
+  .post-body a { overflow-wrap: anywhere; }
+  .post-body { overflow-wrap: break-word; }
+  .spec dt, .spec dd { min-width: 0; overflow-wrap: anywhere; }
+  .mod-body { overflow-wrap: break-word; }
+  .mod-body :not(pre) > code { overflow-wrap: anywhere; }
 }
