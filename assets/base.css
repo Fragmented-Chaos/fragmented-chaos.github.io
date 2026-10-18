@@ -957,3 +957,9 @@ body::before {
   .mod-body { overflow-wrap: break-word; }
   .mod-body :not(pre) > code { overflow-wrap: anywhere; }
 }
+
+/* ---------- 404 页的站内导航 ---------- */
+.nav-404 { display: flex; flex-wrap: wrap; gap: 1.25rem; justify-content: center; margin: 0 0 0.5rem; font-size: 0.92rem; }
+.nav-404 a { color: var(--soft); text-decoration: none; border-bottom: 1px solid transparent; padding-bottom: 1px; }
+.nav-404 a:hover { color: var(--ink); border-color: var(--accent); }
+

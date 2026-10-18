@@ -18,7 +18,9 @@
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="preload" href="/assets/fonts/quicksand-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/assets/fonts/caveat-latin.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/assets/base.css?v=cbc7b286">
+<link rel="preload" as="image" href="/assets/images/bg-dark.webp">
+<link rel="preload" as="image" href="/assets/images/bg-light.webp" media="(prefers-color-scheme: light)">
+<link rel="stylesheet" href="/assets/base.css?v=08000286">
 <noscript><style>
 /* JS 不可用时兜底：直接把导航链接平铺显示，别让菜单变成打不开的死结 */
 @media (max-width: 560px) {
@@ -37,6 +39,15 @@
   </span>
 </header>
 
+<nav class="wrap nav-404" aria-label="站内导航">
+  <a data-nav="mods" href="/zh/mods/">模组</a>
+  <a data-nav="blog" href="/zh/blog/">博客</a>
+  <a data-nav="music" href="/zh/music/">音乐</a>
+  <a data-nav="experience" href="/zh/experience/">经历</a>
+  <a data-nav="about" href="/zh/about/">关于</a>
+</nav>
+
+
 <main class="start-main">
   <h1 class="start-name rise rise-1">404</h1>
   <div class="start-rule rise rise-1" aria-hidden="true"></div>
@@ -45,6 +56,26 @@
   </div>
 </main>
 
+
+<script>
+  /* 404 页没有固定语言：按 ?lang= → 浏览器语言猜一个，把导航指到对应语言目录 */
+  (function () {
+    var LABEL = {
+      'zh':      { mods: '模组', blog: '博客', music: '音乐', experience: '经历', about: '关于' },
+      'zh-hant': { mods: '模組', blog: '部落格', music: '音樂', experience: '經歷', about: '關於' },
+      'en':      { mods: 'Mods', blog: 'Blog', music: 'Music', experience: 'Experience', about: 'About' }
+    };
+    var m = /[?&]lang=(zh-hant|zh|en)\b/.exec(location.search);
+    var nav = (navigator.language || 'en').toLowerCase();
+    var lang = (m && m[1]) || (/^zh-(hant|tw|hk|mo)/.test(nav) ? 'zh-hant' : (/^zh/.test(nav) ? 'zh' : 'en'));
+    if (!LABEL[lang]) lang = 'zh';
+    Array.prototype.forEach.call(document.querySelectorAll('.nav-404 a[data-nav]'), function (a) {
+      var key = a.getAttribute('data-nav');
+      a.setAttribute('href', '/' + lang + '/' + key + '/');
+      a.textContent = LABEL[lang][key];
+    });
+  })();
+</script>
 <script src="/assets/site.js?v=53a39227" defer></script>
 </body>
 </html>
