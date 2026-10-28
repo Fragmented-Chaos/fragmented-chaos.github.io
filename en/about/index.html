@@ -28,7 +28,7 @@
 <link rel="preload" href="../../assets/fonts/caveat-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" as="image" href="../../assets/images/bg-dark.webp">
 <link rel="preload" as="image" href="../../assets/images/bg-light.webp" media="(prefers-color-scheme: light)">
-<link rel="stylesheet" href="../../assets/base.css?v=08000286">
+<link rel="stylesheet" href="../../assets/base.css?v=60db5860">
 <noscript><style>
 /* JS 不可用时兜底：直接把导航链接平铺显示，别让菜单变成打不开的死结 */
 @media (max-width: 560px) {
@@ -91,7 +91,15 @@
     <div class="panel rise">
       <h3>Related links</h3>
       <ul class="chips">
-        <li><a href="https://center.mcmod.cn/626584/" target="_blank" rel="noopener">mcmod.cn <small>MC百科</small></a></li>
+        <li class="chip-menu">
+          <details>
+            <summary>mcmod.cn <span class="caret" aria-hidden="true">▾</span></summary>
+            <ul class="chip-menu-list">
+              <li><a href="https://center.mcmod.cn/626584/" target="_blank" rel="noopener">StewedTuba73416</a></li>
+              <li><a href="https://center.mcmod.cn/656227/" target="_blank" rel="noopener">Fragmented_Chaos</a></li>
+            </ul>
+          </details>
+        </li>
         <li><a href="https://klpbbs.com/space-uid-2340710.html" target="_blank" rel="noopener">KLPBBS <small>forum</small></a></li>
         <li><a href="https://space.bilibili.com/3546896511536057" target="_blank" rel="noopener">Bilibili <small>videos</small></a></li>
         <li><a href="https://modrinth.com/user/Fragmented_Chaos" target="_blank" rel="noopener">Modrinth <small>downloads</small></a></li>
@@ -107,6 +115,33 @@
           <dt>Running for</dt><dd><span data-stats-days data-since="2026-08-07">—</span> days</dd>
           <dt>Languages</dt><dd>简体 · 繁體 · English</dd>
       </dl>
+        <div class="wiki-accounts" data-wiki-accounts-list></div>
+    </div>
+
+    <div class="panel rise wiki-stats" style="margin-top:1rem"
+         data-wiki data-aria-template="{n} days of contributions in {y}" data-label-edit="Edits" data-label-review="Submissions" data-src="../../data/wiki-stats.json">
+      <h3>Wiki contributions</h3>
+      <p class="wiki-note">
+          MC百科 · data updated <time data-wiki-updated>—</time>
+        </p>
+        <dl class="spec" data-wiki-tpl hidden>
+          <dt>Edits</dt><dd><span data-f="edits">—</span></dd>
+          <dt>Submissions</dt><dd><span data-f="reviews">—</span></dd>
+          <dt>Bytes edited</dt><dd><span data-f="bytes">—</span></dd>
+          <dt>Comments</dt><dd><span data-f="comments">—</span></dd>
+          <dt>Tutorials</dt><dd><span data-f="tutorials">—</span></dd>
+          <dt>Joined</dt><dd><span data-f="registered">—</span></dd>
+        </dl>
+        <div class="wiki-accounts" data-wiki-accounts-list></div>
+      <details class="wiki-more">
+        <summary>Show a year's edit heatmap</summary>
+        <div class="wiki-years" data-wiki-years hidden></div>
+        <div class="wiki-scroll">
+          <div class="wiki-months" data-wiki-months hidden></div>
+          <div class="wiki-heat" data-wiki-heat hidden></div>
+        </div>
+      </details>
+      <div class="wiki-tip" data-wiki-tip hidden></div>
     </div>
   </section>
 </main>
@@ -117,11 +152,12 @@
     <span>About</span>
   </div>
 <div class="wrap foot foot-updated">
-    <span>Last updated <time datetime="2026-10-19" data-updated>2026-10-19</time></span>
+    <span>Last updated <time datetime="2026-10-28" data-updated>2026-10-28</time></span>
   </div>
 </footer>
 
-<script src="../../assets/site.js?v=53a39227" defer></script>
+<script src="../../assets/site.js?v=eb0afa2b" defer></script>
 <script src="../../assets/lightbox.js" defer></script>
+<script src="../../assets/wiki-stats.js" defer></script>
 </body>
 </html>

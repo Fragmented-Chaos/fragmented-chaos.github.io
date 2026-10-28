@@ -24,6 +24,9 @@
   src: url("fonts/caveat-latin.woff2") format("woff2");
 }
 
+/* 选中文字：默认的蓝紫色在这套暖色里很扎眼，换成强调色的低透明度版 */
+::selection { background-color: color-mix(in srgb, var(--accent) 28%, transparent); color: var(--ink); }
+
 /* ---------- 令牌：暗色（默认） ---------- */
 :root {
   --bg: #0c0d10;
@@ -33,6 +36,7 @@
   --muted: #bdb6a8;
   --line: #23262d;
   --line-soft: #1a1c22;
+  --glass-hi: rgba(255, 255, 255, 0.09);   /* 托盘顶边高光：0% 透明度的玻璃靠它才有厚度 */
   --accent: #c85a2e;
   --accent-ink: #ffd9c7;
   --font: "Quicksand", -apple-system, BlinkMacSystemFont, "Segoe UI",
@@ -55,6 +59,7 @@
   --ink: #17150f;
   --soft: #55524a;
   --muted: #7d7869;
+  --glass-hi: rgba(255, 255, 255, 0.6);
   --line: #e2ddd2;
   --line-soft: #ece7dc;
   --accent: #b8442a;
@@ -71,6 +76,7 @@
     --muted: #605c51;
     --line: #e2ddd2;
     --line-soft: #ece7dc;
+    --glass-hi: rgba(255, 255, 255, 0.6);
     --accent: #b8442a;
     --accent-ink: #7c2d1b;
     --bg-image: url("images/bg-light.webp");
@@ -230,7 +236,7 @@ button:focus-visible {
   margin-bottom: 2.25rem;
 }
 
-.sec-head h2 { margin: 0; font-size: 1.02rem; font-weight: 600; letter-spacing: 0.01em; }
+.sec-head h2 { margin: 0; font-size: 1.14rem; font-weight: 600; letter-spacing: -0.005em; }
 
 .sec-head span {
   font-size: 0.74rem;
@@ -249,13 +255,13 @@ button:focus-visible {
   grid-template-columns: 3.25rem minmax(9rem, 1fr) 1.5fr 1.75rem;
   align-items: center;
   gap: 1.25rem;
-  padding: 1.4rem 0.25rem;
+  padding: 1.1rem 0.25rem;
   transition: padding-left 0.18s ease, color 0.18s ease;
 }
 
 .row:hover { padding-left: 0.9rem; color: var(--accent); }
 .row .no { font-family: var(--mono); font-size: 0.74rem; color: var(--muted); }
-.row h3 { margin: 0; font-size: 1.3rem; font-weight: 600; letter-spacing: -0.02em; }
+.row h3 { margin: 0; font-size: 1.45rem; font-weight: 600; letter-spacing: -0.02em; }
 .row .desc { font-size: 0.84rem; color: var(--soft); }
 .row .go { font-size: 1.05rem; color: var(--muted); }
 .row:hover .go { color: var(--accent); }
@@ -335,6 +341,58 @@ button:focus-visible {
 /* 胶囊文字不换行、不收缩（否则会被压成一个字一行） */
 .chips a { white-space: nowrap; }
 .chips small { color: var(--muted); font-size: 0.68rem; }
+/* 相关链接里的折叠菜单（mc百科 有两个账号，收进一个小菜单） */
+/* 面板自带 backdrop-filter，会形成层叠上下文，导致下拉菜单被下一块面板盖住；
+   菜单打开时把所在面板整体抬起来 */
+.panel:has(.chip-menu details[open]) { position: relative; z-index: 5; }
+
+.chip-menu { position: relative; }
+.chip-menu > details > summary {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.4rem;
+  padding: 0.45rem 0.8rem;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background-color: var(--bg-soft);
+  font-family: var(--mono);
+  font-size: 0.8rem;
+  color: var(--ink);
+  cursor: pointer;
+  list-style: none;
+  white-space: nowrap;
+  transition: border-color 0.15s ease, color 0.15s ease;
+}
+.chip-menu > details > summary::-webkit-details-marker { display: none; }
+.chip-menu > details > summary:hover { border-color: var(--accent); color: var(--accent); }
+.chip-menu .caret { font-size: 0.7rem; color: var(--muted); }
+.chip-menu details[open] > summary { border-color: var(--accent); color: var(--accent); }
+.chip-menu details[open] .caret { transform: rotate(180deg); }
+.chip-menu-list {
+  position: absolute;
+  z-index: 30;
+  top: calc(100% + 0.35rem);
+  left: 0;
+  margin: 0;
+  padding: 0.3rem;
+  list-style: none;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background-color: color-mix(in srgb, var(--bg) 96%, transparent);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  box-shadow: 0 14px 34px -20px rgba(0, 0, 0, 0.6);
+}
+.chips .chip-menu-list a {
+  display: block;
+  padding: 0.35rem 0.6rem;
+  border: 0;
+  border-radius: 6px;
+  background-color: transparent;
+  white-space: nowrap;
+}
+.chips .chip-menu-list a:hover { background-color: var(--bg-soft); color: var(--accent); }
+
 
 /* ---------- 关于页（参考旧站主页：头像 + 名字 + 亦用名 + 问候 + 平台按钮） ---------- */
 
@@ -763,7 +821,7 @@ body::before {
   background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;
-  filter: saturate(0.7) contrast(0.95);      /* 照片褪一点色，别和主题色打架 */
+  filter: saturate(1.12) contrast(1.04);     /* 照片保一点色：蒙版本来就压得很白，再褪色就糊成一片奶油 */
 }
 body::after {
   z-index: -1;                               /* 压在图上、在内容之下 */
@@ -796,9 +854,12 @@ main:not(.start-main) {
   width: min(calc(var(--max) + 2.5rem), calc(100% - 3rem));
   margin-inline: auto;
   margin-block: 1.5rem;
-  border: 1px solid var(--line-soft);
+  border: 1px solid color-mix(in srgb, var(--line) 75%, transparent);
   border-radius: 24px;
-  box-shadow: 0 24px 60px -32px rgba(0, 0, 0, 0.5);
+  /* 顶边内高光 + 更聚的投影：0% 透明度的玻璃全靠这两条把"面"立起来 */
+  box-shadow:
+    inset 0 1px 0 var(--glass-hi),
+    0 18px 48px -28px rgba(0, 0, 0, 0.55);
 }
 
 /* ---------- ③c 托盘内的次级玻璃面 ----------
@@ -820,8 +881,11 @@ main:not(.start-main) {
    三层一起提到 88% 保持材质一致，蒙版同步加重兜住对比度。 */
 @media (max-width: 760px) {
   main:not(.start-main), .top, .site-footer {
-    -webkit-backdrop-filter: none;
-    backdrop-filter: none;
+    /* 窄屏也保留模糊，半径和饱和调小：手机 GPU 扛得住一层 10px；
+       关掉反而让照片细节直接顶到字上，玻璃感全没了。
+       内层次级面仍然不开 —— 掉帧是层数堆出来的，不是单层半径。 */
+    -webkit-backdrop-filter: blur(10px) saturate(112%);
+    backdrop-filter: blur(10px) saturate(112%);
     background-color: color-mix(in srgb, var(--bg) 18%, transparent);
   }
   main:not(.start-main) { width: 88%; margin-block: 1rem; }   /* 窄屏纵向更宝贵，空隙收紧一档 */
@@ -963,3 +1027,119 @@ body::before {
 .nav-404 a { color: var(--soft); text-decoration: none; border-bottom: 1px solid transparent; padding-bottom: 1px; }
 .nav-404 a:hover { color: var(--ink); border-color: var(--accent); }
 
+
+/* ---------- 关于页的「百科贡献」 ---------- */
+.wiki-note { margin: 0.4rem 0 1.1rem; font-size: 0.78rem; color: var(--soft); line-height: 1.6; }
+.wiki-note time { font-family: var(--mono); }
+
+/* 53 周 × 7 天：按列排周，行就是星期几 */
+.wiki-stats { position: relative; }
+.wiki-scroll { overflow-x: auto; margin-top: 1.2rem; padding-bottom: 4px; }
+/* 热力图默认收起：关于页是"看"的页面，一排可点的年份按钮太像控件 */
+/* 模板 dl 用 hidden 收起；.spec 有自己的 display，会让 hidden 失效，这里显式压掉 */
+.wiki-stats dl[hidden] { display: none; }
+
+/* 每个账号一块：标题一行，下面是它的数字 */
+.wiki-account { margin-top: 1.1rem; }
+.wiki-acct {
+  margin: 0 0 0.45rem;
+  font-size: 0.86rem;
+  font-weight: 600;
+  color: var(--ink);
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+}
+.wiki-acct small { font-weight: 400; font-size: 0.72rem; color: var(--muted); }
+.wiki-account .spec { margin: 0; }
+
+.wiki-more { margin-top: 1rem; }
+.wiki-more > summary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.2rem 0;
+  color: var(--soft);
+  font-size: 0.8rem;
+  cursor: pointer;
+  list-style: none;
+  transition: color 0.15s ease;
+}
+.wiki-more > summary::-webkit-details-marker { display: none; }
+.wiki-more > summary::before {
+  content: "▸";
+  font-size: 0.7rem;
+  transition: transform 0.15s ease;
+}
+.wiki-more[open] > summary::before { transform: rotate(90deg); }
+.wiki-more > summary:hover { color: var(--ink); }
+.wiki-years { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.8rem; }
+
+.wiki-years[hidden] { display: none; }
+.wiki-year {
+  padding: 0.16rem 0.55rem;
+  border: 1px solid var(--line-soft);
+  border-radius: 999px;
+  background-color: transparent;
+  color: var(--soft);
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  cursor: pointer;
+  transition: color 0.15s ease, border-color 0.15s ease, background-color 0.15s ease;
+}
+.wiki-year:hover { color: var(--ink); border-color: var(--line); }
+.wiki-year.on {
+  color: var(--accent-ink);
+  border-color: color-mix(in srgb, var(--accent) 45%, transparent);
+  background-color: color-mix(in srgb, var(--accent) 12%, transparent);
+}
+.wiki-cell.out { visibility: hidden; }
+
+.wiki-months {
+  display: grid;
+  column-gap: 3px;
+  margin-bottom: 6px;
+  font-family: var(--mono);
+  font-size: 0.62rem;
+  color: var(--muted);
+}
+.wiki-months span { white-space: nowrap; }
+.wiki-heat {
+  display: grid;
+  grid-auto-flow: column;
+  grid-template-rows: repeat(7, 9px);
+  grid-auto-columns: 9px;
+  gap: 3px;
+}
+/* 悬停气泡：原生 title 太慢又难看，自己画一个 */
+.wiki-tip {
+  position: absolute;
+  z-index: 5;
+  padding: 0.32rem 0.6rem;
+  border: 1px solid var(--line);
+  border-radius: 7px;
+  background-color: color-mix(in srgb, var(--bg) 94%, transparent);
+  color: var(--ink);
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  line-height: 1.4;
+  white-space: nowrap;
+  pointer-events: none;
+  box-shadow: 0 8px 20px -12px rgba(0, 0, 0, 0.55);
+}
+.wiki-tip[hidden] { display: none; }
+.wiki-cell {
+  border-radius: 2px;
+  background-color: color-mix(in srgb, var(--ink) 8%, transparent);
+  transition: transform 0.12s ease;
+}
+.wiki-cell.lv1 { background-color: color-mix(in srgb, var(--accent) 22%, transparent); }
+.wiki-cell.lv2 { background-color: color-mix(in srgb, var(--accent) 40%, transparent); }
+.wiki-cell.lv3 { background-color: color-mix(in srgb, var(--accent) 62%, transparent); }
+.wiki-cell.lv4 { background-color: color-mix(in srgb, var(--accent) 88%, transparent); }
+.wiki-cell:hover { transform: scale(1.35); }
+
+@media (max-width: 560px) {
+  .wiki-heat { grid-template-rows: repeat(7, 8px); grid-auto-columns: 8px; gap: 2px; }
+  .wiki-months { column-gap: 2px; }
+}

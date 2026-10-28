@@ -28,11 +28,11 @@
 <link rel="preload" href="../assets/fonts/caveat-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" as="image" href="../assets/images/bg-dark.webp">
 <link rel="preload" as="image" href="../assets/images/bg-light.webp" media="(prefers-color-scheme: light)">
-<link rel="stylesheet" href="../assets/base.css?v=08000286">
+<link rel="stylesheet" href="../assets/base.css?v=60db5860">
 <style>
-  .hero { padding-top: 6rem; padding-bottom: 4.5rem; }
+  .hero { padding-top: 4.5rem; padding-bottom: 3rem; }
   .kicker { margin: 0 0 1.5rem; font-size: 0.74rem; font-weight: 600; letter-spacing: 0.22em; text-transform: uppercase; color: var(--soft); }
-  .hero h1 { margin: 0; font-size: clamp(2.4rem, 6.6vw, 4.6rem); line-height: 1.06; letter-spacing: -0.035em; font-weight: 650; }
+  .hero h1 { margin: 0; font-size: clamp(2.4rem, 6.8vw, 5.2rem); line-height: 1.06; letter-spacing: -0.035em; font-weight: 650; }
   .hero h1 .name { display: inline-block; font-family: var(--hand); font-size: 1.14em; font-weight: 600; color: var(--accent); letter-spacing: 0.01em; }
   /* hand-name-mobile：手写字体没加载时会退到更宽的备用字体（实测宽 95%），
      窄屏把名字压小一档，配合下面 base.css 里的预加载，避免贴边/溢出 */
@@ -42,6 +42,20 @@
   }
   .status { display: flex; flex-wrap: wrap; align-items: center; gap: 0.6rem 2rem; margin-top: 2.75rem; padding-top: 1.4rem; border-top: 1px solid var(--line); font-family: var(--mono); font-size: 0.76rem; color: var(--soft); }
   .status b { color: var(--ink); font-weight: 500; }
+  /* 宽屏：左边标题、右边时间信息 —— 把首屏右半边那片空白用起来，
+     窄屏仍然上下排（时间行留作分隔线） */
+  @media (min-width: 761px) {
+    .hero { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; column-gap: 3rem; }
+    .status {
+      margin-top: 0; padding-top: 0; border-top: 0;
+      flex-direction: column; align-items: flex-end; gap: 0.35rem; text-align: right;
+    }
+    /* 右栏做成"时钟"：时间当展示元素，标签和日期陪着它。
+       红点在这里没有位置（会和标签挤成两行），靠跳动的秒数表示"活着"就够了 */
+    .status > span:first-child { display: flex; flex-direction: column; align-items: flex-end; gap: 0.15rem; }
+    .status .dot { display: none; }
+    .status b { font-size: 2.35rem; font-weight: 500; line-height: 1.05; letter-spacing: 0.02em; font-variant-numeric: tabular-nums; }
+  }
   .dot { display: inline-block; width: 6px; height: 6px; margin-right: 0.45rem; border-radius: 50%; background-color: var(--accent); }
   .cols { display: grid; grid-template-columns: 1fr 1.15fr; gap: 2.5rem; align-items: start; }
   @media (max-width: 760px) { .hero { padding-top: 4rem; padding-bottom: 3rem; } .cols { grid-template-columns: 1fr; gap: 1.75rem; } }
@@ -95,8 +109,10 @@
 
 <main id="main">
   <section class="wrap hero">
-    <p class="kicker rise">Personal site · English</p>
-    <h1 class="rise rise-1">Welcome to<br><span class="name">Fragmented_Chaos</span><br>personal site</h1>
+    <div class="hero-main">
+      <p class="kicker rise">Personal site · English</p>
+      <h1 class="rise rise-1">Welcome to<br><span class="name">Fragmented_Chaos</span><br>personal site</h1>
+    </div>
     <div class="status rise rise-2">
       <span><span class="dot" aria-hidden="true"></span>Local time <b data-clock>--:--:--</b></span>
       <span data-clock-date>—</span>
@@ -148,11 +164,11 @@
     <span>Home</span>
   </div>
 <div class="wrap foot foot-updated">
-    <span>Last updated <time datetime="2026-10-19" data-updated>2026-10-19</time></span>
+    <span>Last updated <time datetime="2026-10-28" data-updated>2026-10-28</time></span>
   </div>
 </footer>
 
-<script src="../assets/site.js?v=53a39227" defer></script>
+<script src="../assets/site.js?v=eb0afa2b" defer></script>
 <script src="../assets/lightbox.js" defer></script>
 </body>
 </html>

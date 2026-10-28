@@ -238,6 +238,24 @@
     update();
   }
 
+  // 相关链接里的折叠菜单（mc百科 两个账号）：点外面或按 Esc 收起来，
+  // 否则 <details> 会一直开着挡住下面的内容
+  function setupChipMenu() {
+    var menus = document.querySelectorAll('.chip-menu details');
+    if (!menus.length) return;
+    var closeAll = function () {
+      Array.prototype.forEach.call(menus, function (d) { d.open = false; });
+    };
+    document.addEventListener('click', function (e) {
+      Array.prototype.forEach.call(menus, function (d) {
+        if (d.open && !d.contains(e.target)) d.open = false;
+      });
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') closeAll();
+    });
+  }
+
   function ready(fn) {
     if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', fn);
     else fn();
@@ -250,5 +268,6 @@
     safe('统计', setupStats);
     safe('导航折叠', setupNavToggle);
     safe('回到顶部', setupToTop);
+    safe('相关链接菜单', setupChipMenu);
   });
 })();

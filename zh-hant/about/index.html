@@ -28,7 +28,7 @@
 <link rel="preload" href="../../assets/fonts/caveat-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" as="image" href="../../assets/images/bg-dark.webp">
 <link rel="preload" as="image" href="../../assets/images/bg-light.webp" media="(prefers-color-scheme: light)">
-<link rel="stylesheet" href="../../assets/base.css?v=08000286">
+<link rel="stylesheet" href="../../assets/base.css?v=60db5860">
 <noscript><style>
 /* JS 不可用时兜底：直接把导航链接平铺显示，别让菜单变成打不开的死结 */
 @media (max-width: 560px) {
@@ -91,7 +91,15 @@
     <div class="panel rise">
       <h3>相關連結</h3>
       <ul class="chips">
-        <li><a href="https://center.mcmod.cn/626584/" target="_blank" rel="noopener">mc百科 <small>MC百科</small></a></li>
+        <li class="chip-menu">
+          <details>
+            <summary>mc百科 <span class="caret" aria-hidden="true">▾</span></summary>
+            <ul class="chip-menu-list">
+              <li><a href="https://center.mcmod.cn/626584/" target="_blank" rel="noopener">StewedTuba73416</a></li>
+              <li><a href="https://center.mcmod.cn/656227/" target="_blank" rel="noopener">Fragmented_Chaos</a></li>
+            </ul>
+          </details>
+        </li>
         <li><a href="https://klpbbs.com/space-uid-2340710.html" target="_blank" rel="noopener">苦力怕論壇 <small>社群</small></a></li>
         <li><a href="https://space.bilibili.com/3546896511536057" target="_blank" rel="noopener">B 站 <small>影片</small></a></li>
         <li><a href="https://modrinth.com/user/Fragmented_Chaos" target="_blank" rel="noopener">Modrinth <small>下載</small></a></li>
@@ -107,6 +115,33 @@
           <dt>已運行</dt><dd><span data-stats-days data-since="2026-08-07">—</span> 天</dd>
           <dt>語言</dt><dd>簡體 · 繁體 · English</dd>
       </dl>
+        <div class="wiki-accounts" data-wiki-accounts-list></div>
+    </div>
+
+    <div class="panel rise wiki-stats" style="margin-top:1rem"
+         data-wiki data-aria-template="{y} 年 {n} 天有貢獻" data-label-edit="編輯" data-label-review="提交審核" data-src="../../data/wiki-stats.json">
+      <h3>百科貢獻</h3>
+      <p class="wiki-note">
+          MC百科 · 資料更新於 <time data-wiki-updated>—</time>
+        </p>
+        <dl class="spec" data-wiki-tpl hidden>
+          <dt>編輯</dt><dd><span data-f="edits">—</span> 次</dd>
+          <dt>提交審核</dt><dd><span data-f="reviews">—</span> 次</dd>
+          <dt>編輯字數</dt><dd><span data-f="bytes">—</span> 位元組</dd>
+          <dt>短評</dt><dd><span data-f="comments">—</span> 則</dd>
+          <dt>教學</dt><dd><span data-f="tutorials">—</span> 篇</dd>
+          <dt>註冊</dt><dd><span data-f="registered">—</span></dd>
+        </dl>
+        <div class="wiki-accounts" data-wiki-accounts-list></div>
+      <details class="wiki-more">
+        <summary>展開一年的編輯熱力圖</summary>
+        <div class="wiki-years" data-wiki-years hidden></div>
+        <div class="wiki-scroll">
+          <div class="wiki-months" data-wiki-months hidden></div>
+          <div class="wiki-heat" data-wiki-heat hidden></div>
+        </div>
+      </details>
+      <div class="wiki-tip" data-wiki-tip hidden></div>
     </div>
   </section>
 </main>
@@ -117,11 +152,12 @@
     <span>關於</span>
   </div>
 <div class="wrap foot foot-updated">
-    <span>最後更新 <time datetime="2026-10-19" data-updated>2026-10-19</time></span>
+    <span>最後更新 <time datetime="2026-10-28" data-updated>2026-10-28</time></span>
   </div>
 </footer>
 
-<script src="../../assets/site.js?v=53a39227" defer></script>
+<script src="../../assets/site.js?v=eb0afa2b" defer></script>
 <script src="../../assets/lightbox.js" defer></script>
+<script src="../../assets/wiki-stats.js" defer></script>
 </body>
 </html>
