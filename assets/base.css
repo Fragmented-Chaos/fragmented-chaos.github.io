@@ -1034,6 +1034,7 @@ body::before {
 
 /* 53 周 × 7 天：按列排周，行就是星期几 */
 .wiki-stats { position: relative; }
+.wiki-stats[hidden] { display: none; }
 .wiki-scroll { overflow-x: auto; margin-top: 1.2rem; padding-bottom: 4px; }
 /* 热力图默认收起：关于页是"看"的页面，一排可点的年份按钮太像控件 */
 /* 模板 dl 用 hidden 收起；.spec 有自己的 display，会让 hidden 失效，这里显式压掉 */
