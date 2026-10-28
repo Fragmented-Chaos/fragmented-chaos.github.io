@@ -354,9 +354,10 @@ button:focus-visible {
   padding: 0.45rem 0.8rem;
   border: 1px solid var(--line);
   border-radius: 8px;
-  background-color: var(--bg-soft);
+  /* 跟别的 chip 一样吃次级玻璃那层 10% 底，别用不透明的 --bg-soft */
+  background-color: color-mix(in srgb, var(--bg) 10%, transparent);
   font-family: var(--mono);
-  font-size: 0.8rem;
+  font-size: 0.78rem;
   color: var(--ink);
   cursor: pointer;
   list-style: none;
@@ -714,7 +715,7 @@ body.doc .post-body { max-width: none; }
   /* 规格表 / 胶囊 / 时间线 / 列表行：窄屏改单列或收紧 */
   .spec { grid-template-columns: 4.6rem 1fr; gap: 0.35rem 0.7rem; }
   .chips { gap: 0.4rem; }
-  .chips a { padding: 0.5rem 0.7rem; }
+  .chips a, .chip-menu > details > summary { padding: 0.5rem 0.7rem; }
   .mod-head { grid-template-columns: 1fr; gap: 1rem; }
   .mod-icon { width: 3.5rem; height: 3.5rem; }
   .timeline li { grid-template-columns: 1fr; gap: 0.3rem; }
@@ -873,7 +874,7 @@ main:not(.start-main) {
 /* 不支持 backdrop-filter 的浏览器：退化为更不透明的底，保证文字清晰 */
 @supports not ((backdrop-filter: blur(4px)) or (-webkit-backdrop-filter: blur(4px))) {
   main:not(.start-main), .top, .site-footer { background-color: color-mix(in srgb, var(--bg) 92%, transparent); }
-  .panel, .chips a, .post-body pre, .theme-toggle, .nav-toggle, .comments { background-color: var(--bg-soft); }
+  .panel, .chips a, .chip-menu > details > summary, .post-body pre, .theme-toggle, .nav-toggle, .comments { background-color: var(--bg-soft); }
 }
 
 /* ---------- ④ 降级：窄屏 / 减少透明 / 提高对比 / 打印 ---------- */
@@ -903,7 +904,7 @@ main:not(.start-main) {
 /* 用户明确要求减少透明 / 更高对比：三层一起退回不透明（可读性优先于效果） */
 @media (prefers-reduced-transparency: reduce), (prefers-contrast: more) {
   main:not(.start-main), .top, .site-footer { background-color: var(--bg); -webkit-backdrop-filter: none; backdrop-filter: none; }
-  .panel, .chips a, .post-body pre, .theme-toggle, .nav-toggle, .comments { background-color: var(--bg-soft); }
+  .panel, .chips a, .chip-menu > details > summary, .post-body pre, .theme-toggle, .nav-toggle, .comments { background-color: var(--bg-soft); }
   body::after { background-image: none; background-color: color-mix(in srgb, var(--bg) 90%, transparent); }
 }
 /* 打印：两层背景都不要，三层玻璃全部去掉底色/模糊，托盘再去掉描边与阴影 */
