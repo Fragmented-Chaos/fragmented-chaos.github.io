@@ -1145,3 +1145,64 @@ body::before {
   .wiki-heat { grid-template-rows: repeat(7, 8px); grid-auto-columns: 8px; gap: 2px; }
   .wiki-months { column-gap: 2px; }
 }
+
+
+/* ---------- 深空页 /space/ ----------
+   画布铺满视口，内容浮在上面。这一页只用深色，所以直接压掉主题切换。 */
+html[data-space] { color-scheme: dark; }
+html[data-space] body::before { display: none; }
+html[data-space] [data-theme-toggle] { display: none; }
+html[data-space] .top,
+html[data-space] .site-footer { position: relative; z-index: 3; }
+/* 这页不要让 main 那层玻璃挡在画布前面：透明 + 去掉模糊，画面才是实的 */
+html[data-space] main:not(.start-main) {
+  background-color: transparent;
+  border-color: transparent;
+  box-shadow: none;
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}
+html[data-space] #main {
+  position: relative;
+  z-index: 2;
+  min-height: calc(100vh - 8rem);
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.space-canvas {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  z-index: 0;
+  background-color: #05060a;
+}
+
+.space-copy {
+  max-width: 30rem;
+  margin: 4rem 0 4rem clamp(1.2rem, 9vw, 9rem);
+  padding: 1.8rem 2rem;
+  border: 1px solid rgba(255,255,255,0.10);
+  border-radius: 16px;
+  background-color: rgba(5, 6, 10, 0.52);
+  -webkit-backdrop-filter: blur(9px) saturate(120%);
+  backdrop-filter: blur(9px) saturate(120%);
+  color: #eef2ff;
+}
+.space-kicker { margin: 0 0 0.9rem; font-size: 0.72rem; font-weight: 600; letter-spacing: 0.22em; text-transform: uppercase; color: rgba(255,255,255,0.55); }
+.space-copy h1 { margin: 0 0 1rem; font-size: clamp(1.8rem, 4.4vw, 2.9rem); color: #fff; }
+.space-body { margin: 0 0 1.2rem; line-height: 1.85; color: rgba(255,255,255,0.82); }
+.space-hint { margin: 0 0 0.9rem; font-family: var(--mono); font-size: 0.76rem; color: rgba(255,255,255,0.48); }
+.space-back { margin: 0; }
+.space-back a { color: rgba(255,255,255,0.85); border-bottom: 1px solid rgba(255,255,255,0.28); }
+
+@media (max-width: 900px) {
+  html[data-space] #main { justify-content: center; align-items: flex-end; }
+  .space-copy { margin: 0 auto 1.6rem; }
+}
+@media (max-width: 560px) {
+  .space-copy { margin: 2rem auto; padding: 1.4rem 1.3rem; }
+}

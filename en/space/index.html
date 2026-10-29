@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Event Horizon · Fragmented_Chaos</title>
+<meta name="description" content="A view from the edge of a black hole, rendered live with WebGL.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Fragmented_Chaos">
+<meta property="og:title" content="Event Horizon · Fragmented_Chaos">
+<meta property="og:description" content="A view from the edge of a black hole, rendered live with WebGL.">
+<meta property="og:url" content="https://fragmented-chaos.github.io/en/space/">
+<meta property="og:image" content="https://fragmented-chaos.github.io/assets/images/avatar.jpg">
+<meta property="og:locale" content="en_US">
+<meta name="twitter:card" content="summary">
+<script>
+  (function () {
+    try {
+      var m = /[?&]theme=(light|dark)\b/.exec(location.search);
+      var t = m ? m[1] : localStorage.getItem('site-v2.theme');
+      if (t === 'light' || t === 'dark') document.documentElement.setAttribute('data-theme', t);
+    } catch (e) { /* 隐私模式忽略 */ }
+  })();
+</script>
+<link rel="icon" type="image/png" sizes="64x64" href="../../favicon.png">
+<link rel="apple-touch-icon" href="../../apple-touch-icon.png">
+<link rel="preload" href="../../assets/fonts/quicksand-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../../assets/fonts/caveat-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" as="image" href="../../assets/images/bg-dark.webp">
+<link rel="preload" as="image" href="../../assets/images/bg-light.webp" media="(prefers-color-scheme: light)">
+<link rel="stylesheet" href="../../assets/base.css?v=beff262a">
+<noscript><style>
+/* JS 不可用时兜底：直接把导航链接平铺显示，别让菜单变成打不开的死结 */
+@media (max-width: 560px) {
+  .top-in .nav { display: flex !important; flex-direction: column; align-items: stretch; flex-basis: 100%; }
+  .nav-toggle { display: none !important; }
+}
+</style></noscript>
+  <style>html[data-space]{color-scheme:dark}</style>
+  <script>document.documentElement.setAttribute("data-theme", "dark");</script>
+</head>
+<body>
+    <canvas class="space-canvas" id="space-canvas" aria-hidden="true"></canvas>
+
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="top">
+  <div class="wrap top-in">
+    <a class="mark" href="../../index.html">Fragmented<b>_</b>Chaos</a>
+    <nav class="nav" id="site-nav">
+        <a href="../">Home</a>
+      <a href="../mods/">Mods</a>
+      <a href="../blog/">Blog</a>
+      <a href="./" aria-current="page">Music</a>
+      <a href="../experience/">Experience</a>
+      <a href="../about/">About</a>
+      <span class="lang">
+        <a href="../../zh/space/">简</a><a href="../../zh-hant/space/">繁</a><a href="../../en/space/" aria-current="true">EN</a>
+      </span>
+    </nav>
+
+      <button type="button" class="theme-toggle" data-theme-toggle
+              aria-pressed="false"
+              data-label-to-dark="Switch to dark theme" data-label-to-light="Switch to light theme">
+        <span class="sr-only">Toggle theme</span>
+        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true">
+          <circle cx="12" cy="12" r="4.2"/>
+          <path d="M12 3v2.2M12 18.8V21M3 12h2.2M18.8 12H21M5.6 5.6l1.6 1.6M16.8 16.8l1.6 1.6M18.4 5.6l-1.6 1.6M7.2 16.8l-1.6 1.6"/>
+        </svg>
+        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true">
+          <path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a6.8 6.8 0 0 0 10.5 10.5z"/>
+        </svg>
+      </button>
+      <button type="button" class="nav-toggle" data-nav-toggle
+              aria-expanded="false" aria-controls="site-nav" aria-label="Menu">
+        <span class="bars" aria-hidden="true"><i></i><i></i><i></i></span>
+      </button>
+  </div>
+</header>
+
+<main id="main">
+
+    <section class="wrap space-copy rise">
+      <p class="kicker space-kicker">SPACE · EN</p>
+      <h1>Inside the Horizon</h1>
+      <p class="space-body">A ship holding station at the edge of a black hole. Light bends here, and the stars stop being quiet.</p>
+      <p class="space-hint">Move the pointer — the lensing leans with it.</p>
+      <p class="space-back"><a href="../about/">Back to about</a></p>
+    </section>
+  </main>
+
+<footer class="site-footer">
+  <div class="wrap foot">
+    <span>Fragmented_Chaos · StewedTuba73416 / Rending_Void</span>
+    <span>Music</span>
+  </div>
+<div class="wrap foot foot-updated">
+    <span>Last updated <time datetime="2026-10-29" data-updated>2026-10-29</time></span>
+  </div>
+</footer>
+
+<script src="../../assets/site.js?v=eb0afa2b" defer></script>
+<script src="../../assets/space.js" defer></script>
+<script src="../../assets/lightbox.js" defer></script>
+</body>
+</html>
