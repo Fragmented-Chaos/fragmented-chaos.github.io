@@ -406,13 +406,23 @@ button:focus-visible {
   padding-bottom: 4.5rem;
 }
 
+/* 关于页名字 = 星空页入口（点名字进那片天） */
+.about-name-link {
+  color: inherit;
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.2s ease, color 0.2s ease;
+}
+.about-name-link:hover { color: var(--accent); border-bottom-color: color-mix(in srgb, var(--accent) 45%, transparent); }
+.about-name-link:focus-visible { outline-offset: 4px; }
+
 .about-avatar {
-  width: 11rem;
-  height: 11rem;
-  border: 1px solid var(--line);
-  border-radius: 50%;
-  object-fit: cover;
-  background-color: var(--bg-soft);
+  width: 12rem;
+  height: 12rem;
+  border: 0;                 /* 去底之后不需要圈了，让角色自己浮着 */
+  border-radius: 0;
+  object-fit: contain;
+  background-color: transparent;
 }
 
 .about-name {
@@ -1152,6 +1162,9 @@ body::before {
 html[data-space] { color-scheme: dark; }
 html[data-space] body::before { display: none; }
 html[data-space] [data-theme-toggle] { display: none; }
+/* 主题按钮藏了之后，窄屏就没有元素用 margin-left:auto 把右侧那组推开，
+   折叠按钮会紧贴站点名 —— 让它自己顶到右边 */
+html[data-space] .nav-toggle { margin-left: auto; }
 html[data-space] .top,
 html[data-space] .site-footer { position: relative; z-index: 3; }
 /* 这页不要让 main 那层玻璃挡在画布前面：透明 + 去掉模糊，画面才是实的 */
@@ -1205,4 +1218,57 @@ html[data-space] #main {
 }
 @media (max-width: 560px) {
   .space-copy { margin: 2rem auto; padding: 1.4rem 1.3rem; }
+}
+
+
+/* 深空页：点一下进入漫游，面板淡出，光标变抓取 */
+/* 进入漫游时，页面上的"外壳"（卡片、导航、页脚）一起淡出，只剩星空 */
+html[data-space] .space-copy,
+html[data-space] .top,
+html[data-space] .site-footer {
+  transition: opacity 0.55s ease, transform 0.55s ease;
+}
+/* ⚠️ .rise 是 `animation: ... both`，动画结束后它的 opacity 会一直压着普通声明，
+   所以这里必须先 animation: none，否则淡出根本不生效。 */
+html.is-cruising .space-copy,
+html.is-cruising .top,
+html.is-cruising .site-footer { animation: none; }
+html.is-cruising .space-copy { opacity: 0; transform: translateY(14px); pointer-events: none; }
+html.is-cruising .top { opacity: 0 !important; transform: translateY(-8px); pointer-events: none; }
+html.is-cruising .site-footer { opacity: 0 !important; transform: translateY(8px); pointer-events: none; }
+html.is-cruising,
+html.is-cruising #main { cursor: grab; }
+html.is-cruising:active { cursor: grabbing; }
+
+.space-cruise-tip {
+  position: fixed;
+  left: 50%;
+  bottom: 1.4rem;
+  z-index: 6;
+  margin: 0;
+  padding: 0.45rem 0.95rem;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 999px;
+  background-color: rgba(8, 10, 16, 0.72);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  color: rgba(255, 255, 255, 0.72);
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  transform: translateX(-50%) translateY(8px);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+.space-cruise-tip.on { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+
+/* 手机上拖动星空页时别让浏览器抢去滚动 —— 不加这句，手指一拖就是页面滚，星群不动 */
+html[data-space],
+html[data-space] body,
+html[data-space] #main,
+html[data-space] .space-canvas {
+  touch-action: none;
+  overscroll-behavior: none;
 }
