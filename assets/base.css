@@ -875,7 +875,7 @@ main:not(.start-main) {
 
 /* ---------- ③c 托盘内的次级玻璃面 ----------
    同样由 color-mix(--bg) 派生 —— 明暗主题自动跟随，不用写两遍。 */
-.panel, .chips a, .post-body pre, .theme-toggle, .nav-toggle, .comments {
+.panel, .chips a, .chip-menu > details > summary, .post-body pre, .theme-toggle, .nav-toggle, .comments {
   background-color: color-mix(in srgb, var(--bg) 10%, transparent);
   -webkit-backdrop-filter: blur(10px) saturate(115%);
   backdrop-filter: blur(10px) saturate(115%);
