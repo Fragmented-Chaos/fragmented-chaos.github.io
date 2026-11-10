@@ -256,6 +256,53 @@
     });
   }
 
+  /* 访问计数：给的是"你是第几个访客"。
+     做法 —— 第一次进站才调 hit（计数 +1）并把名次存在本地；
+     以后每次进站直接显示存下来的名次，**不再发请求**。
+     这样刷新多少次都不会涨，也不会因为接口慢而空白。 */
+  function setupVisitCounter() {
+    var box = document.querySelector('[data-visit-counter]');
+    if (!box) return;
+    var el = box.querySelector('[data-visit-value]');
+    if (!el) return;
+
+    var KEY = 'site-v2.visits.mine';
+    var API = 'https://countapi.mileshilliard.com/api/v1/';
+    var fmt = function (n) { return String(n).replace(/\B(?=(\d{3})+(?!\d))/g, ','); };
+
+    function read() {
+      try { return parseInt(localStorage.getItem(KEY), 10) || 0; } catch (e) { return 0; }
+    }
+    function save(n) {
+      try { localStorage.setItem(KEY, String(n)); } catch (e) {}
+    }
+
+    var mine = read();
+    if (mine > 0) {                  // 来过：直接显示，不发请求
+      el.textContent = fmt(mine);
+      return;
+    }
+    if (!window.fetch) return;
+
+    var ctrl = ('AbortController' in window) ? new AbortController() : null;
+    var timer = ctrl ? setTimeout(function () { ctrl.abort(); }, 6000) : null;
+
+    fetch(API + 'hit/fragmented-chaos-visits-20261110', ctrl ? { signal: ctrl.signal } : {})
+      .then(function (r) { return r.ok ? r.json() : null; })
+      .then(function (d) {
+        var n = d && d.value;
+        if (typeof n === 'number' && isFinite(n) && n > 0) {
+          save(n);
+          el.textContent = fmt(n);
+          box.hidden = false;
+        } else {
+          box.hidden = true;         // 一次都没拿到就不显示
+        }
+      })
+      .catch(function () { box.hidden = true; })
+      .then(function () { if (timer) clearTimeout(timer); });
+  }
+
   function ready(fn) {
     if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', fn);
     else fn();
@@ -269,5 +316,6 @@
     safe('导航折叠', setupNavToggle);
     safe('回到顶部', setupToTop);
     safe('相关链接菜单', setupChipMenu);
+    safe('访问计数', setupVisitCounter);
   });
 })();

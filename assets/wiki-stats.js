@@ -38,6 +38,15 @@
           var head = document.createElement('h4');
           head.className = 'wiki-acct';
           head.textContent = acc.name || ('#' + acc.uid);
+          if (acc.level) {
+            var lv = document.createElement('small');
+            lv.className = 'wiki-lv';
+            lv.textContent = acc.level;
+            if (acc.exp != null && acc.expMax != null) {
+              lv.title = acc.exp + ' / ' + acc.expMax + ' Exp';
+            }
+            head.appendChild(lv);
+          }
           wrap.appendChild(head);
 
           var dl = tpl.cloneNode(true);

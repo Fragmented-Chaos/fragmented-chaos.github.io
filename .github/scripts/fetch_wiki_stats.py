@@ -26,6 +26,7 @@ ACCOUNTS = [
 UID = ACCOUNTS[0][0]
 API = "https://center.mcmod.cn/object/UserHistoryChartData/"
 HOME = "https://center.mcmod.cn/frame/CenterHome/"
+RANK = "https://center.mcmod.cn/frame/CenterRank/"
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 OUT = os.path.join(ROOT, "data", "wiki-stats.json")
 
@@ -76,6 +77,25 @@ def fetch_profile(uid):
     }
 
 
+def fetch_rank(uid):
+    """用户等级：另一个 frame 才有（Lv.8 / 253 / 2,918 Exp）。"""
+    try:
+        frame = post(RANK, {"uid": uid})
+        html = frame.get("html") or ""
+    except Exception:
+        return {}
+    text = " ".join(re.sub(r"<[^>]+>", " ", html).split())
+    m = re.search(r"(Lv\.\s*\d+)", text)
+    e = re.search(r"(\d[\d,]*)\s*/\s*(\d[\d,]*)\s*Exp", text)
+    out = {}
+    if m:
+        out["level"] = m.group(1).replace(" ", "")
+    if e:
+        out["exp"] = int(e.group(1).replace(",", ""))
+        out["expMax"] = int(e.group(2).replace(",", ""))
+    return out
+
+
 def fetch(uid, year):
     body = urllib.parse.urlencode({"data": json.dumps({"uid": uid, "year": year})}).encode()
     req = urllib.request.Request(
@@ -123,6 +143,7 @@ def main():
             days.setdefault(d, [0, 0])[1] += n
 
         prof = fetch_profile(uid)
+        rank = fetch_rank(uid)
         for key, field in (("bytes", "bytes"), ("comments", "comments"), ("tutorials", "tutorials")):
             v = prof.get(field)
             if v:
@@ -142,6 +163,9 @@ def main():
             "comments": prof.get("comments"),
             "tutorials": prof.get("tutorials"),
             "registered": prof.get("registered"),
+            "level": rank.get("level"),
+            "exp": rank.get("exp"),
+            "expMax": rank.get("expMax"),
         })
 
     if not ok:

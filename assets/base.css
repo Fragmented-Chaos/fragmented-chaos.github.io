@@ -1272,3 +1272,35 @@ html[data-space] .space-canvas {
   touch-action: none;
   overscroll-behavior: none;
 }
+
+
+/* 页脚访问计数的徽章（Vercount 拿不到数时的兜底） */
+.visit-badge { height: 18px; width: auto; vertical-align: -3px; border-radius: 4px; }
+
+
+/* 计数后面那个颜文字：别让它抢正文，小小的就好 */
+.visit-face { margin-left: 0.35rem; opacity: 0.65; letter-spacing: 0; font-family: var(--mono); }
+
+
+/* 首屏标题末尾的颜文字：比正文小、比墨色淡，不抢标题 */
+.hero-face {
+  font-size: inherit;          /* 跟「个人网站」一样大 */
+  font-weight: inherit;        /* 一样粗 */
+  letter-spacing: 0;
+  color: inherit;
+  vertical-align: baseline;
+  margin-left: 0.2em;
+  white-space: nowrap;
+}
+
+
+/* 百科账号后面的等级小标 */
+.wiki-lv {
+  margin-left: 0.4rem;
+  color: var(--accent);
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0;
+  cursor: help;
+}
